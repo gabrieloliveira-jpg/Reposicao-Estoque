@@ -15,19 +15,18 @@
   --green:#2dd4a0;--green2:#0d4a38;
   --amber:#f5a623;--amber2:#4a3200;
   --red:#f05454;--red2:#4a0f0f;
-  --purple:#a78bfa;--purple2:#2d1b69;
   --mono:'Courier New',monospace;
   --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;padding:2rem 1rem}
 h1{font-size:22px;font-weight:600;letter-spacing:-0.3px}
-.container{max-width:920px;margin:0 auto}
+.container{max-width:860px;margin:0 auto}
 .header{margin-bottom:1.5rem}
 .header p{margin-top:6px;font-size:14px;color:var(--text3)}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
 .section-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--sans);transition:background 0.1s}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--sans)}
 .btn:hover{background:var(--bg4)}
 .btn:disabled{opacity:0.4;cursor:not-allowed}
 .btn-primary{background:var(--blue3);border-color:var(--blue);color:#a8c4ff}
@@ -39,75 +38,66 @@ h1{font-size:22px;font-weight:600;letter-spacing:-0.3px}
 .log-line.ok{color:var(--green)}
 .log-line.warn{color:var(--amber)}
 .log-line.err{color:var(--red)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:1rem}
 .stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .stat-label{font-size:11px;color:var(--text3);margin-bottom:4px}
-.stat-val{font-size:24px;font-weight:600}
+.stat-val{font-size:26px;font-weight:600}
 .stat-val.red{color:var(--red)}
 .stat-val.amber{color:var(--amber)}
-.stat-val.blue{color:var(--blue)}
 .stat-val.green{color:var(--green)}
-.stat-val.purple{color:var(--purple)}
+.stat-val.blue{color:var(--blue)}
 .output-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
 .output-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);gap:8px;flex-wrap:wrap}
 .output-title{font-size:13px;font-weight:500}
 .sec-hdr{font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;padding:10px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px}
 .sec-hdr.critica{color:var(--red)}
-.sec-hdr.catalogo{color:var(--green)}
-.sec-hdr.fora{color:var(--amber)}
-/* Tabela de pedido */
+.sec-hdr.normal{color:var(--green)}
 .pedido-table{width:100%;border-collapse:collapse}
-.pedido-table th{text-align:left;padding:8px 12px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.6px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg3)}
-.pedido-table td{padding:7px 12px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
-.pedido-table td.sku-col{font-family:var(--mono);font-size:14px;font-weight:500}
-.pedido-table td.cx-col{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--green);text-align:right;width:100px}
-.pedido-table td.un-col{font-size:12px;color:var(--text3);text-align:right;width:90px}
-.pedido-table td.cat-col{width:110px}
+.pedido-table th{text-align:left;padding:8px 12px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg3)}
+.pedido-table td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
+.pedido-table td.sku-col{font-family:var(--mono);font-size:14px;font-weight:500;letter-spacing:0.3px}
+.pedido-table td.cx-col{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--green);text-align:right;width:90px}
+.pedido-table td.un-col{font-size:12px;color:var(--text3);text-align:right;width:80px}
+.pedido-table td.res-col{font-size:12px;text-align:right;width:80px}
 .pedido-table tr:last-child td{border-bottom:none}
-.pedido-table tr:hover td{background:rgba(255,255,255,0.02)}
-.badge{font-size:11px;padding:2px 8px;border-radius:4px;font-family:var(--sans);white-space:nowrap}
-.b-red{background:var(--red2);color:var(--red)}
+.pedido-table tr:hover td{background:rgba(255,255,255,0.015)}
+.badge{font-size:11px;padding:2px 8px;border-radius:4px;white-space:nowrap}
 .b-amber{background:var(--amber2);color:var(--amber)}
 .b-blue{background:var(--blue3);color:#7ba8ff}
-.b-green{background:var(--green2);color:var(--green)}
-.b-gray{background:var(--bg4);color:var(--text2)}
-.b-purple{background:var(--purple2);color:var(--purple)}
+.b-red{background:var(--red2);color:var(--red)}
 .notice{font-size:12px;color:var(--text3);padding:10px 14px;border:1px solid var(--amber2);background:rgba(245,166,35,0.05);border-radius:8px;margin-bottom:1rem}
 .spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border2);border-top-color:var(--blue);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.file-drop{border:1px dashed var(--border2);border-radius:10px;padding:18px;text-align:center;cursor:pointer;margin-bottom:10px}
+.file-drop{border:1px dashed var(--border2);border-radius:10px;padding:20px;text-align:center;cursor:pointer;margin-bottom:10px}
 .file-drop:hover,.file-drop.drag{border-color:var(--blue);background:rgba(77,124,254,0.04)}
 .file-drop p{font-size:13px;color:var(--text3);margin-top:5px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
 input[type=file]{display:none}
-.tabs{display:flex;gap:0;margin-bottom:1rem;border-bottom:1px solid var(--border)}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1rem}
 .tab{padding:8px 20px;font-size:13px;cursor:pointer;border:none;background:none;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--sans)}
 .tab.active{color:var(--blue);border-bottom-color:var(--blue)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
-/* Comparação */
 .comp-table{width:100%;border-collapse:collapse;font-size:13px}
-.comp-table th{text-align:left;padding:6px 10px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.6px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.comp-table th{text-align:left;padding:6px 10px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}
 .comp-table td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.03)}
-.comp-table td.mono{font-family:var(--mono)}
 .comp-table input{background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;width:100%;outline:none}
 .comp-table input:focus{background:var(--bg3);border-radius:4px;padding:2px 4px}
 .comp-row.match td{color:var(--green)}
 .comp-row.over td{color:var(--amber)}
 .comp-row.miss td{color:var(--red)}
-.comp-row.extra td{color:var(--purple)}
+.comp-row.extra td{color:#a78bfa}
 .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
 .leg-item{font-size:12px;display:flex;align-items:center;gap:5px;color:var(--text2)}
 .leg-dot{width:9px;height:9px;border-radius:50%}
-.section-divider{border:none;border-top:2px solid var(--border2);margin:1.5rem 0}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
     <h1>Reposição de Estoque</h1>
-    <p>Envie o catálogo PDF do fornecedor · O site sugere o pedido com base na necessidade real</p>
+    <p>Envie o catálogo PDF · Apenas produtos do catálogo aparecem no pedido</p>
   </div>
 
   <div class="tabs">
@@ -115,14 +105,13 @@ input[type=file]{display:none}
     <button class="tab" onclick="switchTab('comparacao')">Comparar Pedido</button>
   </div>
 
-  <!-- ABA ANÁLISE -->
   <div id="tab-analise" class="tab-panel active">
     <div class="card">
       <div class="section-label">Catálogo PDF do fornecedor</div>
       <div class="file-drop" id="dropzone" onclick="document.getElementById('pdfInput').click()">
         <svg width="26" height="26" fill="none" stroke="#5a6080" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
         <p>Arraste o PDF do catálogo aqui ou clique para selecionar</p>
-        <p style="font-size:11px;margin-top:3px">Itens marcados como Esgotado / Sem Estoque são ignorados automaticamente</p>
+        <p style="font-size:11px;margin-top:3px">Esgotado / Sem estoque / Indisponível são ignorados automaticamente</p>
       </div>
       <input type="file" id="pdfInput" multiple accept=".pdf" onchange="handleFiles(this.files)">
       <div class="tags" id="fileTags"></div>
@@ -136,34 +125,32 @@ input[type=file]{display:none}
         <button class="btn btn-sm" onclick="clearAll()">Limpar</button>
       </div>
       <div class="log" id="log" style="display:none"></div>
-      <div id="debugBox" style="display:none;margin-top:10px;background:var(--bg);border:1px solid var(--amber2);border-radius:8px;padding:12px;font-family:var(--mono);font-size:11px;color:var(--text2);max-height:280px;overflow:auto"></div>
+      <div id="debugBox" style="display:none;margin-top:10px;background:var(--bg);border:1px solid var(--amber2);border-radius:8px;padding:12px;font-family:var(--mono);font-size:11px;color:var(--text2);max-height:260px;overflow:auto"></div>
     </div>
-
     <div id="statsArea" class="stats" style="display:none"></div>
     <div id="outputArea" style="display:none"></div>
   </div>
 
-  <!-- ABA COMPARAÇÃO -->
   <div id="tab-comparacao" class="tab-panel">
     <div class="card">
       <div class="section-label">Meu pedido realizado</div>
       <p style="font-size:13px;color:var(--text3);margin-bottom:12px">Compare o pedido que você fez com a sugestão gerada.</p>
       <div style="overflow-x:auto">
-        <table class="comp-table" id="pedidoTable">
+        <table class="comp-table">
           <thead><tr><th>#</th><th>SKU</th><th>Qtd pedida (cx)</th><th>Sugestão (cx)</th><th>Diferença</th><th></th></tr></thead>
           <tbody id="pedidoBody"></tbody>
         </table>
       </div>
       <div class="row" style="margin-top:12px">
-        <button class="btn btn-sm" onclick="addPedidoRow()">+ Adicionar linha</button>
+        <button class="btn btn-sm" onclick="addPedidoRow()">+ Linha</button>
         <button class="btn btn-sm" onclick="importSugestao()">↙ Importar sugestão</button>
         <button class="btn btn-sm" onclick="clearPedido()">Limpar</button>
       </div>
       <div class="legend" id="legend" style="display:none">
-        <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Dentro do esperado</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Ok</div>
         <div class="leg-item"><div class="leg-dot" style="background:var(--amber)"></div>Pediu a mais</div>
         <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>Pediu a menos</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--purple)"></div>SKU extra</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#a78bfa"></div>Extra</div>
       </div>
     </div>
     <div id="compSummary" style="display:none"></div>
@@ -174,122 +161,99 @@ input[type=file]{display:none}
 const SHEET_ID = "1404SCPiabg6abXRphpHqGXQ0frRkIlUptDV9m8a-x3w";
 let pdfFiles = [];
 let lastResult = null;
-let sugestaoMap = {};
 
-const COL = {
-  fornecedor:1, sku:2, estoque:5, d7:7, d30:8,
-  d12m:11, reserva:14, inativo:15, classif:18, fat:19, lucro:20
-};
+const COL = {fornecedor:1,sku:2,estoque:5,d7:7,d30:8,d12m:11,reserva:14,inativo:15,classif:18,fat:19,lucro:20};
 
-// Palavras que indicam produto sem estoque no catálogo
-const SEM_ESTOQUE_WORDS = [
-  "ESGOTADO","SEM EMBALAGEM","FORA DA EMBALAGEM","INDISPONIVEL",
-  "INDISPONÍVEL","EM FALTA","SEM ESTOQUE","FORA DE LINHA",
-  "DESCONTINUADO","TEMPORARIAMENTE INDISPONIVEL"
-];
+const SEM_ESTOQUE = ["ESGOTADO","SEM EMBALAGEM","FORA DA EMBALAGEM","INDISPONIVEL","INDISPONÍVEL","EM FALTA","SEM ESTOQUE","FORA DE LINHA","DESCONTINUADO","TEMPORARIAMENTE INDISPONIVEL","PRODUTO INATIVO"];
 
-// ---- TABS ----
 function switchTab(name){
-  document.querySelectorAll('.tab').forEach((t,i)=>{
-    t.classList.toggle('active',['analise','comparacao'][i]===name);
-  });
-  document.querySelectorAll('.tab-panel').forEach(p=>{
-    p.classList.toggle('active',p.id==='tab-'+name);
-  });
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['analise','comparacao'][i]===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+name));
   if(name==='comparacao')renderPedidoTable();
 }
 
-// ---- UTILS ----
-function sheetUrl(aba){
-  return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(aba)}`;
-}
 async function fetchSheet(aba){
-  const r=await fetch(sheetUrl(aba));
-  if(!r.ok)throw new Error("Erro ao buscar aba: "+aba);
+  const r=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(aba)}`);
+  if(!r.ok)throw new Error("Erro ao buscar: "+aba);
   return parseCSV(await r.text());
 }
 function parseCSV(text){
   const rows=[];
-  const lines=text.split(/\r?\n/);
-  for(const line of lines){
+  for(const line of text.split(/\r?\n/)){
     if(!line.trim())continue;
     const cols=[];let cur="",inQ=false;
-    for(let i=0;i<line.length;i++){
-      const c=line[i];
+    for(const c of line){
       if(c==='"'){inQ=!inQ;continue;}
       if(c===','&&!inQ){cols.push(cur);cur="";continue;}
       cur+=c;
     }
-    cols.push(cur);
-    rows.push(cols);
+    cols.push(cur);rows.push(cols);
   }
   return rows.slice(1);
 }
 function pn(v){
-  if(!v&&v!==0)return 0;
-  const s=String(v).replace(/\./g,"").replace(",",".").replace(/[^\d.-]/g,"");
-  const n=parseFloat(s);
-  return isNaN(n)?0:n;
+  const s=String(v||0).replace(/\./g,"").replace(",",".").replace(/[^\d.-]/g,"");
+  const n=parseFloat(s);return isNaN(n)?0:n;
 }
 function ns(s){return String(s||"").trim().toUpperCase();}
 function normStrip(s){return s.replace(/[\s\/\.\-]/g,"").toUpperCase();}
-function editDist(a,b){
-  const m=a.length,n=b.length;
-  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
-  return dp[m][n];
-}
 
-// ---- MATCH SKU (10 etapas) ----
+// ---- MATCH SKU — conservador ----
+// Só aceita matches com alta confiança. Sem fuzzy genérico.
 function knupMap(sku){
   let s=sku;
   if(/^G-[HBA]/i.test(s)&&!/G-GT|G-RX|G-VR/i.test(s))s=s.replace(/^G-/,"KP-");
-  s=s.replace(/\/K$/i,"");
-  s=s.replace(/\//g,"-");
+  s=s.replace(/\/K$/i,"").replace(/\//g,"-");
   return s;
 }
 
-function matchSku(sku, catalog){
-  const keys=Object.keys(catalog);
-  const try1=(k)=>catalog[k]!=null?{key:k,pcsCx:catalog[k]}:null;
-  const norm=ns(sku);
+function matchSku(skuPlanilha, catalogKeys){
+  const norm = ns(skuPlanilha);
+
   // 1. Exato
-  if(try1(norm))return try1(norm);
-  // 2. KNUP
+  if(catalogKeys.has(norm))return norm;
+
+  // 2. KNUP mapping
   const kn=ns(knupMap(norm));
-  if(kn!==norm&&try1(kn))return try1(kn);
+  if(kn!==norm&&catalogKeys.has(kn))return kn;
+
   // 3. Barras → hífen
   const wd=norm.replace(/\//g,"-");
-  if(try1(wd))return try1(wd);
-  // 4. Remove prefixo (antes do primeiro -)
-  const noPrefix=norm.includes("-")?norm.slice(norm.indexOf("-")+1):null;
-  if(noPrefix&&try1(noPrefix))return try1(noPrefix);
-  // 5. Com hífen inicial
-  if(noPrefix&&try1("-"+noPrefix))return try1("-"+noPrefix);
-  // 6. Normaliza sem separadores
+  if(wd!==norm&&catalogKeys.has(wd))return wd;
+
+  // 4. Normaliza sem separadores — só aceita se ambos >= 5 chars (evita falsos positivos curtos)
   const sn=normStrip(norm);
-  const sm=keys.find(k=>normStrip(k)===sn);
-  if(sm)return try1(sm);
-  // 7. Sufixo (catálogo é prefixo do SKU, diff ≤ 3)
-  const sfx=keys.find(k=>norm.startsWith(k)&&norm.length-k.length<=3);
-  if(sfx)return try1(sfx);
-  // 8. Fuzzy dist ≤ 2
-  const fz=keys.find(k=>editDist(norm,k)<=2);
-  if(fz)return try1(fz);
-  // 9. Sufixo do KNUP mapeado
+  if(sn.length>=5){
+    for(const k of catalogKeys){
+      if(normStrip(k)===sn)return k;
+    }
+  }
+
+  // 5. Remove prefixo do fornecedor (antes do primeiro -) e tenta exato
+  if(norm.includes("-")){
+    const semPrefix=norm.slice(norm.indexOf("-")+1);
+    if(semPrefix.length>=4){
+      if(catalogKeys.has(semPrefix))return semPrefix;
+      // Tenta KNUP do sufixo
+      const knSuf=ns(knupMap(semPrefix));
+      if(catalogKeys.has(knSuf))return knSuf;
+      // Sem separadores do sufixo
+      const snSuf=normStrip(semPrefix);
+      if(snSuf.length>=5){
+        for(const k of catalogKeys){
+          if(normStrip(k)===snSuf)return k;
+        }
+      }
+    }
+  }
+
+  // 6. Sufixo do KNUP mapeado
   if(kn.includes("-")){
     const knSuffix=kn.slice(kn.indexOf("-")+1);
-    const knm=keys.find(k=>normStrip(k)===normStrip(knSuffix)||editDist(ns(k),knSuffix)<=2);
-    if(knm)return try1(knm);
+    if(knSuffix.length>=4&&catalogKeys.has(knSuffix))return knSuffix;
   }
-  // 10. Remove tudo antes do último -
-  const parts=norm.split("-");
-  if(parts.length>1){
-    const lastPart=parts[parts.length-1];
-    const lm=keys.find(k=>ns(k)===lastPart||normStrip(k)===normStrip(lastPart));
-    if(lm)return try1(lm);
-  }
-  return null;
+
+  return null; // Não encontrado — NÃO inclui no pedido
 }
 
 // ---- PDF ----
@@ -307,280 +271,188 @@ async function readPdfText(file){
           text+=c.items.map(i=>i.str).join(" ")+"\n";
         }
         resolve(text);
-      }catch(err){resolve("");}
+      }catch{resolve("");}
     };
     fr.readAsArrayBuffer(file);
   });
 }
 
 function extractCatalog(text){
-  // catalog[SKU] = {pcsCx, disponivel}
-  const catalog={};
+  // Retorna Map: SKU -> {pcsCx, disponivel}
+  const catalog=new Map();
   const lines=text.split(/\r?\n/);
-  const skuRe=/\b([A-Z0-9][A-Z0-9\-\/]{2,}[A-Z0-9])\b/g;
-  const pcsRe=/(?:PCS\/CX|UN\/CX|UNIT\/BOX|QTD\s*CX|EMBALAGEM)[:\s]*(\d+)|CX\s*C\/\s*(\d+)|(?<!\$)\b([1-9]\d{0,2})\b(?!\s*%)/;
+  const skuRe=/\b([A-Z][A-Z0-9\-\/]{3,}[A-Z0-9])\b/g;
+  const pcsRe=/(?:PCS\/CX|UN\/CX|UNIT\/BOX|QTD\s*CX|EMBALAGEM)[:\s]*(\d+)|CX\s*C\/\s*(\d+)/;
+  // Padrão secundário: número isolado próximo ao SKU (mais conservador)
+  const pcsRe2=/\b([2-9][0-9]?|[1-9][0-9]{2})\b(?!\s*%)/;
 
   for(let i=0;i<lines.length;i++){
-    const lineRaw=lines[i];
-    const lineUp=lineRaw.toUpperCase();
+    const lineUp=lines[i].toUpperCase();
+    // Janela de contexto para detectar sem estoque
+    const win=lines.slice(Math.max(0,i-2),Math.min(lines.length,i+6)).join(" ").toUpperCase();
+    const semEstoque=SEM_ESTOQUE.some(w=>win.includes(w));
 
-    // Verificar se a linha contém indicação de sem estoque
-    const semEstoque=SEM_ESTOQUE_WORDS.some(w=>lineUp.includes(w));
+    const matches=[...lineUp.matchAll(skuRe)];
+    for(const m of matches){
+      const sku=ns(m[1]);
+      if(catalog.has(sku))continue;
+      // Ignorar tokens que são claramente não-SKU (só números, muito curtos, etc)
+      if(/^\d+$/.test(sku)||sku.length<4)continue;
 
-    const skus=[...lineUp.matchAll(skuRe)].map(m=>m[1]);
-    for(const sku of skus){
-      if(sku in catalog)continue;
-      // Se a linha ou janela próxima tem "sem estoque", marcar como indisponível
-      const win=lines.slice(i,Math.min(i+8,lines.length)).join(" ").toUpperCase();
-      const isSemEstoque=semEstoque||SEM_ESTOQUE_WORDS.some(w=>win.includes(w));
+      if(semEstoque){catalog.set(sku,{pcsCx:1,disponivel:false});continue;}
 
-      if(isSemEstoque){
-        catalog[ns(sku)]={pcsCx:1,disponivel:false};
-        continue;
-      }
-
-      // Buscar PCS/CX
-      const winFull=lines.slice(i,Math.min(i+20,lines.length)).join("\n").toUpperCase();
-      const m=winFull.match(pcsRe);
+      // Buscar PCS/CX numa janela de 15 linhas
+      const winFull=lines.slice(i,Math.min(i+15,lines.length)).join("\n").toUpperCase();
       let pcsCx=1;
-      if(m){const v=parseInt(m[1]||m[2]||m[3]||"0");if(v>0&&v<=500)pcsCx=v;}
-      catalog[ns(sku)]={pcsCx,disponivel:true};
+      const m1=winFull.match(pcsRe);
+      if(m1){const v=parseInt(m1[1]||m1[2]||"0");if(v>0&&v<=500)pcsCx=v;}
+      else{
+        const m2=winFull.match(pcsRe2);
+        if(m2){const v=parseInt(m2[1]||"0");if(v>1&&v<=200)pcsCx=v;}
+      }
+      catalog.set(sku,{pcsCx,disponivel:true});
     }
   }
   return catalog;
 }
 
 // ---- ANÁLISE ----
-function calcNecessidade(s, meta, pcsCx){
-  const vel=s.d30>0?s.d30/30:s.d7>0?s.d7/7:0;
-  if(vel===0)return 0;
-  let nec=0;
-  if(s.reserva>0){
-    nec=(meta-s.reserva)*vel;
-  } else {
-    nec=meta*vel-s.estoque;
-  }
-  if(nec<=0)return 0;
-  return Math.max(1,Math.ceil(nec/pcsCx));
-}
-
 function precisaRepor(s){
-  // Retorna true se o SKU precisa de reposição segundo as regras
+  if(s.estoque===0&&s.d30>0)return true;
   const vel=s.d30>0?s.d30/30:s.d7>0?s.d7/7:0;
   const cu=s.classif.toUpperCase();
   const isEstr=cu==="ESTRELA"||cu==="PREMIUM";
-
-  // Crítico: estoque zero com venda
-  if(s.estoque===0&&s.d30>0)return true;
-
   if(s.reserva>0)return s.reserva<=14;
-
-  // Fallback sem reserva
   if(isEstr)return(s.estoque-s.d30)<0;
   return(s.estoque-s.d7)<0||(vel>0&&s.estoque/vel<=10);
 }
 
-function analyze(fluxo, inativos, catalog){
+function calcCx(s,catEntry){
+  const pcsCx=catEntry.pcsCx||1;
+  const vel=s.d30>0?s.d30/30:s.d7>0?s.d7/7:0;
+  if(vel===0)return 1;
+  const cu=s.classif.toUpperCase();
+  const isEstr=cu==="ESTRELA"||cu==="PREMIUM";
+  const meta=isEstr?30:21;
+  let nec=0;
+  if(s.reserva>0)nec=(meta-s.reserva)*vel;
+  else if(s.estoque===0)nec=meta*vel;
+  else nec=meta*vel-s.estoque;
+  return Math.max(1,Math.ceil(nec/pcsCx));
+}
+
+function analyze(fluxo,inativos,catalog){
   const inSet=new Set(inativos.map(r=>ns(r[0]||r[1]||"")));
+  const catalogKeys=new Set(catalog.keys());
+
+  const result={critica:[],pedido:[]};
 
   const skus=fluxo.map(r=>({
-    sku:ns(r[COL.sku]),
-    fornecedor:String(r[COL.fornecedor]||"").trim(),
-    estoque:pn(r[COL.estoque]),
-    d7:pn(r[COL.d7]),
-    d30:pn(r[COL.d30]),
-    d12m:pn(r[COL.d12m]),
-    reserva:pn(r[COL.reserva]),
+    sku:ns(r[COL.sku]),fornecedor:String(r[COL.fornecedor]||"").trim(),
+    estoque:pn(r[COL.estoque]),d7:pn(r[COL.d7]),d30:pn(r[COL.d30]),
+    d12m:pn(r[COL.d12m]),reserva:pn(r[COL.reserva]),
     inativo:String(r[COL.inativo]||"").trim().toUpperCase(),
-    classif:String(r[COL.classif]||"").trim(),
-    fat:pn(r[COL.fat]),
-    lucro:pn(r[COL.lucro]),
+    classif:String(r[COL.classif]||"").trim(),fat:pn(r[COL.fat]),lucro:pn(r[COL.lucro]),
   })).filter(s=>
-    s.sku&&
-    !s.sku.startsWith("KIT")&&
+    s.sku&&!s.sku.startsWith("KIT")&&
     !inSet.has(s.sku)&&
     s.inativo!=="SIM"&&s.inativo!=="1"&&s.inativo!=="TRUE"&&
-    s.d12m>0 // excluir sem saída em 12 meses
+    s.d12m>0
   );
-
-  const result={
-    critica:[],    // estoque=0, no catálogo disponível
-    catalogo:[],   // precisa repor + está no catálogo disponível
-    fora:[],       // precisa repor + NÃO está no catálogo
-  };
-
-  const hasCatalog=Object.keys(catalog).length>0;
 
   for(const s of skus){
     // Margem
-    let mg=null;
-    if(s.fat>0)mg=s.lucro/s.fat;
-    if(mg!==null&&mg<0.15)continue;
-    const rev=mg!==null&&mg<0.20;
+    if(s.fat>0&&s.lucro/s.fat<0.15)continue;
+    const rev=s.fat>0&&s.lucro/s.fat<0.20;
 
     if(!precisaRepor(s))continue;
 
-    const match=matchSku(s.sku,catalog);
-    const catEntry=match?catalog[match.key]:null;
+    // MATCH NO CATÁLOGO — obrigatório
+    const matchKey=matchSku(s.sku,catalogKeys);
+    if(!matchKey)continue; // não está no catálogo → ignorar completamente
 
-    // Se tem catálogo e o SKU está marcado como indisponível → pular
-    if(hasCatalog&&catEntry&&!catEntry.disponivel)continue;
+    const catEntry=catalog.get(matchKey);
+    if(!catEntry||!catEntry.disponivel)continue; // esgotado → ignorar
 
-    const inCat=hasCatalog?(catEntry&&catEntry.disponivel):false;
-    const pcsCx=catEntry?catEntry.pcsCx:1;
-
+    const cx=calcCx(s,catEntry);
     const cu=s.classif.toUpperCase();
     const isEstr=cu==="ESTRELA"||cu==="PREMIUM";
-    const meta=isEstr?30:21;
 
-    // Reposição Crítica (estoque zero)
     if(s.estoque===0&&s.d30>0){
-      if(inCat||!hasCatalog){
-        result.critica.push({...s,pcsCx,rev,inCat});
-      } else {
-        result.fora.push({...s,pcsCx:1,rev,cx:0,nec:"?"});
-      }
-      continue;
-    }
-
-    const cx=calcNecessidade(s,meta,pcsCx);
-    if(cx<=0)continue;
-
-    if(inCat||!hasCatalog){
-      result.catalogo.push({...s,cx,pcsCx,rev,meta,inCat});
+      result.critica.push({...s,cx,pcsCx:catEntry.pcsCx,rev,isEstr,matchKey});
     } else {
-      result.fora.push({...s,cx,pcsCx:1,rev,nec:cx});
+      result.pedido.push({...s,cx,pcsCx:catEntry.pcsCx,rev,isEstr,matchKey});
     }
   }
 
-  // Ordenar: Estrela/Premium primeiro, depois por reserva crescente
-  const ordem=(a,b)=>{
-    const aE=["ESTRELA","PREMIUM"].includes(a.classif.toUpperCase())?0:1;
-    const bE=["ESTRELA","PREMIUM"].includes(b.classif.toUpperCase())?0:1;
-    if(aE!==bE)return aE-bE;
+  // Ordenar: Estrela primeiro, depois menor reserva
+  const ord=(a,b)=>{
+    if(a.isEstr!==b.isEstr)return a.isEstr?-1:1;
     return(a.reserva||999)-(b.reserva||999);
   };
-  result.catalogo.sort(ordem);
-  result.critica.sort(ordem);
-
+  result.critica.sort(ord);
+  result.pedido.sort(ord);
   return result;
 }
 
 // ---- RENDER ----
-function renderOutput(result, catalogSize){
+function renderOutput(result,catalogDisp,catalogTotal){
   lastResult=result;
-  sugestaoMap={};
-  for(const i of result.catalogo)sugestaoMap[i.sku]=i.cx;
+  const total=result.critica.length+result.pedido.length;
 
   const statsArea=document.getElementById("statsArea");
   statsArea.style.display="grid";
   statsArea.innerHTML=[
     {label:"Reposição Crítica",val:result.critica.length,cls:"red"},
-    {label:"No Catálogo",val:result.catalogo.length,cls:"green"},
-    {label:"Fora do Catálogo",val:result.fora.length,cls:"amber"},
-    {label:"SKUs catálogo",val:catalogSize,cls:"blue"},
+    {label:"Pedido Normal",val:result.pedido.length,cls:"green"},
+    {label:"Total do Pedido",val:total,cls:"blue"},
+    {label:"SKUs no catálogo",val:catalogDisp,cls:"amber"},
   ].map(s=>`<div class="stat"><div class="stat-label">${s.label}</div><div class="stat-val ${s.cls}">${s.val}</div></div>`).join("");
 
+  if(!total){
+    document.getElementById("outputArea").innerHTML=`<div class="card" style="text-align:center;padding:2rem"><p style="color:var(--text3);font-size:14px">Nenhum produto do catálogo precisa de reposição no momento.</p></div>`;
+    document.getElementById("outputArea").style.display="block";
+    return;
+  }
+
   let rawText="";
-  let html=`<div class="output-box">
-    <div class="output-header">
-      <span class="output-title">Pedido Sugerido</span>
-      <div class="row">
-        <button class="btn btn-sm btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copiar</button>
-        <button class="btn btn-sm" onclick="switchTab('comparacao')">⇄ Comparar</button>
-      </div>
-    </div>
-    <div style="padding:0.5rem 1.25rem 1.25rem">`;
+  let html=`<div class="output-box"><div class="output-header"><span class="output-title">Pedido de Reposição</span><div class="row"><button class="btn btn-sm btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copiar</button><button class="btn btn-sm" onclick="switchTab('comparacao')">⇄ Comparar</button></div></div><div style="padding:0.75rem 1.25rem 1.25rem">`;
 
-  // SEÇÃO 1 — REPOSIÇÃO CRÍTICA
+  // CRÍTICOS
   if(result.critica.length){
-    rawText+="REPOSICAO CRITICA (Estoque Zerado):\n";
-    html+=`<div style="margin-bottom:1.5rem">
-      <div class="sec-hdr critica">⚠ Reposição Crítica — Estoque Zerado</div>
-      <table class="pedido-table">
-        <thead><tr><th>SKU</th><th style="text-align:right">Reserva</th><th style="text-align:right">Venda 30d</th><th>Classif.</th><th></th></tr></thead>
-        <tbody>`;
+    rawText+="REPOSICAO CRITICA:\n";
+    html+=`<div style="margin-bottom:1.5rem"><div class="sec-hdr critica">⚠ Reposição Crítica — Estoque Zerado</div><table class="pedido-table"><thead><tr><th>SKU</th><th style="text-align:right">Caixas</th><th style="text-align:right">Un/cx</th><th style="text-align:right">Venda 30d</th><th>Classif.</th></tr></thead><tbody>`;
     for(const i of result.critica){
-      rawText+=`${i.sku}\tQtd a definir\n`;
-      html+=`<tr>
-        <td class="sku-col">${i.sku}</td>
-        <td style="text-align:right;color:var(--red);font-size:12px">${i.reserva>0?i.reserva+"d":"—"}</td>
-        <td style="text-align:right;color:var(--text2);font-size:12px">${i.d30}</td>
-        <td class="cat-col"><span class="badge ${i.classif.toUpperCase()==="ESTRELA"||i.classif.toUpperCase()==="PREMIUM"?"b-amber":"b-gray"}">${i.classif||"—"}</span></td>
-        <td><span class="badge b-red">CRÍTICO</span></td>
-      </tr>`;
+      rawText+=`${i.sku}\t${i.cx} cx\t${i.pcsCx} un/cx\n`;
+      html+=`<tr><td class="sku-col">${i.sku}${i.rev?' <span class="badge b-amber">revisar</span>':''}</td><td class="cx-col">${i.cx} cx</td><td class="un-col">${i.pcsCx} un/cx</td><td class="res-col" style="color:var(--red)">${i.d30}</td><td><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td></tr>`;
     }
     html+=`</tbody></table></div>`;
     rawText+="\n";
   }
 
-  // SEÇÃO 2 — NO CATÁLOGO
-  if(result.catalogo.length){
-    rawText+="PEDIDO (disponivel no catalogo):\n";
-    html+=`<div style="margin-bottom:1.5rem">
-      <div class="sec-hdr catalogo">✓ Pedido — Disponível no Catálogo</div>
-      <table class="pedido-table">
-        <thead><tr><th>SKU</th><th style="text-align:right">Caixas</th><th style="text-align:right">Un/cx</th><th style="text-align:right">Reserva</th><th>Classif.</th><th></th></tr></thead>
-        <tbody>`;
-    for(const i of result.catalogo){
-      rawText+=`${i.sku}\t${i.cx} cx\t[${i.pcsCx} un/cx]\n`;
-      const isEstr=["ESTRELA","PREMIUM"].includes(i.classif.toUpperCase());
-      html+=`<tr>
-        <td class="sku-col">${i.sku}${i.rev?' <span class="badge b-amber" style="font-size:10px">revisar</span>':''}</td>
-        <td class="cx-col">${i.cx} cx</td>
-        <td class="un-col">${i.pcsCx} un/cx</td>
-        <td style="text-align:right;font-size:12px;color:${i.reserva<=7?"var(--red)":i.reserva<=14?"var(--amber)":"var(--text3)"}">${i.reserva>0?i.reserva+"d":"—"}</td>
-        <td class="cat-col"><span class="badge ${isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td>
-        <td></td>
-      </tr>`;
+  // PEDIDO NORMAL
+  if(result.pedido.length){
+    rawText+="PEDIDO:\n";
+    html+=`<div><div class="sec-hdr normal">✓ Pedido — Produtos do Catálogo</div><table class="pedido-table"><thead><tr><th>SKU</th><th style="text-align:right">Caixas</th><th style="text-align:right">Un/cx</th><th style="text-align:right">Reserva</th><th>Classif.</th></tr></thead><tbody>`;
+    for(const i of result.pedido){
+      rawText+=`${i.sku}\t${i.cx} cx\t${i.pcsCx} un/cx\n`;
+      const resColor=i.reserva<=7?"var(--red)":i.reserva<=14?"var(--amber)":"var(--text3)";
+      html+=`<tr><td class="sku-col">${i.sku}${i.rev?' <span class="badge b-amber">revisar</span>':''}</td><td class="cx-col">${i.cx} cx</td><td class="un-col">${i.pcsCx} un/cx</td><td class="res-col" style="color:${resColor}">${i.reserva>0?i.reserva+"d":"—"}</td><td><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td></tr>`;
     }
     html+=`</tbody></table></div>`;
-    rawText+="\n";
-  }
-
-  // SEÇÃO 3 — FORA DO CATÁLOGO
-  if(result.fora.length){
-    rawText+="FORA DO CATALOGO (cotacao avulsa):\n";
-    html+=`<hr class="section-divider">
-    <div style="margin-bottom:1rem">
-      <div class="sec-hdr fora">⚡ Fora do Catálogo — Cotação Avulsa</div>
-      <p style="font-size:12px;color:var(--text3);margin-bottom:10px">Estes SKUs precisam de reposição mas não foram encontrados no catálogo enviado.</p>
-      <table class="pedido-table">
-        <thead><tr><th>SKU</th><th style="text-align:right">Qtd est. (cx)</th><th style="text-align:right">Reserva</th><th>Classif.</th></tr></thead>
-        <tbody>`;
-    for(const i of result.fora){
-      const qtd=i.nec==="?"?"?":i.cx||i.nec||"?";
-      rawText+=`${i.sku}\t${qtd} cx\n`;
-      html+=`<tr>
-        <td class="sku-col" style="color:var(--text2)">${i.sku}</td>
-        <td style="text-align:right;font-family:var(--mono);color:var(--amber)">${qtd}</td>
-        <td style="text-align:right;font-size:12px;color:var(--text3)">${i.reserva>0?i.reserva+"d":"—"}</td>
-        <td class="cat-col"><span class="badge b-gray">${i.classif||"—"}</span></td>
-      </tr>`;
-    }
-    html+=`</tbody></table></div>`;
-  }
-
-  if(!result.critica.length&&!result.catalogo.length&&!result.fora.length){
-    html+=`<p style="color:var(--text3);padding:2rem;text-align:center;font-size:14px">Nenhum produto precisa de reposição no momento.</p>`;
   }
 
   html+=`</div></div>`;
-
-  const outputArea=document.getElementById("outputArea");
-  outputArea.innerHTML=html+`<div class="notice">⚠ Verifique manualmente: KITs · Produtos já pedidos / em recebimento · Planilha sem filtros ativos</div>`;
-  outputArea.style.display="block";
+  document.getElementById("outputArea").innerHTML=html+`<div class="notice">⚠ Verifique: KITs · Produtos já pedidos ou em recebimento · Planilha sem filtros ativos</div>`;
+  document.getElementById("outputArea").style.display="block";
   window._rawOutput=rawText.trim();
 }
 
 function copyOutput(){
   if(!window._rawOutput)return;
   navigator.clipboard.writeText(window._rawOutput).then(()=>{
-    const btn=document.getElementById("copyBtn");
-    if(!btn)return;
-    const orig=btn.textContent;
-    btn.textContent="✓ Copiado!";
-    btn.classList.add("ok");
+    const btn=document.getElementById("copyBtn");if(!btn)return;
+    const orig=btn.textContent;btn.textContent="✓ Copiado!";btn.classList.add("ok");
     setTimeout(()=>{btn.textContent=orig;btn.classList.remove("ok");},2500);
   });
 }
@@ -588,21 +460,19 @@ function copyOutput(){
 // ---- DIAGNÓSTICO ----
 async function runDebug(){
   const box=document.getElementById("debugBox");
-  box.style.display="block";
-  box.innerHTML="<p style='color:var(--amber)'>Carregando...</p>";
+  box.style.display="block";box.innerHTML="<p style='color:var(--amber)'>Carregando...</p>";
   try{
     const rows=await fetchSheet("Visão Geral");
     const sample=rows.slice(0,5);
-    if(!sample.length){box.innerHTML="<p style='color:var(--red)'>Sem dados.</p>";return;}
     const maxCols=Math.max(...sample.map(r=>r.length));
-    const highlight=new Set([1,2,5,7,8,11,14,15,18,19,20]);
-    let html="<p style='color:var(--amber);margin-bottom:8px'>Primeiras 5 linhas — verde = colunas usadas pelo sistema:</p><table style='border-collapse:collapse'><tr><th style='padding:3px 8px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>Idx</th>";
+    const hl=new Set([1,2,5,7,8,11,14,15,18,19,20]);
+    let html="<p style='color:var(--amber);margin-bottom:6px'>Primeiras 5 linhas — verde = colunas usadas:</p><table style='border-collapse:collapse'><tr><th style='padding:3px 8px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>Idx</th>";
     for(let i=0;i<sample.length;i++)html+=`<th style='padding:3px 8px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>L${i+2}</th>`;
     html+="</tr>";
     for(let c=0;c<maxCols;c++){
-      const hl=highlight.has(c)?"color:var(--green);font-weight:bold":"";
-      html+=`<tr><td style='${hl};padding:3px 8px;border:1px solid var(--border)'>${c}</td>`;
-      for(const row of sample)html+=`<td style='${hl};padding:3px 8px;border:1px solid var(--border);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>${(row[c]||"").substring(0,28)}</td>`;
+      const s=hl.has(c)?"color:var(--green);font-weight:bold":"";
+      html+=`<tr><td style='${s};padding:3px 8px;border:1px solid var(--border)'>${c}</td>`;
+      for(const row of sample)html+=`<td style='${s};padding:3px 8px;border:1px solid var(--border);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>${(row[c]||"").substring(0,30)}</td>`;
       html+="</tr>";
     }
     box.innerHTML=html+"</table>";
@@ -610,120 +480,72 @@ async function runDebug(){
 }
 
 // ---- COMPARAÇÃO ----
-let pedidoRows=[];
-let rowCounter=0;
-
-function addPedidoRow(sku="",qtd="",sug=""){
-  rowCounter++;
-  pedidoRows.push({id:rowCounter,sku,qtd,sug});
-  renderPedidoTable();
-}
+let pedidoRows=[],rowCounter=0;
+function addPedidoRow(sku="",qtd="",sug=""){rowCounter++;pedidoRows.push({id:rowCounter,sku,qtd,sug});renderPedidoTable();}
 function importSugestao(){
   if(!lastResult){alert("Rode a análise primeiro.");return;}
   pedidoRows=[];rowCounter=0;
-  for(const i of lastResult.catalogo){rowCounter++;pedidoRows.push({id:rowCounter,sku:i.sku,qtd:"",sug:i.cx});}
-  for(const i of lastResult.critica){rowCounter++;pedidoRows.push({id:rowCounter,sku:i.sku,qtd:"",sug:"?"});}
-  renderPedidoTable();
-  document.getElementById("legend").style.display="flex";
+  for(const i of [...lastResult.critica,...lastResult.pedido]){rowCounter++;pedidoRows.push({id:rowCounter,sku:i.sku,qtd:"",sug:i.cx});}
+  renderPedidoTable();document.getElementById("legend").style.display="flex";
 }
 function renderPedidoTable(){
   const tbody=document.getElementById("pedidoBody");
-  if(!pedidoRows.length){
-    tbody.innerHTML=`<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--text3);font-family:var(--sans)">Clique em "+ Adicionar linha" ou "↙ Importar sugestão".</td></tr>`;
-    document.getElementById("compSummary").style.display="none";
-    return;
-  }
+  if(!pedidoRows.length){tbody.innerHTML=`<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--text3)">Clique em "+ Linha" ou "↙ Importar sugestão".</td></tr>`;document.getElementById("compSummary").style.display="none";return;}
   tbody.innerHTML=pedidoRows.map((row,idx)=>{
-    const qtdNum=parseFloat(row.qtd)||0;
-    const sugNum=parseFloat(row.sug)||0;
-    let rowCls="",diff="",diffStyle="";
     const isExtra=row.sug===""||row.sug===undefined;
-    if(isExtra){rowCls="extra";diff="extra";diffStyle="color:var(--purple)";}
+    let rowCls="",diff="",diffStyle="";
+    if(isExtra){rowCls="extra";diff="extra";diffStyle="color:#a78bfa";}
     else if(row.qtd===""||row.sug==="?"){diff="—";diffStyle="color:var(--text3)";}
     else{
-      const d=qtdNum-sugNum;
+      const d=(parseFloat(row.qtd)||0)-(parseFloat(row.sug)||0);
       if(Math.abs(d)<=1){rowCls="match";diff=d===0?"✓":(d>0?`+${d}`:`${d}`);diffStyle="color:var(--green)";}
       else if(d>1){rowCls="over";diff=`+${d}`;diffStyle="color:var(--amber)";}
       else{rowCls="miss";diff=`${d}`;diffStyle="color:var(--red)";}
     }
-    return `<tr class="comp-row ${rowCls}" data-id="${row.id}">
-      <td style="color:var(--text3);font-size:12px">${idx+1}</td>
-      <td class="mono"><input value="${row.sku}" onchange="updateRow(${row.id},'sku',this.value)" placeholder="SKU..."></td>
-      <td><input value="${row.qtd}" onchange="updateRow(${row.id},'qtd',this.value)" placeholder="0" style="width:70px;font-family:var(--mono)"></td>
-      <td class="mono" style="color:var(--text2)">${row.sug!==undefined&&row.sug!==""?row.sug:"—"}</td>
-      <td><span style="${diffStyle}">${diff}</span></td>
-      <td><button class="btn btn-sm" style="padding:2px 8px;font-size:11px;color:var(--red)" onclick="removeRow(${row.id})">✕</button></td>
-    </tr>`;
+    return `<tr class="comp-row ${rowCls}"><td style="color:var(--text3);font-size:12px">${idx+1}</td><td><input value="${row.sku}" onchange="updateRow(${row.id},'sku',this.value)" placeholder="SKU..." style="font-family:var(--mono)"></td><td><input value="${row.qtd}" onchange="updateRow(${row.id},'qtd',this.value)" placeholder="0" style="width:70px;font-family:var(--mono)"></td><td style="font-family:var(--mono);color:var(--text2)">${row.sug||"—"}</td><td><span style="${diffStyle}">${diff}</span></td><td><button class="btn btn-sm" style="padding:2px 8px;font-size:11px;color:var(--red)" onclick="removeRow(${row.id})">✕</button></td></tr>`;
   }).join("");
-  document.getElementById("legend").style.display=pedidoRows.length?"flex":"none";
+  document.getElementById("legend").style.display="flex";
   updateCompSummary();
 }
-function updateRow(id,field,val){
-  const row=pedidoRows.find(r=>r.id===id);
-  if(row){row[field]=val;renderPedidoTable();}
-}
+function updateRow(id,f,v){const r=pedidoRows.find(r=>r.id===id);if(r){r[f]=v;renderPedidoTable();}}
 function removeRow(id){pedidoRows=pedidoRows.filter(r=>r.id!==id);renderPedidoTable();}
-function clearPedido(){pedidoRows=[];rowCounter=0;renderPedidoTable();document.getElementById("compSummary").style.display="none";}
+function clearPedido(){pedidoRows=[];rowCounter=0;renderPedidoTable();}
 function updateCompSummary(){
   if(!pedidoRows.length){document.getElementById("compSummary").style.display="none";return;}
   let match=0,over=0,miss=0,extra=0;
-  for(const row of pedidoRows){
-    if(row.sug===""||row.sug===undefined){extra++;continue;}
-    if(row.qtd===""||row.sug==="?")continue;
-    const d=(parseFloat(row.qtd)||0)-(parseFloat(row.sug)||0);
+  for(const r of pedidoRows){
+    if(r.sug===""||r.sug===undefined){extra++;continue;}
+    if(r.qtd===""||r.sug==="?")continue;
+    const d=(parseFloat(r.qtd)||0)-(parseFloat(r.sug)||0);
     if(Math.abs(d)<=1)match++;else if(d>1)over++;else miss++;
   }
-  const el=document.getElementById("compSummary");
-  el.style.display="block";
-  el.innerHTML=`<div class="card"><div class="section-label">Resumo da comparação</div><div class="stats" style="display:grid">
-    <div class="stat"><div class="stat-label">Dentro do esperado</div><div class="stat-val green">${match}</div></div>
-    <div class="stat"><div class="stat-label">Pediu a mais</div><div class="stat-val amber">${over}</div></div>
-    <div class="stat"><div class="stat-label">Pediu a menos</div><div class="stat-val red">${miss}</div></div>
-    <div class="stat"><div class="stat-label">SKUs extras</div><div class="stat-val purple">${extra}</div></div>
-  </div></div>`;
+  const el=document.getElementById("compSummary");el.style.display="block";
+  el.innerHTML=`<div class="card"><div class="section-label">Resumo</div><div class="stats" style="display:grid"><div class="stat"><div class="stat-label">Ok</div><div class="stat-val green">${match}</div></div><div class="stat"><div class="stat-label">A mais</div><div class="stat-val amber">${over}</div></div><div class="stat"><div class="stat-label">A menos</div><div class="stat-val red">${miss}</div></div><div class="stat"><div class="stat-label">Extras</div><div class="stat-val" style="color:#a78bfa">${extra}</div></div></div></div>`;
 }
 
-// ---- FILES / LOG ----
 function addLog(msg,type=""){
-  const log=document.getElementById("log");
-  log.style.display="block";
-  const d=document.createElement("div");
-  d.className="log-line"+(type?" "+type:"");
-  d.textContent=msg;
-  log.appendChild(d);
-  log.scrollTop=log.scrollHeight;
+  const log=document.getElementById("log");log.style.display="block";
+  const d=document.createElement("div");d.className="log-line"+(type?" "+type:"");d.textContent=msg;
+  log.appendChild(d);log.scrollTop=log.scrollHeight;
 }
 function handleFiles(files){
   pdfFiles=Array.from(files).slice(0,5);
-  const tags=document.getElementById("fileTags");
-  tags.innerHTML="";
-  pdfFiles.forEach(f=>{
-    const t=document.createElement("span");
-    t.className="tag";t.title=f.name;t.textContent=f.name;
-    tags.appendChild(t);
-  });
+  const tags=document.getElementById("fileTags");tags.innerHTML="";
+  pdfFiles.forEach(f=>{const t=document.createElement("span");t.className="tag";t.title=f.name;t.textContent=f.name;tags.appendChild(t);});
 }
 const dz=document.getElementById("dropzone");
 dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("drag");});
 dz.addEventListener("dragleave",()=>dz.classList.remove("drag"));
 dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("drag");handleFiles(e.dataTransfer.files);});
 function clearAll(){
-  pdfFiles=[];lastResult=null;sugestaoMap={};
-  document.getElementById("fileTags").innerHTML="";
-  document.getElementById("pdfInput").value="";
-  document.getElementById("log").innerHTML="";
-  document.getElementById("log").style.display="none";
-  document.getElementById("debugBox").style.display="none";
-  document.getElementById("statsArea").style.display="none";
-  document.getElementById("outputArea").style.display="none";
-  window._rawOutput="";
+  pdfFiles=[];lastResult=null;
+  ["fileTags","log","debugBox","statsArea","outputArea"].forEach(id=>{const el=document.getElementById(id);el.innerHTML="";el.style.display="none";});
+  document.getElementById("pdfInput").value="";window._rawOutput="";
 }
 
-// ---- RUN ----
 async function runAnalysis(){
   const btn=document.getElementById("runBtn");
-  btn.disabled=true;
-  btn.innerHTML=`<span class="spinner"></span> Analisando...`;
+  btn.disabled=true;btn.innerHTML=`<span class="spinner"></span> Analisando...`;
   document.getElementById("log").innerHTML="";
   document.getElementById("statsArea").style.display="none";
   document.getElementById("outputArea").style.display="none";
@@ -734,42 +556,33 @@ async function runAnalysis(){
     addLog(`${fluxo.length} linhas carregadas.`,"ok");
 
     let inativos=[];
-    try{inativos=await fetchSheet("Produtos Inativos");addLog(`${inativos.length} inativos carregados.`);}
+    try{inativos=await fetchSheet("Produtos Inativos");addLog(`${inativos.length} inativos.`);}
     catch{addLog("Aba inativos não encontrada.","warn");}
 
-    let catalog={};
-    let catalogSize=0;
-    if(pdfFiles.length>0){
-      for(const f of pdfFiles){
-        addLog(`Lendo PDF: ${f.name}`);
-        const text=await readPdfText(f);
-        if(!text||text.length<50)addLog(`⚠ ${f.name} pode ser scan — pouco texto extraído.`,"warn");
-        const parsed=extractCatalog(text);
-        const disponiveis=Object.values(parsed).filter(v=>v.disponivel).length;
-        const indisponiveis=Object.values(parsed).filter(v=>!v.disponivel).length;
-        addLog(`${disponiveis} SKUs disponíveis · ${indisponiveis} ignorados (esgotados) em ${f.name}.`,disponiveis<5?"warn":"ok");
-        // Mesclar apenas disponíveis
-        for(const[k,v]of Object.entries(parsed)){
-          if(!(k in catalog))catalog[k]=v;
-        }
-      }
-      catalogSize=Object.values(catalog).filter(v=>v.disponivel).length;
-      addLog(`Catálogo final: ${catalogSize} SKUs disponíveis.`,"ok");
-    } else {
-      addLog("Sem catálogo PDF — análise sem validação de disponibilidade.","warn");
+    if(!pdfFiles.length){addLog("⚠ Nenhum catálogo PDF enviado. Envie o catálogo para gerar o pedido.","warn");btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;return;}
+
+    let catalog=new Map();
+    for(const f of pdfFiles){
+      addLog(`Lendo: ${f.name}`);
+      const text=await readPdfText(f);
+      if(!text||text.length<50){addLog(`⚠ ${f.name} pode ser scan.`,"warn");continue;}
+      const parsed=extractCatalog(text);
+      const disp=[...parsed.values()].filter(v=>v.disponivel).length;
+      const indisp=[...parsed.values()].filter(v=>!v.disponivel).length;
+      addLog(`${disp} disponíveis · ${indisp} esgotados ignorados.`,"ok");
+      for(const[k,v]of parsed)if(!catalog.has(k))catalog.set(k,v);
     }
+    const catalogDisp=[...catalog.values()].filter(v=>v.disponivel).length;
+    addLog(`Catálogo: ${catalogDisp} SKUs disponíveis.`,"ok");
 
-    addLog("Executando análise...");
+    addLog("Cruzando com planilha...");
     const result=analyze(fluxo,inativos,catalog);
-    const total=result.critica.length+result.catalogo.length;
-    addLog(`Concluído: ${total} itens para pedir · ${result.fora.length} fora do catálogo.`,"ok");
-    renderOutput(result,catalogSize);
-  }catch(err){
-    addLog("❌ Erro: "+err.message,"err");
-  }
+    const total=result.critica.length+result.pedido.length;
+    addLog(`${total} itens para pedir (apenas do catálogo).`,"ok");
+    renderOutput(result,catalogDisp,catalog.size);
+  }catch(err){addLog("❌ Erro: "+err.message,"err");}
 
-  btn.disabled=false;
-  btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
+  btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
 }
 
 renderPedidoTable();
