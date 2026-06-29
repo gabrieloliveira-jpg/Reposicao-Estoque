@@ -22,7 +22,7 @@
 }
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;padding:2rem 1rem}
 h1{font-size:22px;font-weight:600;letter-spacing:-0.3px}
-.container{max-width:940px;margin:0 auto}
+.container{max-width:960px;margin:0 auto}
 .header{margin-bottom:1.5rem}
 .header p{margin-top:6px;font-size:14px;color:var(--text3)}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
@@ -40,35 +40,33 @@ h1{font-size:22px;font-weight:600;letter-spacing:-0.3px}
 .log-line.ok{color:var(--green)}
 .log-line.warn{color:var(--amber)}
 .log-line.err{color:var(--red)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1rem}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:default}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:1rem}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .stat-label{font-size:11px;color:var(--text3);margin-bottom:4px}
 .stat-val{font-size:24px;font-weight:600}
 .output-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
 .output-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);gap:8px;flex-wrap:wrap}
-.sec-block{margin-bottom:0}
-.sec-hdr{font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:12px 16px 8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.sec-hdr{font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:10px 16px 6px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);flex-wrap:wrap}
 .sec-hdr.s1{background:rgba(240,84,84,0.07);color:var(--red)}
 .sec-hdr.s2{background:rgba(45,212,160,0.07);color:var(--green)}
 .sec-hdr.s3{background:rgba(245,166,35,0.07);color:var(--amber)}
-.sec-hdr.s4{background:rgba(77,124,254,0.07);color:var(--blue)}
 .sec-hdr.s5{background:rgba(167,139,250,0.07);color:var(--purple)}
 .sec-hdr.s6{background:rgba(34,211,238,0.07);color:var(--teal)}
-.sec-divider{border:none;border-top:1px solid var(--border)}
+.sec-divider{border:none;border-top:2px solid var(--border2);margin:0}
 .pedido-table{width:100%;border-collapse:collapse}
-.pedido-table th{text-align:left;padding:7px 14px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg3)}
-.pedido-table td{padding:7px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
-.pedido-table td.sku-col{font-family:var(--mono);font-size:13px;font-weight:500}
+.pedido-table th{text-align:left;padding:6px 14px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg3)}
+.pedido-table td{padding:7px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;vertical-align:middle}
+.pedido-table td.sku-col{font-family:var(--mono);font-size:13px;font-weight:500;min-width:120px}
 .pedido-table td.cx-col{font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;width:80px}
-.pedido-table td.un-col{font-size:12px;color:var(--text3);text-align:right;width:80px}
-.pedido-table td.res-col{font-size:12px;text-align:right;width:75px}
-.pedido-table td.cls-col{width:100px}
-.pedido-table td.motivo-col{font-size:11px;color:var(--text3);width:180px}
-.pedido-table td.del-col{width:36px;text-align:center}
+.pedido-table td.un-col{font-size:12px;color:var(--text3);text-align:right;width:75px}
+.pedido-table td.res-col{font-size:12px;text-align:right;width:70px}
+.pedido-table td.tend-col{width:90px;text-align:center}
+.pedido-table td.cls-col{width:95px}
+.pedido-table td.del-col{width:32px;text-align:center}
 .pedido-table tr:last-child td{border-bottom:none}
 .pedido-table tr:hover td{background:rgba(255,255,255,0.015)}
 .pedido-table tr.hidden-row{display:none}
-.badge{font-size:11px;padding:2px 8px;border-radius:4px;white-space:nowrap}
+.badge{font-size:11px;padding:2px 7px;border-radius:4px;white-space:nowrap}
 .b-red{background:var(--red2);color:var(--red)}
 .b-amber{background:var(--amber2);color:var(--amber)}
 .b-blue{background:var(--blue3);color:#7ba8ff}
@@ -79,7 +77,7 @@ h1{font-size:22px;font-weight:600;letter-spacing:-0.3px}
 .notice{font-size:12px;color:var(--text3);padding:10px 14px;border:1px solid var(--amber2);background:rgba(245,166,35,0.05);border-radius:8px;margin-bottom:1rem}
 .spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border2);border-top-color:var(--blue);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.file-drop{border:1px dashed var(--border2);border-radius:10px;padding:20px;text-align:center;cursor:pointer;margin-bottom:10px}
+.file-drop{border:1px dashed var(--border2);border-radius:10px;padding:18px;text-align:center;cursor:pointer;margin-bottom:10px}
 .file-drop:hover,.file-drop.drag{border-color:var(--blue);background:rgba(77,124,254,0.04)}
 .file-drop p{font-size:13px;color:var(--text3);margin-top:5px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -90,18 +88,18 @@ input[type=file]{display:none}
 .tab.active{color:var(--blue);border-bottom-color:var(--blue)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
-/* Filtros fornecedor */
-.filter-bar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
-.filter-chip{font-size:12px;padding:4px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--bg4);color:var(--text2);cursor:pointer;transition:all 0.15s}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg3);align-items:center}
+.filter-chip{font-size:12px;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--bg4);color:var(--text2);cursor:pointer}
 .filter-chip:hover{border-color:var(--purple);color:var(--purple)}
 .filter-chip.active{background:var(--purple2);border-color:var(--purple);color:var(--purple)}
 .filter-chip.all.active{background:var(--blue3);border-color:var(--blue);color:#a8c4ff}
-/* Busca */
-.search-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
-.search-input{background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:5px 10px;color:var(--text);font-size:13px;font-family:var(--mono);width:200px;outline:none}
+.search-input{background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:13px;font-family:var(--mono);outline:none;width:160px}
 .search-input:focus{border-color:var(--blue)}
-.search-label{font-size:12px;color:var(--text3)}
-/* Comparação */
+.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:2px 5px;border-radius:4px;line-height:1}
+.del-btn:hover{color:var(--red);background:var(--red2)}
+.forn-pills{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border)}
+.forn-pill{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--purple2);color:var(--purple);border:1px solid var(--purple)}
+.empty-sec{padding:8px 16px;font-size:12px;color:var(--text3);font-style:italic}
 .comp-table{width:100%;border-collapse:collapse;font-size:13px}
 .comp-table th{text-align:left;padding:6px 10px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}
 .comp-table td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.03)}
@@ -111,23 +109,17 @@ input[type=file]{display:none}
 .comp-row.over td{color:var(--amber)}
 .comp-row.miss td{color:var(--red)}
 .comp-row.extra td{color:var(--purple)}
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
 .leg-item{font-size:12px;display:flex;align-items:center;gap:5px;color:var(--text2)}
-.leg-dot{width:9px;height:9px;border-radius:50%}
-.empty-sec{padding:10px 16px;font-size:12px;color:var(--text3);font-style:italic}
-.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 4px;border-radius:4px;line-height:1}
-.del-btn:hover{color:var(--red);background:var(--red2)}
-.forn-summary{padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px}
-.forn-pill{font-size:12px;padding:4px 12px;border-radius:20px;background:var(--purple2);color:var(--purple);border:1px solid var(--purple)}
+.leg-dot{width:8px;height:8px;border-radius:50%}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
     <h1>Reposição de Estoque</h1>
-    <p>Envie o catálogo PDF · O pedido é gerado automaticamente por prioridade</p>
+    <p>Envie o catálogo PDF · Apenas produtos disponíveis no catálogo aparecem no pedido</p>
   </div>
-
   <div class="tabs">
     <button class="tab active" onclick="switchTab('analise')">Análise</button>
     <button class="tab" onclick="switchTab('comparacao')">Comparar Pedido</button>
@@ -137,9 +129,9 @@ input[type=file]{display:none}
     <div class="card">
       <div class="section-label">Catálogo PDF do fornecedor</div>
       <div class="file-drop" id="dropzone" onclick="document.getElementById('pdfInput').click()">
-        <svg width="26" height="26" fill="none" stroke="#5a6080" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+        <svg width="24" height="24" fill="none" stroke="#5a6080" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
         <p>Arraste o PDF aqui ou clique para selecionar</p>
-        <p style="font-size:11px;margin-top:3px">Esgotado / Sem estoque são ignorados automaticamente</p>
+        <p style="font-size:11px;margin-top:3px">Esgotado / Sem estoque / Indisponível são ignorados automaticamente</p>
       </div>
       <input type="file" id="pdfInput" multiple accept=".pdf" onchange="handleFiles(this.files)">
       <div class="tags" id="fileTags"></div>
@@ -187,15 +179,38 @@ input[type=file]{display:none}
 
 <script>
 const SHEET_ID = "1404SCPiabg6abXRphpHqGXQ0frRkIlUptDV9m8a-x3w";
-let pdfFiles=[], lastResult=null;
-// SKUs removidos manualmente pelo usuário
-let removedSkus=new Set();
-// Filtro ativo na seção S5
-let s5Filter="all";
+let pdfFiles=[], lastResult=null, removedSkus=new Set(), s5Filter="all";
 
 const COL={fornecedor:1,sku:2,estoque:5,d7:7,d30:8,d12m:11,reserva:14,inativo:15,classif:18,fat:19,lucro:20};
-const SEM_ESTOQUE_WORDS=["ESGOTADO","SEM EMBALAGEM","FORA DA EMBALAGEM","INDISPONIVEL","INDISPONÍVEL","EM FALTA","SEM ESTOQUE","FORA DE LINHA","DESCONTINUADO","TEMPORARIAMENTE INDISPONIVEL","PRODUTO INATIVO"];
-const LANCAMENTO_WORDS=["LANÇAMENTO","LANCAMENTO","NOVO","NEW","NOVIDADE","NEW PRODUCT","NOVO PRODUTO"];
+
+// Palavras que indicam produto sem estoque no catálogo — lista abrangente
+const SEM_ESTOQUE_WORDS=[
+  "ESGOTADO","SEM EMBALAGEM","FORA DA EMBALAGEM","INDISPONIVEL","INDISPONÍVEL",
+  "EM FALTA","SEM ESTOQUE","FORA DE LINHA","DESCONTINUADO","INATIVO","PRODUTO INATIVO",
+  "TEMPORARIAMENTE INDISPONIVEL","TEMPORARIAMENTE INDISPONÍVEL","FORA DE ESTOQUE",
+  "AGUARDANDO","PREVISAO","PREVISÃO","SOB ENCOMENDA","CONSULTE","SEM PREVISAO",
+  "NAO DISPONIVEL","NÃO DISPONÍVEL","INDISPONIVEL","OUT OF STOCK","UNAVAILABLE"
+];
+
+// Detecta se bloco contém indicação visual de "apagado/riscado"
+// PDFs com texto riscado às vezes exportam com caracteres especiais ou espaçamento diferente
+function contemSemEstoque(texto){
+  const up=texto.toUpperCase();
+  // Verificar palavras diretas
+  if(SEM_ESTOQUE_WORDS.some(w=>up.includes(w)))return true;
+  // Detectar padrão de texto riscado: letras com espaço entre cada caractere (S K U)
+  // alguns PDFs exportam texto tachado assim
+  if(/\b([A-Z]\s){4,}/.test(up))return true;
+  return false;
+}
+
+// Normalização de SKU
+function ns(s){return String(s||"").trim().toUpperCase();}
+function normStrip(s){return s.replace(/[\s\/\.\-]/g,"").toUpperCase();}
+function pn(v){
+  const s=String(v||0).replace(/\./g,"").replace(",",".").replace(/[^\d.-]/g,"");
+  const n=parseFloat(s);return isNaN(n)?0:n;
+}
 
 function switchTab(name){
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['analise','comparacao'][i]===name));
@@ -203,7 +218,6 @@ function switchTab(name){
   if(name==='comparacao')renderPedidoTable();
 }
 
-// Fetch com parâmetro que ignora filtros da planilha
 async function fetchSheet(aba){
   const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(aba)}&headers=1`;
   const r=await fetch(url);
@@ -224,13 +238,8 @@ function parseCSV(text){
   }
   return rows.slice(1);
 }
-function pn(v){
-  const s=String(v||0).replace(/\./g,"").replace(",",".").replace(/[^\d.-]/g,"");
-  const n=parseFloat(s);return isNaN(n)?0:n;
-}
-function ns(s){return String(s||"").trim().toUpperCase();}
-function normStrip(s){return s.replace(/[\s\/\.\-]/g,"").toUpperCase();}
 
+// MAPEAMENTO KNUP
 function knupMap(sku){
   let s=sku;
   if(/^G-[HBA]/i.test(s)&&!/G-GT|G-RX|G-VR/i.test(s))s=s.replace(/^G-/,"KP-");
@@ -238,15 +247,20 @@ function knupMap(sku){
   return s;
 }
 
+// MATCH SKU — conservador, sem fuzzy genérico
 function matchSku(skuPlanilha,catalogKeys){
   const norm=ns(skuPlanilha);
   if(catalogKeys.has(norm))return norm;
+  // KNUP mapping
   const kn=ns(knupMap(norm));
   if(kn!==norm&&catalogKeys.has(kn))return kn;
+  // Barras → hífen
   const wd=norm.replace(/\//g,"-");
   if(wd!==norm&&catalogKeys.has(wd))return wd;
+  // Sem separadores (só se >= 5 chars para evitar falsos positivos)
   const sn=normStrip(norm);
   if(sn.length>=5){for(const k of catalogKeys){if(normStrip(k)===sn)return k;}}
+  // Remove prefixo do fornecedor
   if(norm.includes("-")){
     const sp=norm.slice(norm.indexOf("-")+1);
     if(sp.length>=4){
@@ -255,6 +269,7 @@ function matchSku(skuPlanilha,catalogKeys){
       if(snSp.length>=5){for(const k of catalogKeys){if(normStrip(k)===snSp)return k;}}
     }
   }
+  // Sufixo do KNUP mapeado
   if(kn.includes("-")){
     const ks=kn.slice(kn.indexOf("-")+1);
     if(ks.length>=4&&catalogKeys.has(ks))return ks;
@@ -262,6 +277,7 @@ function matchSku(skuPlanilha,catalogKeys){
   return null;
 }
 
+// PDF
 async function readPdfText(file){
   return new Promise(resolve=>{
     const fr=new FileReader();
@@ -273,7 +289,14 @@ async function readPdfText(file){
         for(let p=1;p<=pdf.numPages;p++){
           const page=await pdf.getPage(p);
           const c=await page.getTextContent();
-          text+=c.items.map(i=>i.str).join(" ")+"\n";
+          // Preservar informação de fonte/estilo para detectar texto riscado
+          const items=c.items;
+          for(const item of items){
+            // Se o item tem transform muito pequeno ou cor diferente pode ser riscado
+            // Capturar o texto normal
+            text+=item.str+" ";
+          }
+          text+="\n";
         }
         resolve(text);
       }catch{resolve("");}
@@ -282,75 +305,86 @@ async function readPdfText(file){
   });
 }
 
+// EXTRAÇÃO DO CATÁLOGO — robusto para qualquer formato
 function extractCatalog(text){
-  const catalog=new Map();
+  const catalog=new Map(); // SKU -> {pcsCx, disponivel, lancamento}
   const lines=text.split(/\r?\n/);
+  // SKU: começa com letra, tem letras+números+hífens, mínimo 4 chars
   const skuRe=/\b([A-Z][A-Z0-9\-\/]{3,}[A-Z0-9])\b/g;
-  const pcsRe=/(?:PCS\/CX|UN\/CX|UNIT\/BOX|QTD\s*CX|EMBALAGEM)[:\s]*(\d+)|CX\s*C\/\s*(\d+)/;
-  const pcsRe2=/\b([2-9][0-9]?|1[0-9]{2})\b(?!\s*%)/;
+  // PCS/CX explícito
+  const pcsRe=/(?:PCS\/CX|UN\/CX|UNIT\/BOX|QTD\s*CX|EMBALAGEM|CX\s*C\/)[:\s]*(\d+)|CX\s*C\/\s*(\d+)/i;
+  // PCS/CX implícito — número isolado razoável (2-200)
+  const pcsRe2=/\b([2-9][0-9]?|1[0-9]{2})\b(?!\s*[%RrDd])/;
+  // Palavras de lançamento
+  const lancWords=["LANÇAMENTO","LANCAMENTO","NOVIDADE","NOVO PRODUTO","NEW PRODUCT","NOVO"];
+
   for(let i=0;i<lines.length;i++){
-    const lineUp=lines[i].toUpperCase();
-    const win=lines.slice(Math.max(0,i-2),Math.min(lines.length,i+6)).join(" ").toUpperCase();
-    const semEstoque=SEM_ESTOQUE_WORDS.some(w=>win.includes(w));
-    const lancamento=LANCAMENTO_WORDS.some(w=>win.includes(w));
+    const lineRaw=lines[i];
+    const lineUp=lineRaw.toUpperCase();
+
+    // Janela de contexto: 3 linhas antes e 5 depois
+    const winBefore=lines.slice(Math.max(0,i-3),i+1).join(" ").toUpperCase();
+    const winAfter=lines.slice(i,Math.min(lines.length,i+6)).join(" ").toUpperCase();
+    const winFull=winBefore+" "+winAfter;
+
+    // Verificar sem estoque na janela
+    const semEstoque=contemSemEstoque(winFull);
+    const lancamento=lancWords.some(w=>winFull.includes(w));
+
     const matches=[...lineUp.matchAll(skuRe)];
     for(const m of matches){
       const sku=ns(m[1]);
       if(catalog.has(sku))continue;
+      // Ignorar tokens claramente não-SKU
       if(/^\d+$/.test(sku)||sku.length<4)continue;
-      if(semEstoque){catalog.set(sku,{pcsCx:1,disponivel:false,lancamento:false});continue;}
-      const winFull=lines.slice(i,Math.min(i+15,lines.length)).join("\n").toUpperCase();
+      // Ignorar palavras comuns que não são SKU
+      if(["HTTP","HTTPS","CNPJ","FONE","FGTS","LTDA","EMAIL"].includes(sku))continue;
+
+      if(semEstoque){
+        catalog.set(sku,{pcsCx:1,disponivel:false,lancamento:false});
+        continue;
+      }
+
+      // Buscar PCS/CX em janela de 15 linhas à frente
+      const winPcs=lines.slice(i,Math.min(i+15,lines.length)).join("\n").toUpperCase();
       let pcsCx=1;
-      const m1=winFull.match(pcsRe);
-      if(m1){const v=parseInt(m1[1]||m1[2]||"0");if(v>0&&v<=500)pcsCx=v;}
-      else{const m2=winFull.match(pcsRe2);if(m2){const v=parseInt(m2[1]||"0");if(v>1&&v<=200)pcsCx=v;}}
+      const m1=winPcs.match(pcsRe);
+      if(m1){
+        const v=parseInt(m1[1]||m1[2]||"0");
+        if(v>0&&v<=500)pcsCx=v;
+      } else {
+        const m2=winPcs.match(pcsRe2);
+        if(m2){const v=parseInt(m2[1]||"0");if(v>1&&v<=200)pcsCx=v;}
+      }
       catalog.set(sku,{pcsCx,disponivel:true,lancamento});
     }
   }
   return catalog;
 }
 
-// Reserva mínima por classificação
+// RESERVA MÍNIMA POR CLASSIFICAÇÃO
 function reservaMinima(classif){
   const cu=(classif||"").toUpperCase();
   if(cu==="ESTRELA"||cu==="PREMIUM")return 15;
-  return 7; // Volume, Potencial, Análise, Outros
+  return 7;
 }
 
-// Tendência de venda: compara velocidade d7 vs d30
-// crescimento = d7/7 > d30/30 → usar vel d7 (mais agressivo)
-// queda = d7/7 < d30/30 → usar vel d30 (conservador)
+// TENDÊNCIA: compara velocidade d7 vs d30
 function velTendencia(s){
   const v30=s.d30>0?s.d30/30:0;
   const v7=s.d7>0?s.d7/7:0;
-  if(v7===0&&v30===0)return{vel:0,tendencia:"neutro"};
-  if(v30===0)return{vel:v7,tendencia:"crescimento"};
-  if(v7===0)return{vel:v30,tendencia:"queda"};
+  if(v7===0&&v30===0)return{vel:0,tendencia:"neutro",icone:"—"};
+  if(v30===0)return{vel:v7,tendencia:"crescimento",icone:"↑"};
+  if(v7===0)return{vel:v30,tendencia:"queda",icone:"↓"};
   const ratio=v7/v30;
-  if(ratio>=1.15)return{vel:v7,tendencia:"crescimento"};     // cresce: usa d7
-  if(ratio<=0.85)return{vel:v30,tendencia:"queda"};           // cai: usa d30 (conservador)
-  return{vel:(v7+v30)/2,tendencia:"neutro"};                  // estável: média
+  // Crescimento significativo: d7 proporcional > d30 em 15%+
+  if(ratio>=1.15)return{vel:v7,tendencia:"crescimento",icone:"↑"};
+  // Queda significativa
+  if(ratio<=0.85)return{vel:v30,tendencia:"queda",icone:"↓"};
+  return{vel:(v7+v30)/2,tendencia:"neutro",icone:"→"};
 }
 
-function calcCx(s,pcsCx){
-  const{vel,tendencia}=velTendencia(s);
-  if(vel===0)return 1;
-  const reservaMin=reservaMinima(s.classif);
-  // Meta = reserva mínima + buffer de 7 dias para chegada
-  // Ex: Estrela meta = 15+7 = 22 dias; Outros meta = 7+7 = 14 dias
-  const metaDias=reservaMin+7;
-  let nec=0;
-  if(s.reserva>0){
-    nec=(metaDias-s.reserva)*vel;
-  } else if(s.estoque===0){
-    nec=metaDias*vel;
-  } else {
-    nec=metaDias*vel-s.estoque;
-  }
-  if(nec<=0)nec=pcsCx;
-  return Math.max(1,Math.ceil(nec/pcsCx));
-}
-
+// DIAS DE ESTOQUE — usando velocidade com tendência
 function diasEstoque(s){
   const{vel}=velTendencia(s);
   if(vel===0)return 999;
@@ -358,249 +392,281 @@ function diasEstoque(s){
   return s.estoque/vel;
 }
 
-function motivoTexto(s,dias){
-  const{tendencia}=velTendencia(s);
+// CALCULAR CAIXAS
+function calcCx(s,pcsCx){
+  const{vel}=velTendencia(s);
+  if(vel===0)return 1;
   const reservaMin=reservaMinima(s.classif);
-  const tendStr=tendencia==="crescimento"?"↑ crescendo":tendencia==="queda"?"↓ caindo":"→ estável";
-  if(s.estoque===0)return`Zerado · ${s.d30} vnd/30d · ${tendStr}`;
-  if(dias<=reservaMin)return`Abaixo do mín (${reservaMin}d) · ${tendStr}`;
-  if(dias<=reservaMin+7)return`Reserva baixa · ${Math.round(dias)}d · ${tendStr}`;
-  return`${Math.round(dias)}d · ${tendStr}`;
+  // Meta = reserva mínima + 7 dias de chegada
+  const metaDias=reservaMin+7;
+  let nec=0;
+  if(s.reserva>0) nec=(metaDias-s.reserva)*vel;
+  else if(s.estoque===0) nec=metaDias*vel;
+  else nec=metaDias*vel-s.estoque;
+  if(nec<=0)nec=pcsCx;
+  return Math.max(1,Math.ceil(nec/pcsCx));
 }
 
+// PRECISA REPOR — leva em conta tendência
+function precisaRepor(s){
+  const{vel,tendencia}=velTendencia(s);
+  const reservaMin=reservaMinima(s.classif);
+  const limiteRepor=reservaMin+7; // gatilho padrão
+
+  // Estoque zerado com venda
+  if(s.estoque===0&&(s.d30>0||s.d7>0))return true;
+
+  const dias=diasEstoque(s);
+
+  // Crescimento acelerado: antecipar reposição mesmo com reserva maior
+  // Se está crescendo, usar limite mais alto (+5 dias de folga)
+  const limiteEfetivo=tendencia==="crescimento"?(limiteRepor+5):limiteRepor;
+
+  if(s.reserva>0)return s.reserva<=limiteEfetivo;
+  return dias<=limiteEfetivo;
+}
+
+// ANÁLISE PRINCIPAL
 function analyze(fluxo,inativos,catalog){
   const inSet=new Set(inativos.map(r=>ns(r[0]||r[1]||"")));
   const catalogKeys=new Set(catalog.keys());
   const skuSetPlanilha=new Set();
-  const result={s1:[],s2:[],s3:[],s4:[],s5:[],s6:[]};
+  const result={s1:[],s2:[],s3:[],s5:[],s6:[]};
 
   const skus=fluxo.map(r=>({
-    sku:ns(r[COL.sku]),fornecedor:String(r[COL.fornecedor]||"").trim(),
-    estoque:pn(r[COL.estoque]),d7:pn(r[COL.d7]),d30:pn(r[COL.d30]),
-    d12m:pn(r[COL.d12m]),reserva:pn(r[COL.reserva]),
+    sku:ns(r[COL.sku]),
+    fornecedor:String(r[COL.fornecedor]||"").trim(),
+    estoque:pn(r[COL.estoque]),
+    d7:pn(r[COL.d7]),
+    d30:pn(r[COL.d30]),
+    d12m:pn(r[COL.d12m]),
+    reserva:pn(r[COL.reserva]),
     inativo:String(r[COL.inativo]||"").trim().toUpperCase(),
-    classif:String(r[COL.classif]||"").trim(),fat:pn(r[COL.fat]),lucro:pn(r[COL.lucro]),
+    classif:String(r[COL.classif]||"").trim(),
+    fat:pn(r[COL.fat]),
+    lucro:pn(r[COL.lucro]),
   })).filter(s=>
-    s.sku&&!s.sku.startsWith("KIT")&&
+    s.sku&&
+    !s.sku.startsWith("KIT")&&
     !inSet.has(s.sku)&&
     s.inativo!=="SIM"&&s.inativo!=="1"&&s.inativo!=="TRUE"&&
-    s.d12m>0
+    s.d12m>0  // sem saída em 12 meses = ignora
   );
 
   for(const s of skus){
     skuSetPlanilha.add(s.sku);
+
+    // Margem — se < 15% ignora
     if(s.fat>0&&s.lucro/s.fat<0.15)continue;
     const rev=s.fat>0&&s.lucro/s.fat<0.20;
-    const matchKey=matchSku(s.sku,catalogKeys);
-    const catEntry=matchKey?catalog.get(matchKey):null;
-    const inCat=catEntry&&catEntry.disponivel;
-    const pcsCx=inCat?catEntry.pcsCx:1;
+
+    const{tendencia,icone}=velTendencia(s);
     const dias=diasEstoque(s);
     const cu=s.classif.toUpperCase();
     const isEstr=cu==="ESTRELA"||cu==="PREMIUM";
-    const cx=calcCx(s,pcsCx);
-    const motivo=motivoTexto(s,dias);
-
     const reservaMin=reservaMinima(s.classif);
-    const limiteRepor=reservaMin+7;
 
-    if(inCat){
-      if(s.estoque===0&&(s.d30>0||s.d7>0)){
-        result.s1.push({...s,cx,pcsCx,rev,isEstr,dias,motivo});
-      } else if(dias<=limiteRepor){
-        result.s2.push({...s,cx,pcsCx,rev,isEstr,dias,motivo});
-      } else if(dias<=(limiteRepor*2)){
-        result.s3.push({...s,cx,pcsCx,rev,isEstr,dias,motivo});
-      } else {
-        result.s4.push({...s,cx:1,pcsCx,rev,isEstr,dias,motivo});
+    // Verificar se está no catálogo e disponível
+    const matchKey=matchSku(s.sku,catalogKeys);
+    const catEntry=matchKey?catalog.get(matchKey):null;
+
+    // REGRA PRINCIPAL: só incluir se está no catálogo E disponível
+    if(!catEntry||!catEntry.disponivel){
+      // Fora do catálogo mas precisa repor → S5
+      if(precisaRepor(s)){
+        const cx=calcCx(s,1);
+        result.s5.push({...s,cx,pcsCx:1,rev,isEstr,dias,tendencia,icone});
       }
-    } else {
-      if(s.estoque===0||(dias<=limiteRepor&&(s.d30>0||s.d7>0))){
-        result.s5.push({...s,cx,pcsCx:1,rev,isEstr,dias,motivo});
-      }
+      continue;
     }
+
+    // Está no catálogo e disponível
+    const pcsCx=catEntry.pcsCx||1;
+    const cx=calcCx(s,pcsCx);
+
+    // S1 — Estoque zerado com venda
+    if(s.estoque===0&&(s.d30>0||s.d7>0)){
+      result.s1.push({...s,cx,pcsCx,rev,isEstr,dias,tendencia,icone});
+      continue;
+    }
+
+    // S2 — Precisa repor (dentro do limiar)
+    if(precisaRepor(s)){
+      result.s2.push({...s,cx,pcsCx,rev,isEstr,dias,tendencia,icone});
+      continue;
+    }
+
+    // S3 — Atenção: reserva até 2x o limite (produto com estoque mas vale monitorar)
+    const limiteRepor=reservaMin+7;
+    if(dias<=(limiteRepor*2)){
+      result.s3.push({...s,cx,pcsCx,rev,isEstr,dias,tendencia,icone});
+    }
+    // Se reserva OK e crescendo muito, também inclui no S3
+    else if(tendencia==="crescimento"&&dias<=(limiteRepor*3)){
+      result.s3.push({...s,cx,pcsCx,rev,isEstr,dias,tendencia,icone});
+    }
+    // Caso contrário: produto OK, não inclui (deixa limpo)
   }
 
-  // S6 lançamentos
+  // S6 — Lançamentos: no catálogo disponível, não tem na planilha
   for(const[sku,entry]of catalog){
     if(!entry.disponivel)continue;
     if(skuSetPlanilha.has(sku))continue;
     let jatem=false;
-    for(const ps of skuSetPlanilha){if(matchSku(ps,new Set([sku]))===sku){jatem=true;break;}}
+    for(const ps of skuSetPlanilha){
+      if(matchSku(ps,new Set([sku]))===sku){jatem=true;break;}
+    }
     if(!jatem)result.s6.push({sku,pcsCx:entry.pcsCx,lancamento:entry.lancamento});
   }
 
+  // Ordenar: Estrela primeiro, menor reserva primeiro
   const ord=(a,b)=>{
     if((a.isEstr||false)!==(b.isEstr||false))return a.isEstr?-1:1;
     return(a.dias||999)-(b.dias||999);
   };
-  [result.s1,result.s2,result.s3,result.s4,result.s5].forEach(a=>a.sort(ord));
+  [result.s1,result.s2,result.s3,result.s5].forEach(a=>a.sort(ord));
   return result;
 }
 
-// RENDER SEÇÃO GENÉRICA
-function renderSec(items,title,cls,showCx,showMotivo,showDel,extraHeader){
-  const count=items.filter(i=>!removedSkus.has(i.sku||i.sku)).length;
-  let html=`<div class="sec-block"><div class="sec-hdr ${cls}">${title} <span style="opacity:0.6;font-size:10px;font-weight:400">${count} item${count!==1?"s":""}</span>${extraHeader||""}</div>`;
-  if(!items.length){html+=`<div class="empty-sec">Nenhum item.</div>`;html+=`</div><hr class="sec-divider">`;return html;}
+// RENDER
+function tendBadge(tendencia,icone){
+  if(tendencia==="crescimento")return`<span class="badge b-green">${icone} Sobe</span>`;
+  if(tendencia==="queda")return`<span class="badge b-red">${icone} Cai</span>`;
+  return`<span class="badge b-gray">${icone} Estável</span>`;
+}
 
+function renderSec(items,title,cls,showCx,showTend,showForn,showDel){
+  const visibles=items.filter(i=>!removedSkus.has(i.sku||i.sku));
+  let html=`<div><div class="sec-hdr ${cls}">${title} <span style="opacity:0.55;font-size:10px;font-weight:400">${visibles.length} item${visibles.length!==1?"s":""}</span></div>`;
+  if(!visibles.length){html+=`<div class="empty-sec">Nenhum item.</div></div><hr class="sec-divider">`;return html;}
   html+=`<table class="pedido-table"><thead><tr><th>SKU</th>`;
   if(showCx)html+=`<th style="text-align:right">Caixas</th><th style="text-align:right">Un/cx</th>`;
-  html+=`<th style="text-align:right">Reserva</th><th>Classif.</th>`;
-  if(showMotivo)html+=`<th>Motivo</th>`;
+  html+=`<th style="text-align:right">Reserva</th>`;
+  if(showTend)html+=`<th style="text-align:center">Tendência</th>`;
+  if(showForn)html+=`<th>Fornecedor</th>`;
+  html+=`<th>Classif.</th>`;
   if(showDel)html+=`<th></th>`;
   html+=`</tr></thead><tbody>`;
 
   for(const i of items){
-    const sku=i.sku||i.sku;
-    const hidden=removedSkus.has(sku)?"hidden-row":"";
+    const sku=i.sku;
+    if(removedSkus.has(sku))continue;
     const dias=i.dias||999;
-    const resColor=dias<=7?"var(--red)":dias<=14?"var(--amber)":dias<=30?"var(--green)":"var(--text3)";
-    const diasStr=dias===999?"—":(Math.round(dias)+"d");
-    const cxColor=cls==="s1"?"var(--red)":cls==="s2"?"var(--green)":cls==="s3"?"var(--amber)":"var(--text2)";
-    html+=`<tr class="${hidden}" data-sku="${sku}">`;
+    const resColor=dias<=7?"var(--red)":dias<=14?"var(--amber)":dias<=22?"var(--green)":"var(--text3)";
+    const diasStr=dias>=999?"—":(Math.round(dias)+"d");
+    const cxColor=cls==="s1"?"var(--red)":cls==="s2"?"var(--green)":cls==="s3"?"var(--amber)":"var(--purple)";
+    html+=`<tr data-sku="${sku}">`;
     html+=`<td class="sku-col">${sku}${i.rev?' <span class="badge b-amber" style="font-size:10px">revisar</span>':''}</td>`;
     if(showCx)html+=`<td class="cx-col" style="color:${cxColor}">${i.cx||1} cx</td><td class="un-col">${i.pcsCx||1} un/cx</td>`;
     html+=`<td class="res-col" style="color:${resColor}">${diasStr}</td>`;
-    if(i.classif!==undefined)html+=`<td class="cls-col"><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td>`;
-    else if(i.lancamento!==undefined)html+=`<td class="cls-col">${i.lancamento?'<span class="badge b-teal">Lançamento</span>':'<span class="badge b-gray">Catálogo</span>'}</td>`;
-    else html+=`<td></td>`;
-    if(showMotivo)html+=`<td class="motivo-col">${i.motivo||""}</td>`;
-    if(showDel)html+=`<td class="del-col"><button class="del-btn" onclick="removeSkuFromResult('${sku}')" title="Remover do pedido">✕</button></td>`;
+    if(showTend)html+=`<td class="tend-col">${tendBadge(i.tendencia,i.icone)}</td>`;
+    if(showForn)html+=`<td style="font-size:12px;color:var(--text2)">${i.fornecedor||"—"}</td>`;
+    html+=`<td class="cls-col"><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td>`;
+    if(showDel)html+=`<td class="del-col"><button class="del-btn" onclick="removeSku('${sku}')" title="Remover">✕</button></td>`;
     html+=`</tr>`;
   }
   html+=`</tbody></table></div><hr class="sec-divider">`;
   return html;
 }
 
-// Seção S5 com filtro por fornecedor
 function renderS5(items){
-  if(!items.length)return`<div class="sec-block"><div class="sec-hdr s5">⚡ Precisa Repor — Fora do Catálogo <span style="opacity:0.6;font-size:10px;font-weight:400">0 itens</span></div><div class="empty-sec">Nenhum item.</div></div><hr class="sec-divider">`;
-
-  // Fornecedores únicos
-  const fornecedores=[...new Set(items.map(i=>i.fornecedor||"Sem fornecedor").filter(Boolean))].sort();
+  const fornecedores=[...new Set(items.map(i=>i.fornecedor||"Sem fornecedor"))].sort();
   const filtered=s5Filter==="all"?items:items.filter(i=>(i.fornecedor||"Sem fornecedor")===s5Filter);
-  const count=filtered.filter(i=>!removedSkus.has(i.sku)).length;
+  const visibles=filtered.filter(i=>!removedSkus.has(i.sku));
+
+  let html=`<div><div class="sec-hdr s5">⚡ Precisa Repor — Fora do Catálogo <span style="opacity:0.55;font-size:10px;font-weight:400">${visibles.length} item${visibles.length!==1?"s":""}</span></div>`;
+  if(!items.length){html+=`<div class="empty-sec">Nenhum item.</div></div><hr class="sec-divider">`;return html;}
 
   // Resumo por fornecedor
-  const fornSummary=fornecedores.map(f=>{
-    const n=items.filter(i=>(i.fornecedor||"Sem fornecedor")===f).length;
-    return`<span class="forn-pill">${f} (${n})</span>`;
-  }).join("");
+  html+=`<div class="forn-pills">${fornecedores.map(f=>{const n=items.filter(i=>(i.fornecedor||"Sem fornecedor")===f).length;return`<span class="forn-pill">${f} (${n})</span>`;}).join("")}</div>`;
+  html+=`<div class="filter-bar"><span style="font-size:12px;color:var(--text3)">Filtrar:</span>
+    <span class="filter-chip all ${s5Filter==="all"?"active":""}" onclick="setS5Filter('all')">Todos</span>
+    ${fornecedores.map(f=>`<span class="filter-chip ${s5Filter===f?"active":""}" onclick="setS5Filter('${f.replace(/'/g,"\\'")}')">${f}</span>`).join("")}
+  </div>`;
 
-  let html=`<div class="sec-block">
-    <div class="sec-hdr s5">⚡ Precisa Repor — Fora do Catálogo <span style="opacity:0.6;font-size:10px;font-weight:400">${count} item${count!==1?"s":""}</span></div>
-    <div class="forn-summary">${fornSummary}</div>
-    <div class="filter-bar">
-      <span class="search-label">Filtrar fornecedor:</span>
-      <span class="filter-chip all ${s5Filter==="all"?"active":""}" onclick="setS5Filter('all')">Todos</span>
-      ${fornecedores.map(f=>`<span class="filter-chip ${s5Filter===f?"active":""}" onclick="setS5Filter('${f.replace(/'/g,"\\'")}')">${f}</span>`).join("")}
-    </div>
-    <table class="pedido-table"><thead><tr><th>SKU</th><th>Fornecedor</th><th style="text-align:right">Qtd est.</th><th style="text-align:right">Reserva</th><th>Classif.</th><th>Motivo</th><th></th></tr></thead><tbody>`;
-
+  html+=`<table class="pedido-table"><thead><tr><th>SKU</th><th style="text-align:right">Qtd est.</th><th style="text-align:right">Reserva</th><th style="text-align:center">Tendência</th><th>Fornecedor</th><th>Classif.</th><th></th></tr></thead><tbody>`;
   for(const i of filtered){
-    const hidden=removedSkus.has(i.sku)?"hidden-row":"";
+    if(removedSkus.has(i.sku))continue;
     const dias=i.dias||999;
     const resColor=dias<=7?"var(--red)":dias<=14?"var(--amber)":"var(--text3)";
-    const diasStr=dias===999?"—":(Math.round(dias)+"d");
-    html+=`<tr class="${hidden}" data-sku="${i.sku}">
+    const diasStr=dias>=999?"—":(Math.round(dias)+"d");
+    html+=`<tr data-sku="${i.sku}">
       <td class="sku-col">${i.sku}${i.rev?' <span class="badge b-amber" style="font-size:10px">revisar</span>':''}</td>
-      <td style="font-size:12px;color:var(--text2)">${i.fornecedor||"—"}</td>
       <td class="cx-col" style="color:var(--purple)">${i.cx||"?"} cx</td>
       <td class="res-col" style="color:${resColor}">${diasStr}</td>
+      <td class="tend-col">${tendBadge(i.tendencia,i.icone)}</td>
+      <td style="font-size:12px;color:var(--text2)">${i.fornecedor||"—"}</td>
       <td class="cls-col"><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td>
-      <td class="motivo-col">${i.motivo||""}</td>
-      <td class="del-col"><button class="del-btn" onclick="removeSkuFromResult('${i.sku}')" title="Remover">✕</button></td>
+      <td class="del-col"><button class="del-btn" onclick="removeSku('${i.sku}')" title="Remover">✕</button></td>
     </tr>`;
   }
   html+=`</tbody></table></div><hr class="sec-divider">`;
   return html;
 }
 
-function setS5Filter(f){
-  s5Filter=f;
-  reRenderOutput();
-}
-
-function removeSkuFromResult(sku){
-  removedSkus.add(sku);
-  reRenderOutput();
-}
-
-function reRenderOutput(){
-  if(!lastResult)return;
-  renderOutput(lastResult,true);
-}
+function removeSku(sku){removedSkus.add(sku);reRender();}
+function setS5Filter(f){s5Filter=f;reRender();}
+function reRender(){if(lastResult)renderOutput(lastResult,true);}
 
 function renderOutput(result,isRerender){
   if(!isRerender){lastResult=result;removedSkus=new Set();s5Filter="all";}
 
-  const statsArea=document.getElementById("statsArea");
   if(!isRerender){
-    statsArea.style.display="grid";
-    statsArea.innerHTML=[
-      {label:"⚠ Crítico",val:result.s1.length,color:"var(--red)"},
-      {label:"✓ Repor",val:result.s2.length,color:"var(--green)"},
-      {label:"~ Atenção",val:result.s3.length,color:"var(--amber)"},
-      {label:"OK catálogo",val:result.s4.length,color:"var(--blue)"},
-      {label:"Sem catálogo",val:result.s5.length,color:"var(--purple)"},
-      {label:"Lançamentos",val:result.s6.length,color:"var(--teal)"},
-    ].map(s=>`<div class="stat"><div class="stat-label">${s.label}</div><div class="stat-val" style="color:${s.color}">${s.val}</div></div>`).join("");
+    const sa=document.getElementById("statsArea");
+    sa.style.display="grid";
+    sa.innerHTML=[
+      {label:"⚠ Crítico",val:result.s1.length,c:"var(--red)"},
+      {label:"✓ Repor",val:result.s2.length,c:"var(--green)"},
+      {label:"~ Atenção",val:result.s3.length,c:"var(--amber)"},
+      {label:"Sem catálogo",val:result.s5.length,c:"var(--purple)"},
+      {label:"Lançamentos",val:result.s6.length,c:"var(--teal)"},
+    ].map(s=>`<div class="stat"><div class="stat-label">${s.label}</div><div class="stat-val" style="color:${s.c}">${s.val}</div></div>`).join("");
   }
 
-  // Busca
   const searchVal=document.getElementById("searchInput")?document.getElementById("searchInput").value:"";
 
   let html=`<div class="output-box">
     <div class="output-header">
       <span style="font-weight:600;font-size:13px">Pedido de Reposição</span>
       <div class="row">
-        <div style="display:flex;align-items:center;gap:6px">
-          <input id="searchInput" class="search-input" placeholder="Buscar SKU..." value="${searchVal}" oninput="filterSearch(this.value)" style="width:150px">
-        </div>
+        <input id="searchInput" class="search-input" placeholder="Buscar SKU..." value="${searchVal}" oninput="filterSearch(this.value)">
         <button class="btn btn-sm btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copiar pedido</button>
         <button class="btn btn-sm" onclick="switchTab('comparacao')">⇄ Comparar</button>
       </div>
     </div>`;
 
-  html+=renderSec(result.s1,"⚠ Reposição Crítica — Estoque Zerado","s1",true,true,true);
-  html+=renderSec(result.s2,"✓ Pedido — Precisa Repor (até 14 dias)","s2",true,true,true);
-  html+=renderSec(result.s3,"~ Atenção — Estoque Médio (15–30 dias)","s3",true,true,true);
-  html+=renderSec(result.s4,"📋 No Catálogo — Estoque OK (referência)","s4",false,false,false);
+  html+=renderSec(result.s1,"⚠ Reposição Crítica — Estoque Zerado","s1",true,true,false,true);
+  html+=renderSec(result.s2,"✓ Pedido — Precisa Repor","s2",true,true,false,true);
+  html+=renderSec(result.s3,"~ Atenção — Monitorar","s3",true,true,false,true);
   html+=renderS5(result.s5);
 
-  // S6 lançamentos
   if(result.s6.length){
-    html+=`<div class="sec-block"><div class="sec-hdr s6">🆕 Lançamentos — Produtos Novos no Catálogo <span style="opacity:0.6;font-size:10px;font-weight:400">${result.s6.length} itens</span></div><table class="pedido-table"><thead><tr><th>SKU</th><th style="text-align:right">Un/cx</th><th>Status</th></tr></thead><tbody>`;
+    html+=`<div><div class="sec-hdr s6">🆕 Lançamentos — Não temos no estoque <span style="opacity:0.55;font-size:10px;font-weight:400">${result.s6.length} itens</span></div>
+    <table class="pedido-table"><thead><tr><th>SKU</th><th style="text-align:right">Un/cx</th><th>Status</th></tr></thead><tbody>`;
     for(const i of result.s6){
       html+=`<tr><td class="sku-col">${i.sku}</td><td class="un-col">${i.pcsCx} un/cx</td><td>${i.lancamento?'<span class="badge b-teal">Lançamento</span>':'<span class="badge b-gray">Novo</span>'}</td></tr>`;
     }
     html+=`</tbody></table></div>`;
   }
-
   html+=`</div>`;
-  document.getElementById("outputArea").innerHTML=html+`<div class="notice">⚠ Verifique: KITs · Produtos já pedidos ou em recebimento · Planilha sem filtros ativos</div>`;
+
+  document.getElementById("outputArea").innerHTML=html+`<div class="notice">⚠ Verifique sempre: KITs · Produtos já pedidos ou em recebimento · Planilha sem filtros ativos</div>`;
   document.getElementById("outputArea").style.display="block";
 
-  // Gerar raw text para copiar (apenas s1, s2, s3 sem removidos)
-  const rawLines=[];
-  for(const sec of [result.s1,result.s2,result.s3]){
-    for(const i of sec){
-      if(!removedSkus.has(i.sku))rawLines.push(`${i.sku}\t${i.cx} cx\t${i.pcsCx} un/cx`);
-    }
+  // Raw text para copiar — apenas s1 e s2 sem removidos
+  const raw=[];
+  for(const i of [...result.s1,...result.s2]){
+    if(!removedSkus.has(i.sku))raw.push(`${i.sku}\t${i.cx} cx\t${i.pcsCx} un/cx`);
   }
-  window._rawOutput=rawLines.join("\n");
-
-  // Reaplicar busca se tinha
+  window._rawOutput=raw.join("\n");
   if(searchVal)filterSearch(searchVal);
 }
 
-function filterSearch(val){
-  const v=val.toUpperCase().trim();
+function filterSearch(v){
+  const val=(v||"").toUpperCase().trim();
   document.querySelectorAll('.pedido-table tbody tr').forEach(tr=>{
-    if(tr.classList.contains('hidden-row'))return;
     const sku=(tr.dataset.sku||"").toUpperCase();
-    tr.style.display=(!v||sku.includes(v))?"":"none";
+    tr.style.display=(!val||sku.includes(val))?"":"none";
   });
 }
 
@@ -621,13 +687,13 @@ async function runDebug(){
     const sample=rows.slice(0,5);
     const maxCols=Math.max(...sample.map(r=>r.length));
     const hl=new Set([1,2,5,7,8,11,14,15,18,19,20]);
-    let html="<p style='color:var(--amber);margin-bottom:6px'>Primeiras 5 linhas — verde = colunas usadas:</p><table style='border-collapse:collapse'><tr><th style='padding:3px 8px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>Idx</th>";
-    for(let i=0;i<sample.length;i++)html+=`<th style='padding:3px 8px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>L${i+2}</th>`;
+    let html="<p style='color:var(--amber);margin-bottom:6px'>Primeiras 5 linhas — verde = colunas usadas:</p><table style='border-collapse:collapse'><tr><th style='padding:3px 6px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>Idx</th>";
+    for(let i=0;i<sample.length;i++)html+=`<th style='padding:3px 6px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>L${i+2}</th>`;
     html+="</tr>";
     for(let c=0;c<maxCols;c++){
       const s=hl.has(c)?"color:var(--green);font-weight:bold":"";
-      html+=`<tr><td style='${s};padding:3px 8px;border:1px solid var(--border)'>${c}</td>`;
-      for(const row of sample)html+=`<td style='${s};padding:3px 8px;border:1px solid var(--border);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>${(row[c]||"").substring(0,30)}</td>`;
+      html+=`<tr><td style='${s};padding:3px 6px;border:1px solid var(--border)'>${c}</td>`;
+      for(const row of sample)html+=`<td style='${s};padding:3px 6px;border:1px solid var(--border);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>${(row[c]||"").substring(0,28)}</td>`;
       html+="</tr>";
     }
     box.innerHTML=html+"</table>";
@@ -652,14 +718,14 @@ function renderPedidoTable(){
     const isExtra=row.sug===""||row.sug===undefined;
     let rowCls="",diff="",diffStyle="";
     if(isExtra){rowCls="extra";diff="extra";diffStyle="color:var(--purple)";}
-    else if(row.qtd===""||row.sug==="?"){diff="—";diffStyle="color:var(--text3)";}
+    else if(row.qtd===""){diff="—";diffStyle="color:var(--text3)";}
     else{
       const d=(parseFloat(row.qtd)||0)-(parseFloat(row.sug)||0);
       if(Math.abs(d)<=1){rowCls="match";diff=d===0?"✓":(d>0?`+${d}`:`${d}`);diffStyle="color:var(--green)";}
       else if(d>1){rowCls="over";diff=`+${d}`;diffStyle="color:var(--amber)";}
       else{rowCls="miss";diff=`${d}`;diffStyle="color:var(--red)";}
     }
-    return `<tr class="comp-row ${rowCls}"><td style="color:var(--text3);font-size:12px">${idx+1}</td><td><input value="${row.sku}" onchange="updateRow(${row.id},'sku',this.value)" placeholder="SKU..." style="font-family:var(--mono)"></td><td><input value="${row.qtd}" onchange="updateRow(${row.id},'qtd',this.value)" placeholder="0" style="width:70px;font-family:var(--mono)"></td><td style="font-family:var(--mono);color:var(--text2)">${row.sug||"—"}</td><td><span style="${diffStyle}">${diff}</span></td><td><button class="btn btn-sm" style="padding:2px 8px;font-size:11px;color:var(--red)" onclick="removeRow(${row.id})">✕</button></td></tr>`;
+    return `<tr class="comp-row ${rowCls}"><td style="color:var(--text3);font-size:12px">${idx+1}</td><td><input value="${row.sku}" onchange="updateRow(${row.id},'sku',this.value)" placeholder="SKU..." style="font-family:var(--mono)"></td><td><input value="${row.qtd}" onchange="updateRow(${row.id},'qtd',this.value)" placeholder="0" style="width:70px;font-family:var(--mono)"></td><td style="font-family:var(--mono);color:var(--text2)">${row.sug||"—"}</td><td><span style="${diffStyle}">${diff}</span></td><td><button class="btn btn-sm" style="padding:2px 7px;font-size:11px;color:var(--red)" onclick="removeRow(${row.id})">✕</button></td></tr>`;
   }).join("");
   document.getElementById("legend").style.display="flex";
   updateCompSummary();
@@ -672,7 +738,7 @@ function updateCompSummary(){
   let match=0,over=0,miss=0,extra=0;
   for(const r of pedidoRows){
     if(r.sug===""||r.sug===undefined){extra++;continue;}
-    if(r.qtd===""||r.sug==="?")continue;
+    if(r.qtd==="")continue;
     const d=(parseFloat(r.qtd)||0)-(parseFloat(r.sug)||0);
     if(Math.abs(d)<=1)match++;else if(d>1)over++;else miss++;
   }
@@ -713,29 +779,39 @@ async function runAnalysis(){
     addLog("Buscando planilha Fluxo...");
     const fluxo=await fetchSheet("Visão Geral");
     addLog(`${fluxo.length} linhas carregadas.`,"ok");
+
     let inativos=[];
-    try{inativos=await fetchSheet("Produtos Inativos");addLog(`${inativos.length} inativos.`);}
+    try{inativos=await fetchSheet("Produtos Inativos");addLog(`${inativos.length} inativos filtrados.`);}
     catch{addLog("Aba inativos não encontrada.","warn");}
 
-    if(!pdfFiles.length){addLog("⚠ Envie o catálogo PDF para gerar o pedido.","warn");btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;return;}
+    if(!pdfFiles.length){
+      addLog("⚠ Envie o catálogo PDF para gerar o pedido.","warn");
+      btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
+      return;
+    }
 
     let catalog=new Map();
     for(const f of pdfFiles){
       addLog(`Lendo: ${f.name}`);
       const text=await readPdfText(f);
-      if(!text||text.length<50){addLog(`⚠ ${f.name} pode ser scan.`,"warn");continue;}
+      if(!text||text.length<100){addLog(`⚠ ${f.name} pode ser scan — pouco texto extraído.`,"warn");continue;}
       const parsed=extractCatalog(text);
       const disp=[...parsed.values()].filter(v=>v.disponivel).length;
       const indisp=parsed.size-disp;
-      addLog(`${disp} disponíveis · ${indisp} esgotados ignorados.`,"ok");
+      addLog(`${disp} SKUs disponíveis · ${indisp} esgotados ignorados — ${f.name}.`,"ok");
       for(const[k,v]of parsed)if(!catalog.has(k))catalog.set(k,v);
     }
-    addLog(`Catálogo: ${[...catalog.values()].filter(v=>v.disponivel).length} SKUs disponíveis.`,"ok");
+    const totalDisp=[...catalog.values()].filter(v=>v.disponivel).length;
+    addLog(`Catálogo total: ${totalDisp} SKUs disponíveis.`,"ok");
+
     addLog("Cruzando com planilha...");
     const result=analyze(fluxo,inativos,catalog);
-    addLog(`Crítico: ${result.s1.length} · Repor: ${result.s2.length} · Atenção: ${result.s3.length} · Sem catálogo: ${result.s5.length} · Lançamentos: ${result.s6.length}`,"ok");
+    addLog(`✓ Crítico: ${result.s1.length} · Repor: ${result.s2.length} · Atenção: ${result.s3.length} · Sem catálogo: ${result.s5.length} · Lançamentos: ${result.s6.length}`,"ok");
     renderOutput(result,false);
-  }catch(err){addLog("❌ Erro: "+err.message,"err");}
+  }catch(err){
+    addLog("❌ Erro: "+err.message,"err");
+    console.error(err);
+  }
 
   btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
 }
