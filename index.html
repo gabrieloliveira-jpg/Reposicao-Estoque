@@ -216,18 +216,18 @@ const SKIP_TOKENS = new Set(["HTTP","HTTPS","CNPJ","FONE","LTDA","EMAIL","FGTS",
 
 // Mapeamento de colunas por aliases
 const COL_ALIASES = {
-  sku:      ["sku","skus","código","codigo","código sku","codigo sku"],
+  sku:      ["skus","sku","codigo","codigo sku"],
   fornecedor:["fornecedor","fabricante","marca"],
-  estoque:  ["estoque anymarket disponível","estoque anymarket disponivel","estoque disponível","estoque disponivel","estoque am","estoque"],
-  d7:       ["últimos 7 dias","ultimos 7 dias","7 dias","venda 7 dias","vendas 7 dias"],
-  d30:      ["últimos 30 dias","ultimos 30 dias","30 dias","venda 30 dias","vendas 30 dias"],
-  d12m:     ["últimos 12 meses","ultimos 12 meses","12 meses","venda 12 meses","vendas 12 meses"],
+  estoque:  ["estoque anymarket disponivel","estoque disponivel","estoque am","estoque wms","estoque"],
+  d7:       ["ultimos 7 dias","7 dias","venda 7 dias","vendas 7 dias"],
+  d30:      ["ultimos 30 dias","30 dias","venda 30 dias","vendas 30 dias"],
+  d12m:     ["ultimos 12m","ultimos 12 meses","12m","12 meses","venda 12 meses","vendas 12 meses"],
   reserva:  ["reserva de estoque","reserva","dias de estoque","cobertura"],
-  inativo:  ["inativo","status","ativo/inativo","ativo inativo"],
-  classif:  ["classificação","classificacao","categoria abc","classe"],
+  inativo:  ["inativo","status","ativo inativo"],
+  classif:  ["classificacao","categoria abc","classe"],
   fat:      ["faturamento","classe faturamento"],
   lucro:    ["lucro","classe lucro","lucratividade"],
-  diretriz: ["diretriz","política","politica","estratégia","estrategia"],
+  diretriz: ["diretriz","politica","estrategia"],
 };
 const COL_REQUIRED = ["sku","fornecedor","estoque","d7","d30","d12m","reserva","inativo","classif"];
 
@@ -235,7 +235,7 @@ const COL_REQUIRED = ["sku","fornecedor","estoque","d7","d30","d12m","reserva","
 // UTILS
 // ═══════════════════════════════════════════
 function removeAccents(s){ return s.normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
-function normHeader(s){ return removeAccents(String(s||"").toLowerCase().trim().replace(/\s+/g," ")); }
+function normHeader(s){ return removeAccents(String(s||"").toLowerCase().trim().replace(/\s+/g," ").replace(/[^\w\s]/g,"")); }
 function normSku(s){ return String(s||"").trim().toUpperCase(); }
 function normStrip(s){ return s.replace(/[\s\/\.\-]/g,"").toUpperCase(); }
 function pn(v){
