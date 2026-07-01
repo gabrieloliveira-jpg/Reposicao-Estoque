@@ -3,128 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reposição de Estoque</title>
+<title>Cellfy — Reposição de Estoque</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0f1117;--bg2:#181c26;--bg3:#1e2231;--bg4:#252a3a;
-  --border:#2d3348;--border2:#3a4060;
-  --text:#e8eaf0;--text2:#9aa0b8;--text3:#5a6080;
-  --blue:#4d7cfe;--blue3:#0d1a42;
+  --bg:#0a0b14;--bg2:#11131f;--bg3:#181b2e;--bg4:#1e2238;--bg5:#252a42;
+  --border:#2a2f4a;--border2:#363d5e;
+  --text:#e8eaf6;--text2:#9ba3c8;--text3:#545d8a;
+  --blue:#4d7cfe;--blue2:#3a5fd4;--blue3:#0d1a42;
+  --purple:#7c3aed;--purple2:#a78bfa;--purple3:#2d1b69;
+  --cyan:#22d3ee;--cyan2:#0a3040;--cyan3:#06b6d4;
   --green:#2dd4a0;--green2:#0d4a38;
   --amber:#f5a623;--amber2:#4a3200;
   --red:#f05454;--red2:#4a0f0f;
-  --purple:#a78bfa;--purple2:#2d1b69;
-  --teal:#22d3ee;--teal2:#0a3040;
+  --grad:linear-gradient(135deg,#7c3aed,#4d7cfe,#22d3ee);
   --mono:'Courier New',monospace;
   --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;padding:2rem 1rem}
-h1{font-size:22px;font-weight:600;letter-spacing:-0.3px}
-.container{max-width:1060px;margin:0 auto}
-.header{margin-bottom:1.5rem}
-.header p{margin-top:6px;font-size:14px;color:var(--text3)}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
+/* HEADER */
+.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;gap:1rem;height:56px;position:sticky;top:0;z-index:100}
+.logo-svg{width:32px;height:32px;flex-shrink:0}
+.logo-text{font-size:18px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.3px}
+.logo-sub{font-size:12px;color:var(--text3);margin-left:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:1.5rem 1rem}
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.5rem;gap:0}
+.tab{padding:10px 22px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--sans);transition:all 0.15s}
+.tab:hover{color:var(--text2)}
+.tab.active{color:var(--purple2);border-bottom-color:var(--purple2)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* CARDS */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--sans)}
+.card-title{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px}
+/* UPLOAD */
+.file-drop{border:1px dashed var(--border2);border-radius:10px;padding:20px;text-align:center;cursor:pointer;margin-bottom:10px;transition:all 0.15s}
+.file-drop:hover,.file-drop.drag{border-color:var(--purple2);background:rgba(124,58,237,0.05)}
+.file-drop p{font-size:13px;color:var(--text3);margin-top:6px}
+.file-drop p.small{font-size:11px;margin-top:3px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;font-size:12px;background:var(--purple3);color:var(--purple2);border:1px solid var(--purple)}
+input[type=file]{display:none}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--sans);transition:all 0.15s}
 .btn:hover{background:var(--bg4)}
 .btn:disabled{opacity:0.4;cursor:not-allowed}
-.btn-primary{background:var(--blue3);border-color:var(--blue);color:#a8c4ff}
-.btn-primary:hover{background:#1a2d6e}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--blue));border-color:transparent;color:#fff}
+.btn-primary:hover{opacity:0.9}
 .btn-sm{font-size:12px;padding:5px 12px}
-.btn-copy.ok{border-color:var(--green);color:var(--green)}
-.tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;background:var(--blue3);color:#7ba8ff;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.log{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--text3);max-height:180px;overflow-y:auto;margin-top:10px}
-.log-line.ok{color:var(--green)}.log-line.warn{color:var(--amber)}.log-line.err{color:var(--red)}.log-line.info{color:var(--blue)}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1rem}
-.summary-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+.btn-grad{background:var(--grad);border-color:transparent;color:#fff}
+.btn-grad:hover{opacity:0.9}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
+/* LOG */
+.log{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--text3);max-height:200px;overflow-y:auto;margin-top:10px}
+.log-line{padding:1px 0}
+.log-line.ok{color:var(--green)}
+.log-line.warn{color:var(--amber)}
+.log-line.err{color:var(--red)}
+.log-line.info{color:var(--cyan)}
+/* COL MAP */
+.col-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px;margin-top:8px}
+.col-map-item{font-size:12px;color:var(--text2);display:flex;gap:6px;align-items:center}
+.col-map-item .ok{color:var(--green)}
+.col-map-item .err{color:var(--red)}
+/* SUMMARY */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:1.5rem}
+.summary-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .summary-label{font-size:11px;color:var(--text3);margin-bottom:3px}
-.summary-val{font-size:21px;font-weight:600}
+.summary-val{font-size:22px;font-weight:700}
+/* SEC */
 .sec-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
 .sec-hdr{font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.sec-hdr.s1{background:rgba(240,84,84,0.08);color:var(--red)}
-.sec-hdr.s2{background:rgba(45,212,160,0.07);color:var(--green)}
-.sec-hdr.s3{background:rgba(245,166,35,0.07);color:var(--amber)}
-.sec-hdr.ns{background:rgba(90,96,128,0.1);color:var(--text2)}
-.sec-hdr.s5{background:rgba(167,139,250,0.07);color:var(--purple)}
-.sec-hdr.s6{background:rgba(34,211,238,0.07);color:var(--teal)}
+.sec-hdr.critico{background:rgba(240,84,84,0.08);color:var(--red)}
+.sec-hdr.pedido{background:rgba(45,212,160,0.07);color:var(--green)}
+.sec-hdr.naosol{background:rgba(84,93,138,0.15);color:var(--text2)}
+.sec-hdr.revisao{background:rgba(245,166,35,0.08);color:var(--amber)}
+.sec-hdr.fora{background:rgba(124,58,237,0.08);color:var(--purple2)}
+.sec-hdr.lanc{background:rgba(34,211,238,0.07);color:var(--cyan)}
+/* TABLE */
 .tbl{width:100%;border-collapse:collapse}
 .tbl th{text-align:left;padding:7px 14px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg3)}
 .tbl td{padding:7px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;vertical-align:top}
 .tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:rgba(255,255,255,0.012)}
-.tbl td.sku{font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap}
-.tbl td.cx{font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;white-space:nowrap}
-.tbl td.pri{font-family:var(--mono);font-size:13px;text-align:right}
-.tbl td.mot{font-size:12px;color:var(--text2);line-height:1.7;min-width:200px}
-.badge{font-size:11px;padding:2px 7px;border-radius:4px;white-space:nowrap;display:inline-block}
+.tbl tr:hover td{background:rgba(255,255,255,0.01)}
+.sku-cell{font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap}
+.cx-cell{font-family:var(--mono);font-size:14px;font-weight:700;white-space:nowrap}
+.mot-cell{font-size:12px;color:var(--text2);line-height:1.7;min-width:180px}
+.calc-cell{font-size:11px;color:var(--text3);font-family:var(--mono);line-height:1.6;min-width:180px}
+/* BADGES */
+.badge{font-size:11px;padding:2px 8px;border-radius:4px;white-space:nowrap;display:inline-block;font-weight:500}
 .b-red{background:var(--red2);color:var(--red)}
 .b-amber{background:var(--amber2);color:var(--amber)}
 .b-blue{background:var(--blue3);color:#7ba8ff}
 .b-green{background:var(--green2);color:var(--green)}
 .b-gray{background:var(--bg4);color:var(--text2)}
-.b-purple{background:var(--purple2);color:var(--purple)}
-.b-teal{background:var(--teal2);color:var(--teal)}
-.notice{font-size:12px;color:var(--text3);padding:10px 14px;border:1px solid var(--amber2);background:rgba(245,166,35,0.05);border-radius:8px;margin-bottom:1rem;line-height:1.8}
-.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border2);border-top-color:var(--blue);border-radius:50%;animation:spin 0.7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.file-drop{border:1px dashed var(--border2);border-radius:10px;padding:18px;text-align:center;cursor:pointer;margin-bottom:10px}
-.file-drop:hover,.file-drop.drag{border-color:var(--blue);background:rgba(77,124,254,0.04)}
-.file-drop p{font-size:13px;color:var(--text3);margin-top:5px}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
-input[type=file]{display:none}
-.search-input{background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:13px;font-family:var(--mono);outline:none;width:180px}
-.search-input:focus{border-color:var(--blue)}
-.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:2px 5px;border-radius:4px}
+.b-purple{background:var(--purple3);color:var(--purple2)}
+.b-cyan{background:var(--cyan2);color:var(--cyan)}
+.pri-badge{font-size:12px;padding:3px 10px;border-radius:6px;font-weight:600;white-space:nowrap}
+.pri-critica{background:rgba(240,84,84,0.15);color:var(--red);border:1px solid var(--red2)}
+.pri-alta{background:rgba(245,166,35,0.12);color:var(--amber);border:1px solid var(--amber2)}
+.pri-media{background:rgba(77,124,254,0.12);color:#7ba8ff;border:1px solid var(--blue3)}
+.pri-baixa{background:rgba(45,212,160,0.1);color:var(--green);border:1px solid var(--green2)}
+/* EDIT */
+.cx-input{background:var(--bg3);border:1px solid var(--border2);border-radius:5px;color:var(--text);font-family:var(--mono);font-size:13px;font-weight:700;width:60px;padding:3px 6px;text-align:center;outline:none}
+.cx-input:focus{border-color:var(--purple2)}
+.obs-input{background:var(--bg3);border:1px solid var(--border2);border-radius:5px;color:var(--text2);font-size:12px;width:130px;padding:3px 6px;outline:none}
+.obs-input:focus{border-color:var(--purple2)}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 5px;border-radius:4px;line-height:1}
 .del-btn:hover{color:var(--red);background:var(--red2)}
-.empty{padding:12px 16px;font-size:12px;color:var(--text3);font-style:italic}
+/* NOTICE */
+.notice{font-size:12px;color:var(--text3);padding:10px 14px;border:1px solid var(--amber2);background:rgba(245,166,35,0.05);border-radius:8px;margin-bottom:1rem;line-height:1.8}
+/* SPINNER */
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border2);border-top-color:var(--purple2);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* SEARCH */
+.search-input{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;color:var(--text);font-size:13px;outline:none;width:200px}
+.search-input:focus{border-color:var(--purple2)}
+/* FILTER */
 .filter-bar{display:flex;gap:6px;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg3);align-items:center}
-.chip{font-size:12px;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--bg4);color:var(--text2);cursor:pointer}
-.chip:hover{border-color:var(--purple);color:var(--purple)}
-.chip.active{background:var(--purple2);border-color:var(--purple);color:var(--purple)}
+.chip{font-size:12px;padding:3px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--bg4);color:var(--text2);cursor:pointer;transition:all 0.15s}
+.chip:hover{border-color:var(--purple2);color:var(--purple2)}
+.chip.active{background:var(--purple3);border-color:var(--purple2);color:var(--purple2)}
 .chip.all.active{background:var(--blue3);border-color:var(--blue);color:#a8c4ff}
-.forn-pill{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--purple2);color:var(--purple);border:1px solid var(--purple);display:inline-block;margin:2px}
-.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1rem}
-.tab{padding:8px 20px;font-size:13px;cursor:pointer;border:none;background:none;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--sans)}
-.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
-.comp-table{width:100%;border-collapse:collapse;font-size:13px}
-.comp-table th{text-align:left;padding:6px 10px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}
-.comp-table td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.03)}
-.comp-table input{background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;width:100%;outline:none}
-.comp-table input:focus{background:var(--bg3);border-radius:4px;padding:2px 4px}
-.comp-row.match td{color:var(--green)}.comp-row.over td{color:var(--amber)}.comp-row.miss td{color:var(--red)}.comp-row.extra td{color:var(--purple)}
-.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-.leg-item{font-size:12px;display:flex;align-items:center;gap:5px;color:var(--text2)}
-.leg-dot{width:8px;height:8px;border-radius:50%}
-.sec-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px}
-.step-indicator{display:flex;gap:0;margin-bottom:1rem}
-.step{flex:1;text-align:center;padding:8px 4px;font-size:11px;color:var(--text3);border-bottom:2px solid var(--border);transition:all 0.2s}
-.step.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
-.step.done{color:var(--green);border-bottom-color:var(--green)}
+.forn-pill{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--purple3);color:var(--purple2);border:1px solid rgba(167,139,250,0.3);display:inline-block;margin:2px}
+.empty{padding:14px 16px;font-size:12px;color:var(--text3);font-style:italic}
+/* STATS BAR */
+.stats-bar{display:flex;gap:16px;padding:8px 16px;border-bottom:1px solid var(--border);background:var(--bg3);flex-wrap:wrap;font-size:12px;color:var(--text3)}
+.stats-bar span b{color:var(--text2)}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <h1>Reposição de Estoque</h1>
-    <p>Planilha decide · Catálogo confirma · Resultado auditável</p>
+
+<div class="header">
+  <!-- Logo Cellfy SVG -->
+  <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="lg1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#7c3aed"/>
+        <stop offset="50%" stop-color="#4d7cfe"/>
+        <stop offset="100%" stop-color="#22d3ee"/>
+      </linearGradient>
+    </defs>
+    <path d="M50 5 A45 45 0 1 0 95 50" stroke="url(#lg1)" stroke-width="12" stroke-linecap="round" fill="none"/>
+    <circle cx="50" cy="50" r="18" stroke="url(#lg1)" stroke-width="8" fill="none"/>
+    <line x1="34" y1="34" x2="66" y2="66" stroke="url(#lg1)" stroke-width="8" stroke-linecap="round"/>
+  </svg>
+  <div>
+    <div class="logo-text">Cellfy</div>
   </div>
+  <span class="logo-sub" style="color:var(--text3);font-size:12px;margin-left:4px">Reposição de Estoque</span>
+  <div class="header-right">
+    <button class="btn btn-sm" onclick="clearAll()">Limpar</button>
+  </div>
+</div>
+
+<div class="main">
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('analise')">Análise</button>
-    <button class="tab" onclick="switchTab('comparacao')">Comparar Pedido</button>
+    <button class="tab active" onclick="switchTab('pedido')">📦 Pedido de Compra</button>
+    <button class="tab" onclick="switchTab('fora')">📋 Fora do Catálogo</button>
+    <button class="tab" onclick="switchTab('lanc')">🆕 Lançamentos</button>
   </div>
 
-  <div id="tab-analise" class="tab-panel active">
+  <!-- ABA 1: PEDIDO -->
+  <div id="tab-pedido" class="tab-panel active">
     <div class="card">
-      <div class="sec-label">Catálogos PDF dos fornecedores</div>
+      <div class="card-title">Catálogos PDF dos fornecedores</div>
       <div class="file-drop" id="dropzone" onclick="document.getElementById('pdfInput').click()">
-        <svg width="24" height="24" fill="none" stroke="#5a6080" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+        <svg width="28" height="28" fill="none" stroke="url(#lg1)" stroke-width="1.5" viewBox="0 0 24 24"><defs><linearGradient id="lg1" x1="0" y1="0" x2="24" y2="24"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
         <p>Arraste um ou mais PDFs aqui ou clique para selecionar</p>
-        <p style="font-size:11px;margin-top:3px">Ctrl+clique para selecionar vários · Até 10 catálogos simultâneos</p>
+        <p class="small">Ctrl+clique para múltiplos arquivos · Até 10 catálogos simultâneos</p>
       </div>
       <input type="file" id="pdfInput" multiple accept=".pdf" onchange="handleFiles(this.files)">
       <div class="tags" id="fileTags"></div>
@@ -134,77 +186,92 @@ input[type=file]{display:none}
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg>
           Gerar Pedido
         </button>
-        <button class="btn btn-sm" onclick="runDebug()">🔍 Diagnóstico</button>
-        <button class="btn btn-sm" onclick="clearAll()">Limpar</button>
       </div>
       <div class="log" id="log" style="display:none"></div>
-      <div id="debugBox" style="display:none;margin-top:10px;background:var(--bg);border:1px solid var(--amber2);border-radius:8px;padding:12px;font-family:var(--mono);font-size:11px;color:var(--text2);max-height:260px;overflow:auto"></div>
+      <div id="colMapArea" style="display:none;margin-top:10px"></div>
     </div>
     <div id="summaryArea" style="display:none"></div>
     <div id="outputArea" style="display:none"></div>
   </div>
 
-  <div id="tab-comparacao" class="tab-panel">
-    <div class="card">
-      <div class="sec-label">Meu pedido realizado</div>
-      <p style="font-size:13px;color:var(--text3);margin-bottom:12px">Compare o pedido que você fez com a sugestão gerada.</p>
-      <div style="overflow-x:auto">
-        <table class="comp-table">
-          <thead><tr><th>#</th><th>SKU</th><th>Qtd pedida (cx)</th><th>Sugestão (cx)</th><th>Diferença</th><th></th></tr></thead>
-          <tbody id="pedidoBody"></tbody>
-        </table>
-      </div>
-      <div class="row" style="margin-top:12px">
-        <button class="btn btn-sm" onclick="addPedidoRow()">+ Linha</button>
-        <button class="btn btn-sm" onclick="importSugestao()">↙ Importar sugestão</button>
-        <button class="btn btn-sm" onclick="clearPedido()">Limpar</button>
-      </div>
-      <div class="legend" id="legend" style="display:none">
-        <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Ok</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--amber)"></div>Pediu a mais</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>Pediu a menos</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--purple)"></div>Extra</div>
-      </div>
-    </div>
-    <div id="compSummary" style="display:none"></div>
+  <!-- ABA 2: FORA DO CATÁLOGO -->
+  <div id="tab-fora" class="tab-panel">
+    <div id="foraContent"><div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra para ver os produtos fora do catálogo.</p></div></div>
+  </div>
+
+  <!-- ABA 3: LANÇAMENTOS -->
+  <div id="tab-lanc" class="tab-panel">
+    <div id="lancContent"><div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra para ver os lançamentos.</p></div></div>
   </div>
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════════
-// CONFIGURAÇÃO
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
 const SHEET_ID = "1404SCPiabg6abXRphpHqGXQ0frRkIlUptDV9m8a-x3w";
-const COL = {fornecedor:1,sku:2,estoque:5,d7:7,d30:8,d12m:11,reserva:14,inativo:15,classif:18,fat:19,lucro:20};
-const INDISP = ["ESGOTADO","SEM EMBALAGEM","FORA DA EMBALAGEM","INDISPONIVEL","INDISPONÍVEL","EM FALTA","SEM ESTOQUE","FORA DE LINHA","DESCONTINUADO","INATIVO","TEMPORARIAMENTE INDISPONIVEL","TEMPORARIAMENTE INDISPONÍVEL","FORA DE ESTOQUE","SOB ENCOMENDA","SEM PREVISAO","SEM PREVISÃO","NAO DISPONIVEL","NÃO DISPONÍVEL","OUT OF STOCK","UNAVAILABLE"];
-const SKIP_TOKENS = new Set(["HTTP","HTTPS","CNPJ","FONE","LTDA","EMAIL","FGTS","RESP","INSC","CNAE","WHATSAPP","INSTAGRAM","FACEBOOK"]);
 
-// ════════════════════════════════════════════════════════════
-// UTILS — normalizeSku (uma vez por SKU, sem repetir)
-// ════════════════════════════════════════════════════════════
-const _normCache = new Map();
-function normSku(s){
-  const raw = String(s||"").trim().toUpperCase();
-  if(_normCache.has(raw)) return _normCache.get(raw);
-  _normCache.set(raw, raw);
-  return raw;
-}
+const INDISP_WORDS = ["ESGOTADO","SEM EMBALAGEM","FORA DA EMBALAGEM","INDISPONIVEL","INDISPONÍVEL","EM FALTA","SEM ESTOQUE","FORA DE LINHA","DESCONTINUADO","INATIVO","TEMPORARIAMENTE INDISPONIVEL","TEMPORARIAMENTE INDISPONÍVEL","FORA DE ESTOQUE","SOB ENCOMENDA","SEM PREVISAO","SEM PREVISÃO","NAO DISPONIVEL","NÃO DISPONÍVEL","OUT OF STOCK","UNAVAILABLE"];
+const SKIP_TOKENS = new Set(["HTTP","HTTPS","CNPJ","FONE","LTDA","EMAIL","FGTS","RESP","INSC","CNAE","WHATSAPP","INSTAGRAM","FACEBOOK","PRODUTO","CODIGO","DESCRICAO"]);
+
+// Mapeamento de colunas por aliases
+const COL_ALIASES = {
+  sku:      ["sku","skus","código","codigo","código sku","codigo sku"],
+  fornecedor:["fornecedor","fabricante","marca"],
+  estoque:  ["estoque anymarket disponível","estoque anymarket disponivel","estoque disponível","estoque disponivel","estoque am","estoque"],
+  d7:       ["últimos 7 dias","ultimos 7 dias","7 dias","venda 7 dias","vendas 7 dias"],
+  d30:      ["últimos 30 dias","ultimos 30 dias","30 dias","venda 30 dias","vendas 30 dias"],
+  d12m:     ["últimos 12 meses","ultimos 12 meses","12 meses","venda 12 meses","vendas 12 meses"],
+  reserva:  ["reserva de estoque","reserva","dias de estoque","cobertura"],
+  inativo:  ["inativo","status","ativo/inativo","ativo inativo"],
+  classif:  ["classificação","classificacao","categoria abc","classe"],
+  fat:      ["faturamento","classe faturamento"],
+  lucro:    ["lucro","classe lucro","lucratividade"],
+  diretriz: ["diretriz","política","politica","estratégia","estrategia"],
+};
+const COL_REQUIRED = ["sku","fornecedor","estoque","d7","d30","d12m","reserva","inativo","classif"];
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function removeAccents(s){ return s.normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+function normHeader(s){ return removeAccents(String(s||"").toLowerCase().trim().replace(/\s+/g," ")); }
+function normSku(s){ return String(s||"").trim().toUpperCase(); }
 function normStrip(s){ return s.replace(/[\s\/\.\-]/g,"").toUpperCase(); }
 function pn(v){
   const s=String(v||0).replace(/\./g,"").replace(",",".").replace(/[^\d.-]/g,"");
   const n=parseFloat(s); return isNaN(n)?0:n;
 }
+function letterScore(l){ const m={A:15,B:10,C:5,D:0}; return m[(l||"").toUpperCase()]||0; }
+
 function switchTab(name){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['analise','comparacao'][i]===name));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['pedido','fora','lanc'][i]===name));
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+name));
-  if(name==='comparacao') renderPedidoTable();
 }
 
-// ════════════════════════════════════════════════════════════
-// SHEET READER — lê planilha uma única vez
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// COLUMN MAPPER — automático por nome
+// ═══════════════════════════════════════════
+function mapColumns(headerRow){
+  const map={};
+  const headers=headerRow.map((h,i)=>({norm:normHeader(h),idx:i,raw:h}));
+
+  for(const[field,aliases]of Object.entries(COL_ALIASES)){
+    let found=null;
+    for(const alias of aliases){
+      const h=headers.find(h=>h.norm===alias||h.norm.includes(alias));
+      if(h){found=h;break;}
+    }
+    if(found) map[field]=found.idx;
+  }
+  return map;
+}
+
+// ═══════════════════════════════════════════
+// SHEET READER
+// ═══════════════════════════════════════════
 async function sheetReader(aba){
-  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(aba)}&headers=1`;
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(aba)}&headers=0`;
   const r=await fetch(url);
   if(!r.ok) throw new Error("Erro ao buscar aba: "+aba);
   return parseCSV(await r.text());
@@ -221,50 +288,100 @@ function parseCSV(text){
     }
     cols.push(cur); rows.push(cols);
   }
-  return rows.slice(1);
+  return rows;
 }
 
-// ════════════════════════════════════════════════════════════
-// SKU MATCHER — 6 etapas, sem fuzzy, para na primeira
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// SKU MATCHER — 8 etapas + combinações + O↔0
+// ═══════════════════════════════════════════
 function knupMap(sku){
   let s=sku;
   if(/^G-[HBA]/i.test(s)&&!/G-GT|G-RX|G-VR/i.test(s)) s=s.replace(/^G-/,"KP-");
   s=s.replace(/\/K$/i,"").replace(/\//g,"-");
   return normSku(s);
 }
-function skuMatcher(skuNorm, catalogMaster){
+
+function tryMatch(candidate, catalogMaster){
+  if(!candidate||candidate.length<2) return null;
+  return catalogMaster.has(candidate)?candidate:null;
+}
+
+function skuMatcher(skuRaw, catalogMaster){
+  const sku=normSku(skuRaw);
+  const attempts=[];
+
   // 1. Exato
-  if(catalogMaster.has(skuNorm)) return skuNorm;
+  if(tryMatch(sku,catalogMaster)) return{key:sku,step:1};
+
   // 2. KNUP
-  const kn=knupMap(skuNorm);
-  if(kn!==skuNorm&&catalogMaster.has(kn)) return kn;
+  const kn=knupMap(sku);
+  if(kn!==sku&&tryMatch(kn,catalogMaster)) return{key:kn,step:2};
+
   // 3. Barras → hífen
-  const wd=skuNorm.replace(/\//g,"-");
-  if(wd!==skuNorm&&catalogMaster.has(wd)) return wd;
-  // 4. Sem separadores (min 5 chars)
-  const sn=normStrip(skuNorm);
-  if(sn.length>=5){ for(const k of catalogMaster.keys()){ if(normStrip(k)===sn) return k; } }
-  // 5. Remove prefixo fornecedor
-  if(skuNorm.includes("-")){
-    const sp=skuNorm.slice(skuNorm.indexOf("-")+1);
-    if(sp.length>=4){
-      if(catalogMaster.has(sp)) return sp;
-      const snSp=normStrip(sp);
-      if(snSp.length>=5){ for(const k of catalogMaster.keys()){ if(normStrip(k)===snSp) return k; } }
+  const wd=sku.replace(/\//g,"-");
+  if(wd!==sku&&tryMatch(wd,catalogMaster)) return{key:wd,step:3};
+
+  // 4. Remove prefixo
+  if(sku.includes("-")){
+    const sp=sku.slice(sku.indexOf("-")+1);
+    if(sp.length>=2&&tryMatch(sp,catalogMaster)) return{key:sp,step:4};
+  }
+
+  // 5. Sem separadores (min 5)
+  const sn=normStrip(sku);
+  if(sn.length>=5){
+    for(const k of catalogMaster.keys()){
+      if(normStrip(k)===sn) return{key:k,step:5};
     }
   }
-  // 6. Sufixo KNUP
+
+  // 6. Espaços
+  if(sku.includes(" ")){
+    const parts=sku.split(" ");
+    const joined=parts.join("");
+    if(tryMatch(joined,catalogMaster)) return{key:joined,step:"6a"};
+    const hyphened=parts.join("-");
+    if(tryMatch(hyphened,catalogMaster)) return{key:hyphened,step:"6b"};
+    const before=parts[0];
+    if(tryMatch(before,catalogMaster)) return{key:before,step:"6c"};
+  }
+
+  // 7. Sufixo KNUP
   if(kn.includes("-")){
     const ks=kn.slice(kn.indexOf("-")+1);
-    if(ks.length>=4&&catalogMaster.has(ks)) return ks;
+    if(ks.length>=2&&tryMatch(ks,catalogMaster)) return{key:ks,step:7};
   }
+
+  // 8. Combinações múltiplas
+  const combos=[];
+  // KNUP + barras
+  const knWd=kn.replace(/\//g,"-");
+  combos.push(knWd);
+  // Espaço + barra
+  if(sku.includes(" ")){
+    const sp2=sku.replace(/ /g,"-").replace(/\//g,"-");
+    combos.push(sp2);
+    const sp3=sku.replace(/ /g,"").replace(/\//g,"");
+    combos.push(sp3);
+    // KNUP + espaço + barra
+    combos.push(knWd.replace(/ /g,"-"));
+  }
+  for(const c of combos){
+    if(c&&c!==sku&&tryMatch(c,catalogMaster)) return{key:c,step:"8-combo"};
+  }
+
+  // 9. O ↔ 0
+  const withZero=sku.replace(/O/g,"0");
+  if(withZero!==sku&&tryMatch(withZero,catalogMaster)) return{key:withZero,step:"9-O→0"};
+  const withO=sku.replace(/0/g,"O");
+  if(withO!==sku&&tryMatch(withO,catalogMaster)) return{key:withO,step:"9-0→O"};
+
   return null;
 }
 
-// ════════════════════════════════════════════════════════════
-// PDF IMPORTER — lê cada PDF uma única vez e constrói Catálogo Mestre
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// PDF READER + CATALOG MASTER BUILDER
+// ═══════════════════════════════════════════
 async function readPdfText(file){
   return new Promise(resolve=>{
     const fr=new FileReader();
@@ -285,59 +402,49 @@ async function readPdfText(file){
   });
 }
 
-// Constrói item do Catálogo Mestre para um SKU localizado
-// Analisa APENAS o bloco do SKU (±15 linhas) — nunca o PDF inteiro
-function buildCatalogItem(skuNorm, lineIdx, lines, nomeArquivo){
+function buildCatalogItem(skuNorm,lineIdx,lines,nomeArq){
   const start=Math.max(0,lineIdx-2);
   const end=Math.min(lines.length,lineIdx+16);
   const block=lines.slice(start,end).join(" ").toUpperCase();
+  const disponivel=!INDISP_WORDS.some(w=>block.includes(w));
 
-  // Verificar indisponibilidade SOMENTE neste bloco
-  const disponivel=!INDISP.some(w=>block.includes(w));
-
-  // Buscar PCS/CX neste bloco
+  // PCS/CX apenas no bloco do SKU
   const pcsRe=/(?:PCS\/CX|UN\/CX|UNIT\/BOX|QTD\s*CX|EMBALAGEM|CX\s*C\/)[:\s]*(\d+)|CX\s*C\/\s*(\d+)/i;
   const pcsRe2=/\b([2-9][0-9]?|1[0-9]{2})\b(?!\s*[%RrDd])/;
-  let pcsCx=1;
+  let pcsCx=null;
   const m1=block.match(pcsRe);
   if(m1){ const v=parseInt(m1[1]||m1[2]||"0"); if(v>0&&v<=500) pcsCx=v; }
   else{ const m2=block.match(pcsRe2); if(m2){ const v=parseInt(m2[1]||"0"); if(v>1&&v<=200) pcsCx=v; } }
 
-  // Extrair descrição (texto próximo ao SKU, max 40 chars)
-  const descBloco=lines.slice(lineIdx,Math.min(lineIdx+3,lines.length)).join(" ").replace(/\s+/g," ").trim();
-  const descricao=descBloco.substring(0,60);
-
-  return{skuNorm,disponivel,pcsCx,catalogo:nomeArquivo,descricao};
+  const desc=lines.slice(lineIdx,Math.min(lineIdx+2,lines.length)).join(" ").replace(/\s+/g," ").trim().substring(0,60);
+  return{skuNorm,disponivel,pcsCx,catalogo:nomeArq,descricao:desc};
 }
 
-// pdfImporter — processa um arquivo e adiciona ao Catálogo Mestre
-function pdfImporter(text, nomeArquivo, catalogMaster){
+function pdfImporter(text,nomeArq,catalogMaster){
   const lines=text.split(/\r?\n/);
-  const skuRe=/\b([A-Z][A-Z0-9\-\/]{3,}[A-Z0-9])\b/g;
-  let added=0, skipped=0;
-
+  const skuRe=/\b([A-Z][A-Z0-9\-\/]{2,}[A-Z0-9])\b/g;
+  let added=0;
   for(let i=0;i<lines.length;i++){
     const lineUp=lines[i].toUpperCase();
     const matches=[...lineUp.matchAll(skuRe)];
     for(const m of matches){
       const skuNorm=normSku(m[1]);
-      if(catalogMaster.has(skuNorm)){ skipped++; continue; }
-      if(/^\d+$/.test(skuNorm)||skuNorm.length<4) continue;
+      if(catalogMaster.has(skuNorm)) continue;
+      if(/^\d+$/.test(skuNorm)||skuNorm.length<3) continue;
       if(SKIP_TOKENS.has(skuNorm)) continue;
-      const item=buildCatalogItem(skuNorm,i,lines,nomeArquivo);
-      catalogMaster.set(skuNorm,item);
+      catalogMaster.set(skuNorm,buildCatalogItem(skuNorm,i,lines,nomeArq));
       added++;
     }
   }
-  return{added,skipped};
+  return added;
 }
 
-// ════════════════════════════════════════════════════════════
-// REGRAS DE NEGÓCIO — reservaMinima, tendência, cálculo
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// BUSINESS RULES
+// ═══════════════════════════════════════════
 function reservaMinima(classif){
   const cu=(classif||"").toUpperCase();
-  return (cu==="ESTRELA"||cu==="PREMIUM")?15:7;
+  return(cu==="ESTRELA"||cu==="PREMIUM")?15:7;
 }
 function calcTendencia(d7,d30){
   const v30=d30>0?d30/30:0, v7=d7>0?d7/7:0;
@@ -354,7 +461,7 @@ function calcDias(estoque,reserva,vel){
   if(reserva>0) return reserva;
   return estoque>0?estoque/vel:0;
 }
-function calcPrioridade(estoque,dias,tend,gatilho,classif){
+function calcPrioridade(estoque,dias,tend,gatilho,classif,fat,lucro){
   let p=0;
   const cu=(classif||"").toUpperCase();
   if(estoque===0) p+=100;
@@ -364,289 +471,233 @@ function calcPrioridade(estoque,dias,tend,gatilho,classif){
   if(tend.tipo==="crescimento") p+=20;
   if(dias<=7) p+=10;
   if(tend.tipo==="queda") p-=20;
+  p+=letterScore(lucro);
+  p+=letterScore(fat);
   return p;
 }
+function priLabel(p){
+  if(p>=120) return{label:"🔴 Crítica",cls:"pri-critica"};
+  if(p>=90)  return{label:"🟠 Alta",cls:"pri-alta"};
+  if(p>=60)  return{label:"🟡 Média",cls:"pri-media"};
+  return{label:"🟢 Baixa",cls:"pri-baixa"};
+}
 function calcCaixas(dias,reservaMin,vel,pcsCx,estoque){
+  if(!vel) return null;
   const meta=reservaMin+7;
   let nec=estoque===0?meta*vel:(meta-Math.max(dias,0))*vel;
-  if(nec<=0) nec=pcsCx;
-  return Math.max(1,Math.ceil(nec/pcsCx));
+  if(nec<=0) return 0;
+  return Math.ceil(nec/pcsCx);
 }
 
-// ════════════════════════════════════════════════════════════
-// ETAPA 1 — replenishmentEngine
-// Analisa planilha e gera lista "Produtos Necessários"
-// Nenhum PDF é consultado aqui.
-// ════════════════════════════════════════════════════════════
-function replenishmentEngine(fluxoRows, inativosRows){
-  const inSet=new Set(inativosRows.map(r=>normSku(r[0]||r[1]||"")));
-  const necessarios=[];   // precisam de reposição
-  const descartados=[];   // não precisam ou foram filtrados
-  const stats={analisados:0,inativos:0,kits:0,semVenda:0,margemBaixa:0,necessarios:0};
+// ═══════════════════════════════════════════
+// ETAPA 1 — REPLENISHMENT ENGINE
+// ═══════════════════════════════════════════
+function replenishmentEngine(dataRows, colMap, inativosSet){
+  const necessarios=[], descartados=[], revisaoPreview=[];
+  const stats={analisados:0,inativos:0,kits:0,semVenda:0,saida:0,necessarios:0};
 
-  const rows=fluxoRows.map(r=>({
-    sku:normSku(r[COL.sku]),
-    fornecedor:String(r[COL.fornecedor]||"").trim(),
-    estoque:pn(r[COL.estoque]),
-    d7:pn(r[COL.d7]),
-    d30:pn(r[COL.d30]),
-    d12m:pn(r[COL.d12m]),
-    reserva:pn(r[COL.reserva]),
-    inativo:String(r[COL.inativo]||"").trim().toUpperCase(),
-    classif:String(r[COL.classif]||"").trim(),
-    fat:pn(r[COL.fat]),
-    lucro:pn(r[COL.lucro]),
-  })).filter(r=>r.sku&&r.sku.length>1);
-
-  for(const s of rows){
+  for(const r of dataRows){
+    const sku=normSku(r[colMap.sku]||"");
+    if(!sku||sku.length<2) continue;
     stats.analisados++;
 
-    // Regra 1 — Inativo (prioridade máxima)
-    if(inSet.has(s.sku)||s.inativo==="SIM"||s.inativo==="1"||s.inativo==="TRUE"){
+    const inativo=String(r[colMap.inativo]||"").trim().toUpperCase();
+    const diretriz=String(r[colMap.diretriz]||"").trim().toUpperCase();
+    const estoque=pn(r[colMap.estoque]);
+    const d7=pn(r[colMap.d7]);
+    const d30=pn(r[colMap.d30]);
+    const d12m=pn(r[colMap.d12m]);
+    const reserva=pn(r[colMap.reserva]);
+    const classif=String(r[colMap.classif]||"").trim();
+    const fat=String(r[colMap.fat]||"").trim();
+    const lucro=String(r[colMap.lucro]||"").trim();
+    const fornecedor=String(r[colMap.fornecedor]||"").trim();
+
+    const base={sku,fornecedor,estoque,d7,d30,d12m,reserva,classif,fat,lucro,inativo,diretriz};
+
+    // DIRETRIZ = SAÍDA → não comprar, mas verificar no catálogo depois
+    if(diretriz==="SAÍDA"||diretriz==="SAIDA"){
+      stats.saida++;
+      revisaoPreview.push({...base,motivoRevisao:"Diretriz = SAÍDA",acaoSugerida:"Verificar se a diretriz deve ser alterada.",prioRevisao:2});
+      continue;
+    }
+    // Inativo
+    if(inativosSet.has(sku)||inativo==="SIM"||inativo==="1"||inativo==="TRUE"){
       stats.inativos++;
-      descartados.push({...s,motDescarte:"Produto Inativo"});
+      revisaoPreview.push({...base,motivoRevisao:"Produto Inativo",acaoSugerida:"Confirme se o produto deve permanecer inativo.",prioRevisao:1});
       continue;
     }
-    // Regra 2 — KIT
-    if(s.sku.startsWith("KIT")){
-      stats.kits++;
-      descartados.push({...s,motDescarte:"Produto KIT — verificar manualmente"});
-      continue;
-    }
-    // Regra 3 — Sem vendas 12 meses
-    if(s.d12m<=0){
+    // KIT
+    if(sku.startsWith("KIT")){ stats.kits++; continue; }
+    // Sem vendas 12 meses
+    if(d12m<=0){
       stats.semVenda++;
-      descartados.push({...s,motDescarte:"Sem vendas nos últimos 12 meses"});
-      continue;
-    }
-    // Regra 4 — Margem
-    if(s.fat>0&&s.lucro/s.fat<0.15){
-      stats.margemBaixa++;
-      const pct=((s.lucro/s.fat)*100).toFixed(1);
-      descartados.push({...s,motDescarte:`Margem inferior a 15% (atual: ${pct}%)`});
+      revisaoPreview.push({...base,motivoRevisao:"Sem vendas nos últimos 12 meses",acaoSugerida:"Avalie se o produto deve voltar ao portfólio.",prioRevisao:3});
       continue;
     }
 
-    const rev=s.fat>0&&s.lucro/s.fat<0.20;
-    const tend=calcTendencia(s.d7,s.d30);
-    const reservaMin=reservaMinima(s.classif);
+    const tend=calcTendencia(d7,d30);
+    const reservaMin=reservaMinima(classif);
     const gatilho=reservaMin+7+(tend.tipo==="crescimento"?5:0);
-    const dias=calcDias(s.estoque,s.reserva,tend.vel);
-    const prioridade=calcPrioridade(s.estoque,dias,tend,gatilho,s.classif);
-    const cu=(s.classif||"").toUpperCase();
+    const dias=calcDias(estoque,reserva,tend.vel);
+    const prioridade=calcPrioridade(estoque,dias,tend,gatilho,classif,fat,lucro);
+    const cu=(classif||"").toUpperCase();
     const isEstr=cu==="ESTRELA"||cu==="PREMIUM";
+    const zerado=estoque===0&&(d30>0||d7>0);
+    const abaixo=dias<=gatilho&&tend.vel>0;
 
-    // Regra 5 — Precisa repor?
-    const zerado=s.estoque===0&&(s.d30>0||s.d7>0);
-    const abaixoGatilho=dias<=gatilho&&tend.vel>0;
-
-    if(zerado||abaixoGatilho){
-      // cx provisório com pcsCx=1 — será recalculado na Etapa 3 com pcsCx real
-      const cxProv=calcCaixas(dias,reservaMin,tend.vel,1,s.estoque);
-      necessarios.push({...s,tend,dias,reservaMin,gatilho,prioridade,isEstr,rev,cxProv,zerado});
+    if(zerado||abaixo){
+      necessarios.push({...base,tend,dias,reservaMin,gatilho,prioridade,isEstr,zerado});
       stats.necessarios++;
     } else {
-      descartados.push({...s,tend,dias,gatilho,
-        motDescarte:dias>=999?"Sem velocidade de venda":`Reserva acima do gatilho (${Math.round(dias)}d > ${gatilho}d)`
+      descartados.push({...base,tend,dias,gatilho,
+        motivoDescarte:dias>=999?"Sem velocidade de venda":`Reserva de ${Math.round(dias)}d acima do gatilho de ${gatilho}d`
       });
     }
   }
-
-  // Ordenar por prioridade desc
   necessarios.sort((a,b)=>b.prioridade-a.prioridade);
-  return{necessarios,descartados,stats};
+  return{necessarios,descartados,revisaoPreview,stats};
 }
 
-// ════════════════════════════════════════════════════════════
-// ETAPA 3 — Verificação: cruzar Produtos Necessários com Catálogo Mestre
-// ════════════════════════════════════════════════════════════
-function verificacao(necessarios, descartados, catalogMaster){
-  const s1=[],s2=[],s3=[];
-  const foraCatalogo=[];
-  const naoSolicitados=[]; // no catálogo mas não precisam comprar
-  const statsV={noCatalogo:0,comprados:0,indisponiveis:0,foraCatalogo:0};
+// ═══════════════════════════════════════════
+// ETAPA 3 — VERIFICAÇÃO
+// ═══════════════════════════════════════════
+function verificacao(necessarios,descartados,revisaoPreview,catalogMaster,pdfNames){
+  const s1=[],s2=[],foraCatalogo=[],revisao=[...revisaoPreview];
+  const naoSolicitados=[];
+  const multiMatch=new Map(); // sku → [keys]
+  const statsV={noCatalogo:0,comprados:0,indisponiveis:0,semCx:0,foraCatalogo:0,multiMatch:0};
 
-  // Produtos necessários → cruzar com catálogo
+  // Verificar revisaoPreview no catálogo
+  for(const rv of revisaoPreview){
+    const match=skuMatcher(rv.sku,catalogMaster);
+    if(match){
+      const item=catalogMaster.get(match.key);
+      if(item&&item.disponivel){
+        // Produto voltou ao catálogo — já está em revisao com motivo
+        const idx=revisao.findIndex(r=>r.sku===rv.sku);
+        if(idx>=0) revisao[idx]={...revisao[idx],catalogo:item.catalogo,voltouAoCatalogo:true};
+      }
+    }
+  }
+
   for(const s of necessarios){
-    const matchKey=skuMatcher(s.sku,catalogMaster);
+    // Detectar múltiplos matches (buscar todas as chaves que podem corresponder)
+    const matchResult=skuMatcher(s.sku,catalogMaster);
 
-    if(!matchKey){
-      foraCatalogo.push({...s,cx:s.cxProv,pcsCx:1});
+    if(!matchResult){
+      foraCatalogo.push({...s,cx:s.zerado?1:null,pcsCx:null,catalogosPesquisados:pdfNames});
       statsV.foraCatalogo++;
       continue;
     }
 
-    const item=catalogMaster.get(matchKey);
+    const item=catalogMaster.get(matchResult.key);
+
+    // Produto disponível em múltiplos fornecedores?
+    const otherMatches=[];
+    for(const[k,v]of catalogMaster){
+      if(k!==matchResult.key&&v.disponivel){
+        const alt=skuMatcher(s.sku,new Map([[k,v]]));
+        if(alt) otherMatches.push({catalogo:v.catalogo,sku:k});
+      }
+    }
+    if(otherMatches.length>0){
+      revisao.push({...s,motivoRevisao:"Produto disponível em múltiplos fornecedores",
+        acaoSugerida:`Escolher o fornecedor mais vantajoso. Encontrado em: ${[item.catalogo,...otherMatches.map(o=>o.catalogo)].join(", ")}`,
+        prioRevisao:4,catalogo:item.catalogo});
+      statsV.multiMatch++;
+      continue;
+    }
+
     statsV.noCatalogo++;
 
     if(!item.disponivel){
-      foraCatalogo.push({...s,cx:s.cxProv,pcsCx:1,motivoFora:"Indisponível no fornecedor",catalogo:item.catalogo});
+      foraCatalogo.push({...s,cx:s.zerado?1:null,pcsCx:null,motivoFora:"Indisponível no fornecedor",catalogo:item.catalogo,catalogosPesquisados:pdfNames});
       statsV.indisponiveis++;
       continue;
     }
 
-    // Disponível — recalcular cx com pcsCx real
-    const pcsCx=item.pcsCx||1;
+    // Sem quantidade por caixa
+    if(!item.pcsCx){
+      revisao.push({...s,motivoRevisao:"Quantidade por caixa não encontrada no catálogo",
+        acaoSugerida:"Conferir o catálogo ou solicitar informação ao fornecedor.",
+        prioRevisao:5,catalogo:item.catalogo});
+      statsV.semCx++;
+      continue;
+    }
+
+    const pcsCx=item.pcsCx;
     const cx=calcCaixas(s.dias,s.reservaMin,s.tend.vel,pcsCx,s.estoque);
+    if(cx===0||cx===null){
+      // necessidade zerada — não comprar
+      naoSolicitados.push({...s,catalogo:item.catalogo,
+        motivoNS:"🔵 Necessidade calculada zerada — estoque suficiente para o período",icone:"🔵"});
+      continue;
+    }
     statsV.comprados++;
 
-    const orderItem={...s,cx,pcsCx,catalogo:item.catalogo,matchKey,
-      motivo:{
-        estoque:s.estoque,
-        reserva:Math.round(s.dias)>=999?0:Math.round(s.dias),
-        gatilho:s.gatilho,
-        classif:s.classif||"Outros",
-        tendencia:s.tend.label,
-        velUsada:s.tend.tipo==="crescimento"?"D7":s.tend.tipo==="queda"?"D30":"Média",
-        velVal:s.tend.vel.toFixed(2),
-        pcsCx,
-        nec:Math.ceil(cx*pcsCx),
-        cx,
-        prioridade:s.prioridade,
-        catalogo:item.catalogo
-      }
+    const motivo={
+      estoque:s.estoque, reserva:Math.round(s.dias)>=999?0:Math.round(s.dias),
+      gatilho:s.gatilho, classif:s.classif||"Outros", tendencia:s.tend.label,
+      velUsada:s.tend.tipo==="crescimento"?"D7":s.tend.tipo==="queda"?"D30":"Média",
+      velVal:s.tend.vel.toFixed(2), pcsCx, nec:Math.ceil(cx*pcsCx), cx,
+      prioridade:s.prioridade, catalogo:item.catalogo,
+      calculo:`Reserva: ${Math.round(s.dias)>=999?0:Math.round(s.dias)}d | Meta: ${s.reservaMin+7}d | Vel: ${s.tend.vel.toFixed(2)}/dia | Nec: ${Math.ceil(cx*pcsCx)}un | Cx: ${pcsCx}un | Pedido: ${cx}cx`
     };
 
+    const orderItem={...s,cx,pcsCx,catalogo:item.catalogo,matchKey:matchResult.key,matchStep:matchResult.step,motivo,
+      _cxEdited:cx, _obs:""};
+
     if(s.zerado) s1.push(orderItem);
-    else if(s.dias<=s.gatilho) s2.push(orderItem);
-    else s3.push(orderItem);
+    else s2.push(orderItem);
   }
 
-  // Descartados que existem no catálogo → seção "Não Solicitados"
+  // Descartados no catálogo → Não Solicitados
   for(const d of descartados){
-    const matchKey=skuMatcher(d.sku,catalogMaster);
-    if(matchKey){
-      const item=catalogMaster.get(matchKey);
-      naoSolicitados.push({...d,catalogo:item.catalogo,disponivel:item.disponivel,
-        motivoNs:!item.disponivel?`Produto indisponível no fornecedor`:d.motDescarte
-      });
+    const match=skuMatcher(d.sku,catalogMaster);
+    if(match){
+      const item=catalogMaster.get(match.key);
+      if(item){
+        let icone="🟢",mot=d.motivoDescarte;
+        if(!item.disponivel){icone="🟠";mot="Produto indisponível no fornecedor.";}
+        else if(mot.includes("Reserva")){icone="🟢";}
+        else if(mot.includes("velocidade")){icone="🔵";}
+        naoSolicitados.push({...d,catalogo:item.catalogo,motivoNS:icone+" "+mot,icone});
+      }
     }
   }
 
-  return{s1,s2,s3,foraCatalogo,naoSolicitados,statsV};
+  // Ordenar revisao
+  revisao.sort((a,b)=>(a.prioRevisao||9)-(b.prioRevisao||9));
+
+  return{s1,s2,foraCatalogo,naoSolicitados,revisao,statsV};
 }
 
-// ════════════════════════════════════════════════════════════
-// Lançamentos — no catálogo mas não existem na planilha
-// ════════════════════════════════════════════════════════════
-function findLancamentos(necessarios, descartados, catalogMaster){
-  const skusPlanilha=new Set([...necessarios,...descartados].map(s=>s.sku));
+// ═══════════════════════════════════════════
+// LANÇAMENTOS
+// ═══════════════════════════════════════════
+function findLancamentos(necessarios,descartados,revisaoPreview,catalogMaster){
+  const skusPlanilha=new Set([...necessarios,...descartados,...revisaoPreview].map(s=>s.sku));
   const lancs=[];
   for(const[skuCat,item]of catalogMaster){
     if(!item.disponivel) continue;
     let jatem=false;
-    for(const ps of skusPlanilha){ if(skuMatcher(ps,new Map([[skuCat,item]]))){jatem=true;break;} }
+    for(const ps of skusPlanilha){
+      if(skuMatcher(ps,new Map([[skuCat,item]]))){jatem=true;break;}
+    }
     if(!jatem) lancs.push({sku:skuCat,pcsCx:item.pcsCx,catalogo:item.catalogo,descricao:item.descricao});
   }
   return lancs;
 }
 
-// ════════════════════════════════════════════════════════════
-// RENDER
-// ════════════════════════════════════════════════════════════
-let lastResult=null, removedSkus=new Set(), s5Filter="all";
+// ═══════════════════════════════════════════
+// ESTADO GLOBAL DO PEDIDO (editável)
+// ═══════════════════════════════════════════
+let lastResult=null, removedSkus=new Set(), s5Filter="all", searchVal="";
 
-function tendBadge(tend){
-  if(!tend) return"";
-  const cls=tend.tipo==="crescimento"?"b-green":tend.tipo==="queda"?"b-red":"b-gray";
-  return`<span class="badge ${cls}">${tend.icone} ${tend.label}</span>`;
-}
-function motivoHtml(m){
-  if(!m) return"";
-  return`<b>Estoque:</b> ${m.estoque} &nbsp;|&nbsp; <b>Reserva:</b> ${m.reserva}d<br>
-<b>Gatilho:</b> ${m.gatilho}d &nbsp;|&nbsp; <b>Tend.:</b> ${m.tendencia}<br>
-<b>Vel.:</b> ${m.velUsada} (${m.velVal}/dia) &nbsp;|&nbsp; <b>Cx:</b> ${m.pcsCx} un<br>
-<b>Nec.:</b> ${m.nec} un &nbsp;|&nbsp; <b>Sug.:</b> ${m.cx} cx &nbsp;|&nbsp; <b>Prior.:</b> ${m.prioridade}<br>
-<b>Catálogo:</b> ${(m.catalogo||"—").substring(0,28)}`;
-}
-function priColor(p){ return p>=120?"var(--red)":p>=80?"var(--amber)":p>=40?"var(--green)":"var(--text3)"; }
-
-function renderOrderSec(items,title,cls){
-  const vis=items.filter(i=>!removedSkus.has(i.sku));
-  let html=`<div class="sec-box"><div class="sec-hdr ${cls}">${title} <span style="opacity:0.55;font-size:10px;font-weight:400">${vis.length} item${vis.length!==1?"s":""}</span></div>`;
-  if(!vis.length){html+=`<div class="empty">Nenhum item.</div></div>`;return html;}
-  html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
-    <th>SKU</th><th style="text-align:right">Caixas</th><th style="text-align:right">Un/cx</th>
-    <th style="text-align:right">Reserva</th><th>Tendência</th><th>Classif.</th>
-    <th style="text-align:right">Prior.</th><th>Motivo da Compra</th><th>Catálogo</th><th></th>
-  </tr></thead><tbody>`;
-  for(const i of vis){
-    const dias=i.dias||999;
-    const rc=dias<=7?"var(--red)":dias<=14?"var(--amber)":dias<=22?"var(--green)":"var(--text3)";
-    const ds=dias>=999?"—":(Math.round(dias)+"d");
-    const cc=cls==="s1"?"var(--red)":cls==="s2"?"var(--green)":"var(--amber)";
-    html+=`<tr data-sku="${i.sku}">
-      <td class="sku">${i.sku}${i.rev?' <span class="badge b-amber" style="font-size:10px">revisar</span>':''}</td>
-      <td class="cx" style="color:${cc}">${i.cx} cx</td>
-      <td style="text-align:right;font-size:12px;color:var(--text3)">${i.pcsCx}</td>
-      <td style="text-align:right;font-size:12px;color:${rc}">${ds}</td>
-      <td>${tendBadge(i.tend)}</td>
-      <td><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td>
-      <td class="pri" style="color:${priColor(i.prioridade||0)}">${i.prioridade||0}</td>
-      <td class="mot">${motivoHtml(i.motivo)}</td>
-      <td style="font-size:11px;color:var(--text3)">${(i.catalogo||"—").substring(0,24)}</td>
-      <td><button class="del-btn" onclick="removeSku('${i.sku}')" title="Remover">✕</button></td>
-    </tr>`;
-  }
-  html+=`</tbody></table></div></div>`;
-  return html;
-}
-
-function renderNaoSolicitados(items){
-  let html=`<div class="sec-box"><div class="sec-hdr ns">📋 Não Solicitados — no catálogo, sem necessidade de compra <span style="opacity:0.55;font-size:10px;font-weight:400">${items.length} itens</span></div>`;
-  if(!items.length){html+=`<div class="empty">Nenhum item.</div></div>`;return html;}
-  html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
-    <th>SKU</th><th>Motivo exato</th><th style="text-align:right">Reserva</th><th>Tendência</th><th>Classif.</th><th>Catálogo</th>
-  </tr></thead><tbody>`;
-  for(const i of items){
-    const ds=(!i.dias||i.dias>=999)?"—":(Math.round(i.dias)+"d");
-    html+=`<tr>
-      <td class="sku">${i.sku}</td>
-      <td style="font-size:12px;color:var(--text2)">${i.motivoNs||"—"}</td>
-      <td style="text-align:right;font-size:12px;color:var(--green)">${ds}</td>
-      <td>${tendBadge(i.tend)}</td>
-      <td><span class="badge b-gray">${i.classif||"—"}</span></td>
-      <td style="font-size:11px;color:var(--text3)">${(i.catalogo||"—").substring(0,24)}</td>
-    </tr>`;
-  }
-  html+=`</tbody></table></div></div>`;
-  return html;
-}
-
-function renderForaCatalogo(items){
-  const fornecedores=[...new Set(items.map(i=>i.fornecedor||"Sem fornecedor"))].sort();
-  const filtered=s5Filter==="all"?items:items.filter(i=>(i.fornecedor||"Sem fornecedor")===s5Filter);
-  const vis=filtered.filter(i=>!removedSkus.has(i.sku));
-  let html=`<div class="sec-box"><div class="sec-hdr s5">⚡ Fora do Catálogo — Precisa Repor <span style="opacity:0.55;font-size:10px;font-weight:400">${vis.length} itens</span></div>`;
-  if(!items.length){html+=`<div class="empty">Nenhum item.</div></div>`;return html;}
-  const pills=fornecedores.map(f=>{const n=items.filter(i=>(i.fornecedor||"Sem fornecedor")===f).length;return`<span class="forn-pill">${f} (${n})</span>`;}).join(" ");
-  html+=`<div style="padding:8px 14px;border-bottom:1px solid var(--border)">${pills}</div>`;
-  html+=`<div class="filter-bar"><span style="font-size:12px;color:var(--text3)">Filtrar:</span>
-    <span class="chip all ${s5Filter==="all"?"active":""}" onclick="setS5Filter('all')">Todos</span>
-    ${fornecedores.map(f=>`<span class="chip ${s5Filter===f?"active":""}" onclick="setS5Filter('${f.replace(/'/g,"\\'")}')">${f}</span>`).join("")}
-  </div>`;
-  html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
-    <th>SKU</th><th>Fornecedor</th><th style="text-align:right">Reserva</th>
-    <th>Tendência</th><th>Classif.</th><th>Obs.</th><th></th>
-  </tr></thead><tbody>`;
-  for(const i of vis){
-    const dias=i.dias||999;
-    const rc=dias<=7?"var(--red)":dias<=14?"var(--amber)":"var(--text3)";
-    const ds=dias>=999?"—":(Math.round(dias)+"d");
-    html+=`<tr data-sku="${i.sku}">
-      <td class="sku">${i.sku}</td>
-      <td style="font-size:12px;color:var(--text2)">${i.fornecedor||"—"}</td>
-      <td style="text-align:right;font-size:12px;color:${rc}">${ds}</td>
-      <td>${tendBadge(i.tend)}</td>
-      <td><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td>
-      <td style="font-size:11px;color:var(--text3)">${i.motivoFora||"Não encontrado no catálogo"}</td>
-      <td><button class="del-btn" onclick="removeSku('${i.sku}')" title="Remover">✕</button></td>
-    </tr>`;
-  }
-  html+=`</tbody></table></div></div>`;
-  return html;
-}
-
+// ═══════════════════════════════════════════
+// RENDER — SUMMARY
+// ═══════════════════════════════════════════
 function renderSummary(stats,elapsed){
   document.getElementById("summaryArea").style.display="block";
   document.getElementById("summaryArea").innerHTML=`<div class="summary-grid">
@@ -656,259 +707,433 @@ function renderSummary(stats,elapsed){
       {l:"No catálogo",v:stats.noCatalogo,c:"var(--blue)"},
       {l:"Comprados",v:stats.comprados,c:"var(--green)"},
       {l:"Indisponíveis",v:stats.indisponiveis,c:"var(--red)"},
-      {l:"Fora do cat.",v:stats.foraCatalogo,c:"var(--purple)"},
+      {l:"Fora do cat.",v:stats.foraCatalogo,c:"var(--purple2)"},
       {l:"Não solic.",v:stats.naoSolicitados,c:"var(--text2)"},
+      {l:"Revisão",v:stats.revisao,c:"var(--amber)"},
       {l:"Inativos",v:stats.inativos,c:"var(--text3)"},
-      {l:"PDFs",v:stats.pdfs,c:"var(--teal)"},
+      {l:"PDFs",v:stats.pdfs,c:"var(--cyan)"},
       {l:"Tempo",v:elapsed+"s",c:"var(--text3)"},
     ].map(x=>`<div class="summary-card"><div class="summary-label">${x.l}</div><div class="summary-val" style="color:${x.c}">${x.v}</div></div>`).join("")}
   </div>`;
 }
 
+// ═══════════════════════════════════════════
+// RENDER — PEDIDO (editável)
+// ═══════════════════════════════════════════
+function tendBadge(tend){
+  if(!tend) return"";
+  const cls=tend.tipo==="crescimento"?"b-green":tend.tipo==="queda"?"b-red":"b-gray";
+  return`<span class="badge ${cls}">${tend.icone} ${tend.label}</span>`;
+}
+
+function renderOrderSec(items,title,cls){
+  const vis=items.filter(i=>!removedSkus.has(i.sku));
+  let html=`<div class="sec-box"><div class="sec-hdr ${cls}">${title} <span style="opacity:0.5;font-size:10px;font-weight:400">${vis.length} item${vis.length!==1?"s":""}</span></div>`;
+  if(!vis.length){html+=`<div class="empty">Nenhum item.</div></div>`;return html;}
+  html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
+    <th>SKU</th><th style="text-align:right">Caixas</th><th style="text-align:right">Un/cx</th>
+    <th style="text-align:right">Reserva</th><th>Tendência</th><th>Classif.</th>
+    <th>Prioridade</th><th>Cálculo</th><th>Catálogo</th><th>Obs.</th><th></th>
+  </tr></thead><tbody>`;
+  for(const i of vis){
+    const dias=i.dias||999;
+    const rc=dias<=7?"var(--red)":dias<=14?"var(--amber)":dias<=22?"var(--green)":"var(--text3)";
+    const ds=dias>=999?"—":(Math.round(dias)+"d");
+    const cc=cls==="critico"?"var(--red)":"var(--green)";
+    const pl=priLabel(i.prioridade||0);
+    const cxVal=i._cxEdited||i.cx;
+    html+=`<tr data-sku="${i.sku}">
+      <td class="sku-cell">${i.sku}</td>
+      <td style="text-align:right"><input class="cx-input" type="number" min="0" value="${cxVal}" onchange="updateCx('${i.sku}',this.value,'${cls}')" title="Alterar quantidade"></td>
+      <td style="text-align:right;font-size:12px;color:var(--text3)">${i.pcsCx}</td>
+      <td style="text-align:right;font-size:12px;color:${rc}">${ds}</td>
+      <td>${tendBadge(i.tend)}</td>
+      <td><span class="badge ${i.isEstr?"b-amber":"b-blue"}">${i.classif||"Outros"}</span></td>
+      <td><span class="pri-badge ${pl.cls}">${pl.label}</span></td>
+      <td class="calc-cell">${i.motivo?.calculo||"—"}</td>
+      <td style="font-size:11px;color:var(--text3)">${(i.catalogo||"—").substring(0,22)}</td>
+      <td><input class="obs-input" placeholder="Observação..." value="${i._obs||""}" onchange="updateObs('${i.sku}',this.value,'${cls}')" title="Adicionar observação"></td>
+      <td><button class="del-btn" onclick="removeSku('${i.sku}')" title="Remover do pedido">✕</button></td>
+    </tr>`;
+  }
+  html+=`</tbody></table></div></div>`;
+  return html;
+}
+
+function renderNaoSolicitados(items){
+  let html=`<div class="sec-box"><div class="sec-hdr naosol">📋 Produtos Não Solicitados — no catálogo, sem necessidade de compra <span style="opacity:0.5;font-size:10px;font-weight:400">${items.length} itens</span></div>`;
+  if(!items.length){html+=`<div class="empty">Nenhum item.</div></div>`;return html;}
+  html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
+    <th>SKU</th><th>Motivo</th><th style="text-align:right">Reserva</th><th>Tendência</th><th>Classif.</th><th>Catálogo</th>
+  </tr></thead><tbody>`;
+  for(const i of items){
+    const ds=(!i.dias||i.dias>=999)?"—":(Math.round(i.dias)+"d");
+    html+=`<tr>
+      <td class="sku-cell">${i.sku}</td>
+      <td style="font-size:12px;color:var(--text2)">${i.motivoNS||"—"}</td>
+      <td style="text-align:right;font-size:12px;color:var(--green)">${ds}</td>
+      <td>${tendBadge(i.tend)}</td>
+      <td><span class="badge b-gray">${i.classif||"—"}</span></td>
+      <td style="font-size:11px;color:var(--text3)">${(i.catalogo||"—").substring(0,22)}</td>
+    </tr>`;
+  }
+  html+=`</tbody></table></div></div>`;
+  return html;
+}
+
+function renderRevisao(items){
+  let html=`<div class="sec-box"><div class="sec-hdr revisao">⚠ Produtos para Revisão — requerem análise do comprador <span style="opacity:0.5;font-size:10px;font-weight:400">${items.length} itens</span></div>`;
+  if(!items.length){html+=`<div class="empty">Nenhum item.</div></div>`;return html;}
+  html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
+    <th>SKU</th><th>Motivo</th><th>Ação sugerida</th><th>Catálogo</th>
+  </tr></thead><tbody>`;
+  for(const i of items){
+    html+=`<tr>
+      <td class="sku-cell">${i.sku}</td>
+      <td style="font-size:12px;color:var(--amber)">${i.motivoRevisao||"—"}</td>
+      <td style="font-size:12px;color:var(--text2)">${i.acaoSugerida||"—"}</td>
+      <td style="font-size:11px;color:var(--text3)">${(i.catalogo||"—").substring(0,22)}</td>
+    </tr>`;
+  }
+  html+=`</tbody></table></div></div>`;
+  return html;
+}
+
 function renderOutput(result,isRerender){
-  if(!isRerender){lastResult=result;removedSkus=new Set();s5Filter="all";}
-  const sv=(document.getElementById("searchInput")||{}).value||"";
+  if(!isRerender){lastResult=result;removedSkus=new Set();}
   let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
     <div class="row">
-      <input id="searchInput" class="search-input" placeholder="Buscar SKU..." value="${sv}" oninput="filterSearch(this.value)">
-      <button class="btn btn-sm btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copiar pedido</button>
-      <button class="btn btn-sm" onclick="switchTab('comparacao')">⇄ Comparar</button>
+      <input class="search-input" placeholder="Buscar SKU..." value="${searchVal}" oninput="doSearch(this.value)">
+      <button class="btn btn-grad btn-sm" onclick="copyPedido()">📋 Copiar Pedido</button>
+    </div>
+  </div>`;
+  html+=renderOrderSec(result.s1,"⚠ Reposição Crítica — Estoque Zerado","critico");
+  html+=renderOrderSec(result.s2,"✓ Pedido — Precisa Repor","pedido");
+  html+=renderNaoSolicitados(result.naoSolicitados);
+  html+=renderRevisao(result.revisao);
+  html+=`<div class="notice">⚠ Verificar manualmente os KITs.<br>⚠ Retirar produtos já pedidos ou em recebimento.<br>⚠ Garantir que a planilha esteja sem filtros ativos antes da análise.</div>`;
+  document.getElementById("outputArea").innerHTML=html;
+  document.getElementById("outputArea").style.display="block";
+  if(searchVal) doSearch(searchVal);
+}
+
+// ═══════════════════════════════════════════
+// RENDER — FORA DO CATÁLOGO (aba 2)
+// ═══════════════════════════════════════════
+function renderForaTab(items,pdfNames){
+  const fornecedores=[...new Set(items.map(i=>i.fornecedor||"Sem fornecedor"))].sort();
+  const filtered=s5Filter==="all"?items:items.filter(i=>(i.fornecedor||"Sem fornecedor")===s5Filter);
+  const total=items.length;
+  const totalForn=fornecedores.length;
+
+  let html=`<div class="card">
+    <div class="stats-bar">
+      <span>Produtos fora do catálogo: <b>${total}</b></span>
+      <span>Fornecedores: <b>${totalForn}</b></span>
+      <span>PDFs pesquisados: <b>${pdfNames.join(", ")}</b></span>
+    </div>
+    <div class="filter-bar">
+      <span style="font-size:12px;color:var(--text3)">Filtrar fornecedor:</span>
+      <span class="chip all ${s5Filter==="all"?"active":""}" onclick="setForaFilter('all')">Todos</span>
+      ${fornecedores.map(f=>`<span class="chip ${s5Filter===f?"active":""}" onclick="setForaFilter('${f.replace(/'/g,"\\'")}')">${f}</span>`).join("")}
     </div>
   </div>`;
 
-  html+=renderOrderSec(result.s1,"⚠ Reposição Crítica — Estoque Zerado","s1");
-  html+=renderOrderSec(result.s2,"✓ Pedido — Precisa Repor","s2");
-  html+=renderOrderSec(result.s3,"~ Atenção — Monitorar","s3");
-  html+=renderNaoSolicitados(result.naoSolicitados);
-  html+=renderForaCatalogo(result.foraCatalogo);
-
-  if(result.lancamentos.length){
-    html+=`<div class="sec-box"><div class="sec-hdr s6">🆕 Lançamentos — No catálogo, não temos <span style="opacity:0.55;font-size:10px;font-weight:400">${result.lancamentos.length} itens</span></div>
-    <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>SKU</th><th style="text-align:right">Un/cx</th><th>Catálogo</th><th>Descrição</th></tr></thead><tbody>`;
-    for(const i of result.lancamentos){
-      html+=`<tr><td class="sku">${i.sku}</td><td style="text-align:right;font-size:12px;color:var(--text3)">${i.pcsCx}</td><td style="font-size:11px;color:var(--text3)">${(i.catalogo||"—").substring(0,28)}</td><td style="font-size:11px;color:var(--text3)">${(i.descricao||"").substring(0,40)}</td></tr>`;
+  if(!filtered.length){ html+=`<div class="card"><p style="color:var(--text3);font-size:13px">Nenhum produto nesta categoria.</p></div>`; }
+  else {
+    html+=`<div class="sec-box"><div class="sec-hdr fora">⚡ Fora do Catálogo — ${filtered.length} produtos</div>`;
+    html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
+      <th>SKU</th><th>Fornecedor</th><th>Prioridade</th><th style="text-align:right">Reserva</th><th>Tendência</th><th>Motivo</th><th>PDFs pesquisados</th>
+    </tr></thead><tbody>`;
+    for(const i of filtered){
+      const dias=i.dias||999;
+      const ds=dias>=999?"—":(Math.round(dias)+"d");
+      const rc=dias<=7?"var(--red)":dias<=14?"var(--amber)":"var(--text3)";
+      const pl=priLabel(i.prioridade||0);
+      html+=`<tr>
+        <td class="sku-cell">${i.sku}</td>
+        <td style="font-size:12px;color:var(--text2)">${i.fornecedor||"—"}</td>
+        <td><span class="pri-badge ${pl.cls}">${pl.label}</span></td>
+        <td style="text-align:right;font-size:12px;color:${rc}">${ds}</td>
+        <td>${tendBadge(i.tend)}</td>
+        <td style="font-size:12px;color:var(--text2)">${i.motivoFora||"SKU não encontrado em nenhum catálogo enviado"}</td>
+        <td style="font-size:11px;color:var(--text3)">${(i.catalogosPesquisados||[]).join(", ")}</td>
+      </tr>`;
     }
     html+=`</tbody></table></div></div>`;
   }
-
-  document.getElementById("outputArea").innerHTML=html+`<div class="notice">
-    ⚠ Verificar manualmente os KITs.<br>
-    ⚠ Retirar produtos já pedidos ou em recebimento.<br>
-    ⚠ Garantir que a planilha esteja sem filtros ativos antes da análise.
-  </div>`;
-  document.getElementById("outputArea").style.display="block";
-
-  const raw=[];
-  for(const i of [...result.s1,...result.s2]){
-    if(!removedSkus.has(i.sku)) raw.push(`${i.sku}\t${i.cx} cx\t${i.pcsCx} un/cx\t${i.catalogo||""}`);
-  }
-  window._rawOutput=raw.join("\n");
-  if(sv) filterSearch(sv);
+  html+=`<div style="margin-top:10px"><button class="btn btn-sm" onclick="exportCSV('fora')">⬇ Exportar CSV</button></div>`;
+  document.getElementById("foraContent").innerHTML=html;
 }
 
-function removeSku(sku){removedSkus.add(sku);reRender();}
-function setS5Filter(f){s5Filter=f;reRender();}
-function reRender(){if(lastResult) renderOutput(lastResult,true);}
-function filterSearch(v){
+// ═══════════════════════════════════════════
+// RENDER — LANÇAMENTOS (aba 3)
+// ═══════════════════════════════════════════
+function renderLancTab(items){
+  const fornecedores=[...new Set(items.map(i=>i.catalogo||"Sem fornecedor"))].sort();
+  let html=`<div class="card">
+    <div class="stats-bar">
+      <span>Total de lançamentos: <b>${items.length}</b></span>
+      ${fornecedores.map(f=>`<span>${f}: <b>${items.filter(i=>i.catalogo===f).length}</b></span>`).join("")}
+    </div>
+  </div>`;
+
+  for(const forn of fornecedores){
+    const grupo=items.filter(i=>i.catalogo===forn);
+    html+=`<div class="sec-box"><div class="sec-hdr lanc">${forn} <span style="opacity:0.5;font-size:10px;font-weight:400">${grupo.length} produtos</span></div>`;
+    html+=`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
+      <th>SKU</th><th style="text-align:right">Un/cx</th><th>Descrição</th>
+    </tr></thead><tbody>`;
+    for(const i of grupo){
+      html+=`<tr>
+        <td class="sku-cell">${i.sku}</td>
+        <td style="text-align:right;font-size:12px;color:var(--text3)">${i.pcsCx||"—"}</td>
+        <td style="font-size:12px;color:var(--text2)">${i.descricao||"—"}</td>
+      </tr>`;
+    }
+    html+=`</tbody></table></div></div>`;
+  }
+  html+=`<div style="margin-top:10px"><button class="btn btn-sm" onclick="exportCSV('lanc')">⬇ Exportar CSV</button></div>`;
+  document.getElementById("lancContent").innerHTML=html;
+}
+
+// ═══════════════════════════════════════════
+// AÇÕES DO PEDIDO EDITÁVEL
+// ═══════════════════════════════════════════
+function removeSku(sku){
+  removedSkus.add(sku);
+  if(lastResult) renderOutput(lastResult,true);
+}
+function updateCx(sku,val,sec){
+  if(!lastResult) return;
+  const arr=sec==="critico"?lastResult.s1:lastResult.s2;
+  const item=arr.find(i=>i.sku===sku);
+  if(item) item._cxEdited=parseInt(val)||0;
+}
+function updateObs(sku,val,sec){
+  if(!lastResult) return;
+  const arr=sec==="critico"?lastResult.s1:lastResult.s2;
+  const item=arr.find(i=>i.sku===sku);
+  if(item) item._obs=val;
+}
+function setForaFilter(f){s5Filter=f;if(lastResult)renderForaTab(lastResult.foraCatalogo,lastResult.pdfNames);}
+function doSearch(v){
+  searchVal=v;
   const val=(v||"").toUpperCase().trim();
   document.querySelectorAll('.tbl tbody tr').forEach(tr=>{
-    const sku=(tr.dataset.sku||"").toUpperCase();
+    const sku=(tr.dataset.sku||tr.querySelector('.sku-cell')?.textContent||"").toUpperCase();
     tr.style.display=(!val||sku.includes(val))?"":"none";
   });
 }
-function copyOutput(){
-  if(!window._rawOutput) return;
-  navigator.clipboard.writeText(window._rawOutput).then(()=>{
-    const btn=document.getElementById("copyBtn");if(!btn) return;
-    const orig=btn.textContent;btn.textContent="✓ Copiado!";btn.classList.add("ok");
-    setTimeout(()=>{btn.textContent=orig;btn.classList.remove("ok");},2500);
+
+function copyPedido(){
+  if(!lastResult) return;
+  const lines=[];
+  for(const i of [...lastResult.s1,...lastResult.s2]){
+    if(removedSkus.has(i.sku)) continue;
+    const cx=i._cxEdited!==undefined?i._cxEdited:i.cx;
+    if(cx<=0) continue;
+    let line=`${i.sku} ${cx}CX`;
+    if(i._obs) line+=` (${i._obs})`;
+    lines.push(line);
+  }
+  navigator.clipboard.writeText(lines.join("\n")).then(()=>{
+    const btn=event.target;
+    const orig=btn.textContent;
+    btn.textContent="✓ Copiado!";
+    setTimeout(()=>{btn.textContent=orig;},2500);
   });
 }
 
-// ════════════════════════════════════════════════════════════
-// DIAGNÓSTICO
-// ════════════════════════════════════════════════════════════
-async function runDebug(){
-  const box=document.getElementById("debugBox");
-  box.style.display="block";box.innerHTML="<p style='color:var(--amber)'>Carregando...</p>";
-  try{
-    const rows=await sheetReader("Visão Geral");
-    const sample=rows.slice(0,5);
-    const maxCols=Math.max(...sample.map(r=>r.length));
-    const hl=new Set([1,2,5,7,8,11,14,15,18,19,20]);
-    let html="<p style='color:var(--amber);margin-bottom:6px'>Verde = colunas usadas:</p><table style='border-collapse:collapse'><tr><th style='padding:3px 6px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>Idx</th>";
-    for(let i=0;i<sample.length;i++) html+=`<th style='padding:3px 6px;border:1px solid var(--border);color:var(--amber);background:var(--amber2)'>L${i+2}</th>`;
-    html+="</tr>";
-    for(let c=0;c<maxCols;c++){
-      const s=hl.has(c)?"color:var(--green);font-weight:bold":"";
-      html+=`<tr><td style='${s};padding:3px 6px;border:1px solid var(--border)'>${c}</td>`;
-      for(const row of sample) html+=`<td style='${s};padding:3px 6px;border:1px solid var(--border);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>${(row[c]||"").substring(0,28)}</td>`;
-      html+="</tr>";
+function exportCSV(tipo){
+  if(!lastResult) return;
+  let rows=[],filename="";
+  if(tipo==="fora"){
+    filename="fora_catalogo.csv";
+    rows=[["SKU","Fornecedor","Prioridade","Reserva","Motivo","PDFs Pesquisados"]];
+    for(const i of lastResult.foraCatalogo){
+      rows.push([i.sku,i.fornecedor||"",i.prioridade||0,Math.round(i.dias)>=999?0:Math.round(i.dias),
+        i.motivoFora||"Não encontrado",(i.catalogosPesquisados||[]).join("|")]);
     }
-    box.innerHTML=html+"</table>";
-  }catch(e){box.innerHTML=`<p style='color:var(--red)'>Erro: ${e.message}</p>`;}
+  } else {
+    filename="lancamentos.csv";
+    rows=[["SKU","Catálogo","Un/cx","Descrição"]];
+    for(const i of lastResult.lancamentos){
+      rows.push([i.sku,i.catalogo||"",i.pcsCx||"",i.descricao||""]);
+    }
+  }
+  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;a.click();
+  URL.revokeObjectURL(url);
 }
 
-// ════════════════════════════════════════════════════════════
-// COMPARAÇÃO
-// ════════════════════════════════════════════════════════════
-let pedidoRows=[],rowCounter=0;
-function addPedidoRow(sku="",qtd="",sug=""){rowCounter++;pedidoRows.push({id:rowCounter,sku,qtd,sug});renderPedidoTable();}
-function importSugestao(){
-  if(!lastResult){alert("Rode a análise primeiro.");return;}
-  pedidoRows=[];rowCounter=0;
-  for(const i of [...lastResult.s1,...lastResult.s2]){
-    if(!removedSkus.has(i.sku)){rowCounter++;pedidoRows.push({id:rowCounter,sku:i.sku,qtd:"",sug:i.cx});}
-  }
-  renderPedidoTable();document.getElementById("legend").style.display="flex";
-}
-function renderPedidoTable(){
-  const tbody=document.getElementById("pedidoBody");
-  if(!pedidoRows.length){tbody.innerHTML=`<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--text3)">Clique em "+ Linha" ou "↙ Importar sugestão".</td></tr>`;document.getElementById("compSummary").style.display="none";return;}
-  tbody.innerHTML=pedidoRows.map((row,idx)=>{
-    const isExtra=!row.sug&&row.sug!==0;
-    let rowCls="",diff="",diffStyle="";
-    if(isExtra){rowCls="extra";diff="extra";diffStyle="color:var(--purple)";}
-    else if(row.qtd===""){diff="—";diffStyle="color:var(--text3)";}
-    else{
-      const d=(parseFloat(row.qtd)||0)-(parseFloat(row.sug)||0);
-      if(Math.abs(d)<=1){rowCls="match";diff=d===0?"✓":(d>0?`+${d}`:`${d}`);diffStyle="color:var(--green)";}
-      else if(d>1){rowCls="over";diff=`+${d}`;diffStyle="color:var(--amber)";}
-      else{rowCls="miss";diff=`${d}`;diffStyle="color:var(--red)";}
-    }
-    return`<tr class="comp-row ${rowCls}"><td style="color:var(--text3);font-size:12px">${idx+1}</td><td><input value="${row.sku}" onchange="updateRow(${row.id},'sku',this.value)" placeholder="SKU..." style="font-family:var(--mono)"></td><td><input value="${row.qtd}" onchange="updateRow(${row.id},'qtd',this.value)" placeholder="0" style="width:70px;font-family:var(--mono)"></td><td style="font-family:var(--mono);color:var(--text2)">${row.sug||"—"}</td><td><span style="${diffStyle}">${diff}</span></td><td><button class="btn btn-sm" style="padding:2px 7px;font-size:11px;color:var(--red)" onclick="removeRow(${row.id})">✕</button></td></tr>`;
-  }).join("");
-  document.getElementById("legend").style.display="flex";
-  updateCompSummary();
-}
-function updateRow(id,f,v){const r=pedidoRows.find(r=>r.id===id);if(r){r[f]=v;renderPedidoTable();}}
-function removeRow(id){pedidoRows=pedidoRows.filter(r=>r.id!==id);renderPedidoTable();}
-function clearPedido(){pedidoRows=[];rowCounter=0;renderPedidoTable();}
-function updateCompSummary(){
-  if(!pedidoRows.length){document.getElementById("compSummary").style.display="none";return;}
-  let match=0,over=0,miss=0,extra=0;
-  for(const r of pedidoRows){
-    if(!r.sug&&r.sug!==0){extra++;continue;}
-    if(r.qtd==="") continue;
-    const d=(parseFloat(r.qtd)||0)-(parseFloat(r.sug)||0);
-    if(Math.abs(d)<=1)match++;else if(d>1)over++;else miss++;
-  }
-  const el=document.getElementById("compSummary");el.style.display="block";
-  el.innerHTML=`<div class="card"><div class="sec-label">Resumo</div><div class="summary-grid" style="display:grid">
-    <div class="summary-card"><div class="summary-label">Ok</div><div class="summary-val" style="color:var(--green)">${match}</div></div>
-    <div class="summary-card"><div class="summary-label">A mais</div><div class="summary-val" style="color:var(--amber)">${over}</div></div>
-    <div class="summary-card"><div class="summary-label">A menos</div><div class="summary-val" style="color:var(--red)">${miss}</div></div>
-    <div class="summary-card"><div class="summary-label">Extras</div><div class="summary-val" style="color:var(--purple)">${extra}</div></div>
-  </div></div>`;
-}
-
-// ════════════════════════════════════════════════════════════
-// FILES / LOG / UI
-// ════════════════════════════════════════════════════════════
-let pdfFiles=[];
+// ═══════════════════════════════════════════
+// LOG
+// ═══════════════════════════════════════════
 function addLog(msg,type=""){
-  const log=document.getElementById("log");log.style.display="block";
-  const d=document.createElement("div");d.className="log-line"+(type?" "+type:"");d.textContent=msg;
-  log.appendChild(d);log.scrollTop=log.scrollHeight;
+  const log=document.getElementById("log");
+  log.style.display="block";
+  const d=document.createElement("div");
+  d.className="log-line"+(type?" "+type:"");
+  d.textContent=msg;
+  log.appendChild(d);
+  log.scrollTop=log.scrollHeight;
 }
+
+// ═══════════════════════════════════════════
+// FILES
+// ═══════════════════════════════════════════
+let pdfFiles=[];
 function handleFiles(files){
   pdfFiles=Array.from(files).slice(0,10);
-  const tags=document.getElementById("fileTags");tags.innerHTML="";
-  pdfFiles.forEach(f=>{const t=document.createElement("span");t.className="tag";t.title=f.name;t.textContent=f.name;tags.appendChild(t);});
+  const tags=document.getElementById("fileTags");
+  tags.innerHTML="";
+  pdfFiles.forEach(f=>{
+    const t=document.createElement("span");
+    t.className="tag";
+    t.innerHTML=`<svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ${f.name}`;
+    tags.appendChild(t);
+  });
 }
 const dz=document.getElementById("dropzone");
 dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("drag");});
 dz.addEventListener("dragleave",()=>dz.classList.remove("drag"));
 dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("drag");handleFiles(e.dataTransfer.files);});
+
 function clearAll(){
-  pdfFiles=[];lastResult=null;removedSkus=new Set();s5Filter="all";
-  ["log","debugBox","summaryArea","outputArea"].forEach(id=>{const el=document.getElementById(id);if(el){el.innerHTML="";el.style.display="none";}});
+  pdfFiles=[];lastResult=null;removedSkus=new Set();s5Filter="all";searchVal="";
+  ["log","summaryArea","outputArea"].forEach(id=>{const el=document.getElementById(id);if(el){el.innerHTML="";el.style.display="none";}});
   document.getElementById("fileTags").innerHTML="";
   document.getElementById("pdfInput").value="";
-  window._rawOutput="";
+  document.getElementById("colMapArea").style.display="none";
+  document.getElementById("foraContent").innerHTML=`<div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra.</p></div>`;
+  document.getElementById("lancContent").innerHTML=`<div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra.</p></div>`;
 }
 
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // MAIN — 4 ETAPAS
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 async function runAnalysis(){
   const t0=Date.now();
   const btn=document.getElementById("runBtn");
-  btn.disabled=true;btn.innerHTML=`<span class="spinner"></span> Analisando...`;
+  btn.disabled=true;
+  btn.innerHTML=`<span class="spinner"></span> Analisando...`;
   document.getElementById("log").innerHTML="";
   document.getElementById("summaryArea").style.display="none";
   document.getElementById("outputArea").style.display="none";
+  document.getElementById("colMapArea").style.display="none";
+  removedSkus=new Set();
+  s5Filter="all";
 
   try{
-    // ── ETAPA 1: Planilha decide ──
-    addLog("ETAPA 1 — Analisando planilha...","info");
-    const fluxo=await sheetReader("Visão Geral");
-    addLog(`${fluxo.length} linhas carregadas.`,"ok");
+    // ETAPA 1 — Planilha
+    addLog("ETAPA 1 — Lendo planilha...","info");
+    const allRows=await sheetReader("Visão Geral");
+    if(!allRows.length) throw new Error("Planilha vazia ou sem dados.");
 
-    let inativos=[];
-    try{inativos=await sheetReader("Produtos Inativos");addLog(`${inativos.length} inativos carregados.`);}
-    catch{addLog("Aba Produtos Inativos não encontrada.","warn");}
+    const headerRow=allRows[0];
+    const dataRows=allRows.slice(1).filter(r=>r.some(c=>c.trim()));
+    addLog(`✓ ${dataRows.length} linhas carregadas.`,"ok");
 
-    const{necessarios,descartados,stats:statsP}=replenishmentEngine(fluxo,inativos);
-    addLog(`${necessarios.length} SKUs necessitam de reposição.`,"ok");
-    addLog(`Filtrados: ${statsP.inativos} inativos · ${statsP.semVenda} sem venda · ${statsP.margemBaixa} margem baixa`);
+    // Mapeamento automático de colunas
+    addLog("Mapeando colunas pelo cabeçalho...");
+    const colMap=mapColumns(headerRow);
+
+    // Mostrar mapeamento
+    const colMapEl=document.getElementById("colMapArea");
+    colMapEl.style.display="block";
+    let mapHtml=`<div class="col-map">`;
+    for(const[field,aliases]of Object.entries(COL_ALIASES)){
+      const idx=colMap[field];
+      const required=COL_REQUIRED.includes(field);
+      if(idx!==undefined){
+        mapHtml+=`<div class="col-map-item"><span class="ok">✓</span> ${field} → Coluna ${String.fromCharCode(65+idx)} (idx ${idx})</div>`;
+        addLog(`✓ ${field} → coluna ${idx} (${headerRow[idx]||"?"})`, "ok");
+      } else {
+        mapHtml+=`<div class="col-map-item"><span class="${required?"err":""}">✗</span> ${field} → não encontrado${required?" (OBRIGATÓRIO)":""}</div>`;
+        if(required) addLog(`✗ Coluna obrigatória não encontrada: ${field}`,"err");
+        else addLog(`⚠ Coluna opcional não encontrada: ${field}`,"warn");
+      }
+    }
+    mapHtml+=`</div>`;
+    colMapEl.innerHTML=`<div class="card"><div class="card-title">Mapeamento de Colunas</div>${mapHtml}</div>`;
+
+    // Verificar colunas obrigatórias
+    const missing=COL_REQUIRED.filter(f=>colMap[f]===undefined);
+    if(missing.length){
+      throw new Error(`Cabeçalhos obrigatórios não encontrados: ${missing.join(", ")}`);
+    }
+
+    // Inativos
+    let inativosSet=new Set();
+    try{
+      const inativosRows=await sheetReader("Produtos Inativos");
+      inativosRows.slice(1).forEach(r=>{ const s=normSku(r[0]||r[1]||""); if(s) inativosSet.add(s); });
+      addLog(`✓ ${inativosSet.size} produtos inativos carregados.`,"ok");
+    }catch{addLog("⚠ Aba Produtos Inativos não encontrada.","warn");}
+
+    const{necessarios,descartados,revisaoPreview,stats:statsP}=replenishmentEngine(dataRows,colMap,inativosSet);
+    addLog(`✓ ${necessarios.length} SKUs necessitam de reposição.`,"ok");
+    addLog(`Filtrados: ${statsP.inativos} inativos · ${statsP.semVenda} sem venda · ${statsP.saida} diretriz SAÍDA`);
 
     if(!pdfFiles.length){
       addLog("⚠ Envie pelo menos um catálogo PDF para continuar.","warn");
-      btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
+      btn.disabled=false;
+      btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
       return;
     }
 
-    // ── ETAPA 2: Importar catálogos → Catálogo Mestre ──
+    // ETAPA 2 — Catálogo Mestre
     addLog(`ETAPA 2 — Importando ${pdfFiles.length} catálogo(s)...`,"info");
-    const catalogMaster=new Map(); // Map<skuNorm, CatalogItem> — em memória
+    const catalogMaster=new Map();
+    const pdfNames=[];
     for(const f of pdfFiles){
       addLog(`Lendo: ${f.name}`);
       const text=await readPdfText(f);
-      if(!text||text.length<100){addLog(`⚠ ${f.name} pode ser scan — pouco texto.`,"warn");continue;}
-      const{added}=pdfImporter(text,f.name,catalogMaster);
-      addLog(`${added} SKUs adicionados ao Catálogo Mestre — ${f.name}.`,"ok");
+      if(!text||text.length<100){addLog(`⚠ ${f.name} pode ser scan — pouco texto extraído.`,"warn");continue;}
+      const added=pdfImporter(text,f.name,catalogMaster);
+      pdfNames.push(f.name);
+      addLog(`✓ ${added} SKUs indexados — ${f.name}.`,"ok");
     }
-    const totalMestre=catalogMaster.size;
-    const totalDisp=[...catalogMaster.values()].filter(v=>v.disponivel).length;
-    addLog(`Catálogo Mestre: ${totalMestre} SKUs indexados (${totalDisp} disponíveis).`,"ok");
+    addLog(`✓ Catálogo Mestre: ${catalogMaster.size} SKUs totais.`,"ok");
 
-    // ── ETAPA 3: Verificação ──
-    addLog("ETAPA 3 — Cruzando lista de reposição com Catálogo Mestre...","info");
-    const{s1,s2,s3,foraCatalogo,naoSolicitados,statsV}=verificacao(necessarios,descartados,catalogMaster);
-    addLog(`Comprados: ${statsV.comprados} · Indisponíveis: ${statsV.indisponiveis} · Fora: ${statsV.foraCatalogo}`,"ok");
+    // ETAPA 3 — Verificação
+    addLog("ETAPA 3 — Cruzando com Catálogo Mestre...","info");
+    const{s1,s2,foraCatalogo,naoSolicitados,revisao,statsV}=verificacao(necessarios,descartados,revisaoPreview,catalogMaster,pdfNames);
+    addLog(`✓ Comprados: ${statsV.comprados} · Fora: ${statsV.foraCatalogo} · Revisão: ${revisao.length}`,"ok");
 
-    // ── ETAPA 4: Relatório ──
+    // ETAPA 4 — Relatório
     addLog("ETAPA 4 — Gerando relatório...","info");
-    const lancamentos=findLancamentos(necessarios,descartados,catalogMaster);
+    const lancamentos=findLancamentos(necessarios,descartados,revisaoPreview,catalogMaster);
     const elapsed=((Date.now()-t0)/1000).toFixed(1);
     addLog(`✓ Concluído em ${elapsed}s.`,"ok");
 
-    const result={s1,s2,s3,naoSolicitados,foraCatalogo,lancamentos};
-    const statsFinal={
-      analisados:statsP.analisados,
-      necessarios:statsP.necessarios,
-      noCatalogo:statsV.noCatalogo,
-      comprados:statsV.comprados,
-      indisponiveis:statsV.indisponiveis,
-      foraCatalogo:statsV.foraCatalogo,
-      naoSolicitados:naoSolicitados.length,
-      inativos:statsP.inativos,
-      pdfs:pdfFiles.length,
-    };
+    const result={s1,s2,foraCatalogo,naoSolicitados,revisao,lancamentos,pdfNames};
+    lastResult=result;
 
-    renderSummary(statsFinal,elapsed);
+    renderSummary({
+      analisados:statsP.analisados, necessarios:statsP.necessarios,
+      noCatalogo:statsV.noCatalogo, comprados:statsV.comprados,
+      indisponiveis:statsV.indisponiveis, foraCatalogo:statsV.foraCatalogo,
+      naoSolicitados:naoSolicitados.length, revisao:revisao.length,
+      inativos:statsP.inativos, pdfs:pdfFiles.length,
+    },elapsed);
+
     renderOutput(result,false);
+    renderForaTab(foraCatalogo,pdfNames);
+    renderLancTab(lancamentos);
 
   }catch(err){
-    addLog("❌ Erro: "+err.message,"err");
+    addLog("✗ Erro: "+err.message,"err");
     console.error(err);
   }
 
-  btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
+  btn.disabled=false;
+  btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
 }
-
-renderPedidoTable();
 </script>
 </body>
 </html>
