@@ -188,7 +188,7 @@ input[type=file]{display:none}
         </button>
       </div>
       <div class="log" id="log" style="display:none"></div>
-      <div id="colMapArea" style="display:none;margin-top:10px"></div>
+      
     </div>
     <div id="summaryArea" style="display:none"></div>
     <div id="outputArea" style="display:none"></div>
@@ -214,22 +214,21 @@ const SHEET_ID = "1404SCPiabg6abXRphpHqGXQ0frRkIlUptDV9m8a-x3w";
 const INDISP_WORDS = ["ESGOTADO","SEM EMBALAGEM","FORA DA EMBALAGEM","INDISPONIVEL","INDISPONÍVEL","EM FALTA","SEM ESTOQUE","FORA DE LINHA","DESCONTINUADO","INATIVO","TEMPORARIAMENTE INDISPONIVEL","TEMPORARIAMENTE INDISPONÍVEL","FORA DE ESTOQUE","SOB ENCOMENDA","SEM PREVISAO","SEM PREVISÃO","NAO DISPONIVEL","NÃO DISPONÍVEL","OUT OF STOCK","UNAVAILABLE"];
 const SKIP_TOKENS = new Set(["HTTP","HTTPS","CNPJ","FONE","LTDA","EMAIL","FGTS","RESP","INSC","CNAE","WHATSAPP","INSTAGRAM","FACEBOOK","PRODUTO","CODIGO","DESCRICAO"]);
 
-// Mapeamento de colunas por aliases
-const COL_ALIASES = {
-  sku:      ["skus","sku","codigo","codigo sku"],
-  fornecedor:["fornecedor","fabricante","marca"],
-  estoque:  ["estoque anymarket disponivel","estoque disponivel","estoque am","estoque wms","estoque"],
-  d7:       ["ultimos 7 dias","7 dias","venda 7 dias","vendas 7 dias"],
-  d30:      ["ultimos 30 dias","30 dias","venda 30 dias","vendas 30 dias"],
-  d12m:     ["ultimos 12m","ultimos 12 meses","12m","12 meses","venda 12 meses","vendas 12 meses"],
-  reserva:  ["reserva de estoque","reserva","dias de estoque","cobertura"],
-  inativo:  ["inativo","status","ativo inativo"],
-  classif:  ["classificacao","categoria abc","classe"],
-  fat:      ["faturamento","classe faturamento"],
-  lucro:    ["lucro","classe lucro","lucratividade"],
-  diretriz: ["diretriz","politica","estrategia"],
+// ÍNDICES FIXOS DAS COLUNAS (base 0)
+const COL = {
+  fornecedor: 1,
+  sku:        2,
+  estoque:    5,
+  d7:         7,
+  d30:        8,
+  d12m:       11,
+  reserva:    14,
+  inativo:    15,
+  classif:    18,
+  fat:        19,
+  lucro:      20,
+  diretriz:   22,
 };
-const COL_REQUIRED = ["sku","fornecedor","estoque","d7","d30","d12m","reserva","inativo","classif"];
 
 // ═══════════════════════════════════════════
 // UTILS
@@ -1008,7 +1007,7 @@ function clearAll(){
   ["log","summaryArea","outputArea"].forEach(id=>{const el=document.getElementById(id);if(el){el.innerHTML="";el.style.display="none";}});
   document.getElementById("fileTags").innerHTML="";
   document.getElementById("pdfInput").value="";
-  document.getElementById("colMapArea").style.display="none";
+  
   document.getElementById("foraContent").innerHTML=`<div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra.</p></div>`;
   document.getElementById("lancContent").innerHTML=`<div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra.</p></div>`;
 }
@@ -1024,7 +1023,7 @@ async function runAnalysis(){
   document.getElementById("log").innerHTML="";
   document.getElementById("summaryArea").style.display="none";
   document.getElementById("outputArea").style.display="none";
-  document.getElementById("colMapArea").style.display="none";
+  
   removedSkus=new Set();
   s5Filter="all";
 
@@ -1033,39 +1032,8 @@ async function runAnalysis(){
     addLog("ETAPA 1 — Lendo planilha...","info");
     const allRows=await sheetReader("Visão Geral");
     if(!allRows.length) throw new Error("Planilha vazia ou sem dados.");
-
-    const headerRow=allRows[0];
     const dataRows=allRows.slice(1).filter(r=>r.some(c=>c.trim()));
     addLog(`✓ ${dataRows.length} linhas carregadas.`,"ok");
-
-    // Mapeamento automático de colunas
-    addLog("Mapeando colunas pelo cabeçalho...");
-    const colMap=mapColumns(headerRow);
-
-    // Mostrar mapeamento
-    const colMapEl=document.getElementById("colMapArea");
-    colMapEl.style.display="block";
-    let mapHtml=`<div class="col-map">`;
-    for(const[field,aliases]of Object.entries(COL_ALIASES)){
-      const idx=colMap[field];
-      const required=COL_REQUIRED.includes(field);
-      if(idx!==undefined){
-        mapHtml+=`<div class="col-map-item"><span class="ok">✓</span> ${field} → Coluna ${String.fromCharCode(65+idx)} (idx ${idx})</div>`;
-        addLog(`✓ ${field} → coluna ${idx} (${headerRow[idx]||"?"})`, "ok");
-      } else {
-        mapHtml+=`<div class="col-map-item"><span class="${required?"err":""}">✗</span> ${field} → não encontrado${required?" (OBRIGATÓRIO)":""}</div>`;
-        if(required) addLog(`✗ Coluna obrigatória não encontrada: ${field}`,"err");
-        else addLog(`⚠ Coluna opcional não encontrada: ${field}`,"warn");
-      }
-    }
-    mapHtml+=`</div>`;
-    colMapEl.innerHTML=`<div class="card"><div class="card-title">Mapeamento de Colunas</div>${mapHtml}</div>`;
-
-    // Verificar colunas obrigatórias
-    const missing=COL_REQUIRED.filter(f=>colMap[f]===undefined);
-    if(missing.length){
-      throw new Error(`Cabeçalhos obrigatórios não encontrados: ${missing.join(", ")}`);
-    }
 
     // Inativos
     let inativosSet=new Set();
@@ -1075,7 +1043,7 @@ async function runAnalysis(){
       addLog(`✓ ${inativosSet.size} produtos inativos carregados.`,"ok");
     }catch{addLog("⚠ Aba Produtos Inativos não encontrada.","warn");}
 
-    const{necessarios,descartados,revisaoPreview,stats:statsP}=replenishmentEngine(dataRows,colMap,inativosSet);
+    const{necessarios,descartados,revisaoPreview,stats:statsP}=replenishmentEngine(dataRows,COL,inativosSet);
     addLog(`✓ ${necessarios.length} SKUs necessitam de reposição.`,"ok");
     addLog(`Filtrados: ${statsP.inativos} inativos · ${statsP.semVenda} sem venda · ${statsP.saida} diretriz SAÍDA`);
 
