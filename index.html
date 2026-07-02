@@ -167,6 +167,7 @@ input[type=file]{display:none}
     <button class="tab active" onclick="switchTab('pedido')">📦 Pedido de Compra</button>
     <button class="tab" onclick="switchTab('fora')">📋 Fora do Catálogo</button>
     <button class="tab" onclick="switchTab('lanc')">🆕 Lançamentos</button>
+    <button class="tab" onclick="switchTab('ia')">🤖 Catálogo via IA</button>
   </div>
 
   <!-- ABA 1: PEDIDO -->
@@ -202,6 +203,51 @@ input[type=file]{display:none}
   <!-- ABA 3: LANÇAMENTOS -->
   <div id="tab-lanc" class="tab-panel">
     <div id="lancContent"><div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra para ver os lançamentos.</p></div></div>
+  </div>
+
+  <!-- ABA 4: CATÁLOGO VIA IA -->
+  <div id="tab-ia" class="tab-panel">
+    <div class="card">
+      <div class="card-title">Catálogo via IA — Cole o JSON gerado pelo Claude</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.7">
+        Envie o PDF do catálogo para o Claude neste chat e peça:<br>
+        <span style="font-family:var(--mono);font-size:12px;background:var(--bg3);padding:4px 10px;border-radius:6px;display:inline-block;margin-top:6px;color:var(--purple2)">
+          "Analise este catálogo visualmente e retorne um JSON com todos os SKUs disponíveis e esgotados, incluindo PCS/CX de cada um."
+        </span><br><br>
+        Depois cole o JSON retornado aqui embaixo e clique em <b>Usar este catálogo</b>.
+      </p>
+      <div style="margin-bottom:10px">
+        <input class="search-input" id="iaFornecedor" placeholder="Nome do fornecedor (ex: KNUP)" style="width:220px;margin-bottom:8px">
+        <p style="font-size:11px;color:var(--text3);margin-top:2px">Informe o fornecedor para identificar a origem dos produtos.</p>
+      </div>
+      <textarea id="iaJson" placeholder='Cole o JSON aqui. Exemplo:
+{
+  "produtos": [
+    {"sku": "KP-H81", "disponivel": true, "pcsCx": 12},
+    {"sku": "KP-547", "disponivel": false, "pcsCx": 24}
+  ]
+}' style="width:100%;height:220px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:12px;color:var(--text);font-family:var(--mono);font-size:12px;resize:vertical;outline:none;line-height:1.6"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="btn btn-primary" onclick="usarCatalogoIA()">
+          ✓ Usar este catálogo
+        </button>
+        <button class="btn btn-sm" onclick="limparCatalogoIA()">Limpar</button>
+      </div>
+      <div id="iaStatus" style="margin-top:10px;font-size:13px;display:none"></div>
+    </div>
+    <div id="iaCatalogos" style="display:none">
+      <div class="card">
+        <div class="card-title">Catálogos IA carregados</div>
+        <div id="iaCatalogosList"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn btn-primary" id="runBtnIA" onclick="runAnalysisIA()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg>
+            Gerar Pedido com estes catálogos
+          </button>
+          <button class="btn btn-sm" onclick="limparTodosCatalogosIA()">Remover todos</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -244,8 +290,132 @@ function pn(v){
 function letterScore(l){ const m={A:15,B:10,C:5,D:0}; return m[(l||"").toUpperCase()]||0; }
 
 function switchTab(name){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['pedido','fora','lanc'][i]===name));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['pedido','fora','lanc','ia'][i]===name));
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+name));
+}
+
+// ═══════════════════════════════════════════
+// CATÁLOGO VIA IA
+// ═══════════════════════════════════════════
+let catalogosIA = []; // [{fornecedor, produtos:[{skuNorm,disponivel,pcsCx}]}]
+
+function usarCatalogoIA(){
+  const json=document.getElementById("iaJson").value.trim();
+  const forn=document.getElementById("iaFornecedor").value.trim()||"Fornecedor IA";
+  const status=document.getElementById("iaStatus");
+  status.style.display="block";
+
+  if(!json){status.innerHTML=`<span style="color:var(--red)">Cole o JSON antes de continuar.</span>`;return;}
+
+  try{
+    const clean=json.replace(/```json|```/g,"").trim();
+    const parsed=JSON.parse(clean);
+    const produtos=(parsed.produtos||parsed.items||parsed||[]).map(p=>({
+      skuNorm:normSku(p.sku||p.code||p.codigo||""),
+      disponivel:p.disponivel!==false&&p.available!==false&&p.esgotado!==true,
+      pcsCx:p.pcsCx||p.pcs_cx||p.quantidade||p.qty||null,
+      catalogo:forn,
+      descricao:p.descricao||p.description||""
+    })).filter(p=>p.skuNorm&&p.skuNorm.length>1);
+
+    const disp=produtos.filter(p=>p.disponivel).length;
+    const esg=produtos.filter(p=>!p.disponivel).length;
+
+    catalogosIA.push({fornecedor:forn,produtos});
+    renderCatalogosIA();
+
+    status.innerHTML=`<span style="color:var(--green)">✓ ${produtos.length} produtos carregados — ${disp} disponíveis · ${esg} esgotados.</span>`;
+    document.getElementById("iaJson").value="";
+    document.getElementById("iaFornecedor").value="";
+  }catch(e){
+    status.innerHTML=`<span style="color:var(--red)">✗ JSON inválido: ${e.message}</span>`;
+  }
+}
+
+function renderCatalogosIA(){
+  const box=document.getElementById("iaCatalogos");
+  const list=document.getElementById("iaCatalogosList");
+  if(!catalogosIA.length){box.style.display="none";return;}
+  box.style.display="block";
+  list.innerHTML=catalogosIA.map((c,i)=>{
+    const disp=c.produtos.filter(p=>p.disponivel).length;
+    const esg=c.produtos.filter(p=>!p.disponivel).length;
+    return`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <span style="font-weight:600;font-size:13px">${c.fornecedor}</span>
+        <span style="font-size:12px;color:var(--text3);margin-left:10px">${c.produtos.length} produtos · <span style="color:var(--green)">${disp} disp.</span> · <span style="color:var(--red)">${esg} esg.</span></span>
+      </div>
+      <button class="del-btn" onclick="removerCatalogoIA(${i})">✕</button>
+    </div>`;
+  }).join("");
+}
+
+function removerCatalogoIA(idx){
+  catalogosIA.splice(idx,1);
+  renderCatalogosIA();
+}
+function limparTodosCatalogosIA(){catalogosIA=[];renderCatalogosIA();}
+function limparCatalogoIA(){
+  document.getElementById("iaJson").value="";
+  document.getElementById("iaFornecedor").value="";
+  document.getElementById("iaStatus").style.display="none";
+}
+
+async function runAnalysisIA(){
+  if(!catalogosIA.length){alert("Adicione pelo menos um catálogo via IA.");return;}
+
+  // Montar catalogMaster a partir dos catálogos IA
+  const catalogMaster=new Map();
+  const pdfNames=[];
+  for(const c of catalogosIA){
+    pdfNames.push(c.fornecedor);
+    for(const p of c.produtos){
+      if(!catalogMaster.has(p.skuNorm)) catalogMaster.set(p.skuNorm,p);
+    }
+  }
+
+  // Reusar a lógica existente — buscar planilha e rodar análise
+  const btn=document.getElementById("runBtnIA");
+  btn.disabled=true;btn.innerHTML=`<span class="spinner"></span> Analisando...`;
+
+  try{
+    const t0=Date.now();
+    const allRows=await sheetReader("Visão Geral");
+    const dataRows=allRows.slice(1).filter(r=>r.some(c=>c.trim()));
+
+    let inativosSet=new Set();
+    try{
+      const inativosRows=await sheetReader("Produtos Inativos");
+      inativosRows.slice(1).forEach(r=>{const s=normSku(r[0]||r[1]||"");if(s)inativosSet.add(s);});
+    }catch{}
+
+    const{necessarios,descartados,revisaoPreview,stats:statsP}=replenishmentEngine(dataRows,COL,inativosSet);
+    const{s1,s2,foraCatalogo,naoSolicitados,revisao,statsV}=verificacao(necessarios,descartados,revisaoPreview,catalogMaster,pdfNames);
+    const lancamentos=findLancamentos(necessarios,descartados,revisaoPreview,catalogMaster);
+    const elapsed=((Date.now()-t0)/1000).toFixed(1);
+
+    const result={s1,s2,foraCatalogo,naoSolicitados,revisao,lancamentos,pdfNames};
+    lastResult=result;
+
+    renderSummary({
+      analisados:statsP.analisados,necessarios:statsP.necessarios,
+      noCatalogo:statsV.noCatalogo,comprados:statsV.comprados,
+      indisponiveis:statsV.indisponiveis,foraCatalogo:statsV.foraCatalogo,
+      naoSolicitados:naoSolicitados.length,revisao:revisao.length,
+      inativos:statsP.inativos,pdfs:catalogosIA.length,
+    },elapsed);
+
+    renderOutput(result,false);
+    renderForaTab(foraCatalogo,pdfNames);
+    renderLancTab(lancamentos);
+
+    // Mudar para aba de resultado
+    switchTab('pedido');
+  }catch(e){
+    alert("Erro: "+e.message);
+  }
+
+  btn.disabled=false;btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido com estes catálogos`;
 }
 
 // ═══════════════════════════════════════════
