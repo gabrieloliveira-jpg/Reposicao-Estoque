@@ -552,105 +552,110 @@ function skuMatcher(skuRaw, catalogMaster){
 // PDF READER — VISÃO (Claude API analisa cada página como imagem)
 // ═══════════════════════════════════════════
 // ═══════════════════════════════════════════
-// PDF IMPORTER — DETECÇÃO POR COR DE PIXEL
-// Sem API, sem custo. Detecta selos coloridos
-// (laranja/vermelho) que indicam esgotado.
+// PDF IMPORTER — LEITURA VISUAL COM OCR
+// Renderiza cada página como imagem e lê
+// visualmente com Tesseract.js (sem API)
 // ═══════════════════════════════════════════
 
-// Renderiza página como canvas e retorna ctx + dimensões
-async function renderPageToCanvas(page, scale=1.5){
-  const viewport=page.getViewport({scale});
-  const canvas=document.createElement('canvas');
-  canvas.width=viewport.width;
-  canvas.height=viewport.height;
-  const ctx=canvas.getContext('2d');
-  await page.render({canvasContext:ctx,viewport}).promise;
-  return{canvas,ctx,width:viewport.width,height:viewport.height};
+// Carrega Tesseract.js dinamicamente
+let _tesseractReady=null;
+async function getTesseract(){
+  if(_tesseractReady) return _tesseractReady;
+  await new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    s.onload=res; s.onerror=rej;
+    document.head.appendChild(s);
+  });
+  _tesseractReady=await Tesseract.createWorker('por+eng',1,{
+    logger:()=>{}
+  });
+  return _tesseractReady;
 }
 
-// Verifica se uma cor é "alaranjada/avermelhada" — cor típica de selos ESGOTADO
-function isSeloColor(r,g,b){
-  // Laranja-vermelho: R alto, G médio, B baixo
-  return r>160 && g<140 && b<100 && r>g && r>b && (r-b)>80;
-}
+// Palavras que indicam produto esgotado
+const ESGOTADO_WORDS=["ESGOTADO","SEM ESTOQUE","INDISPONIVEL","INDISPONÍVEL","FORA DE LINHA","DESCONTINUADO","OUT OF STOCK","SEM EMBALAGEM","FORA DA EMBALAGEM"];
 
-// Conta pixels de selo em uma região do canvas
-function contarPixelsSelo(imageData, x0, y0, x1, y1, canvasWidth){
-  let count=0, total=0;
-  for(let y=y0;y<y1;y++){
-    for(let x=x0;x<x1;x++){
-      const idx=(y*canvasWidth+x)*4;
-      const r=imageData.data[idx],g=imageData.data[idx+1],b=imageData.data[idx+2];
-      if(isSeloColor(r,g,b)) count++;
-      total++;
-    }
-  }
-  return total>0?count/total:0;
-}
-
-// Threshold mínimo de pixels coloridos para considerar célula esgotada
-const SELO_THRESHOLD=0.015; // 1.5% da célula com cor de selo
-
-// Processa um PDF lendo texto + detectando selos por cor
 async function pdfImporterPixel(file, catalogMaster, onProgress){
   pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
   const arrayBuffer=await file.arrayBuffer();
   const pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
+
+  // Carregar OCR
+  const worker=await getTesseract();
+
   let added=0, esgotados=0;
+  const skuRe=/^[A-Z][A-Z0-9\-\/]{2,}[A-Z0-9]$/;
 
   for(let p=1;p<=pdf.numPages;p++){
     if(onProgress) onProgress(p,pdf.numPages);
     const page=await pdf.getPage(p);
+    const viewport=page.getViewport({scale:2.0});
 
-    // 1. Extrair texto com posições (X,Y)
-    const textContent=await page.getTextContent();
-    const viewport=page.getViewport({scale:1.5});
+    // Renderizar página como imagem
+    const canvas=document.createElement('canvas');
+    canvas.width=viewport.width;
+    canvas.height=viewport.height;
+    const ctx=canvas.getContext('2d');
+    await page.render({canvasContext:ctx,viewport}).promise;
 
-    // 2. Renderizar página como imagem para detecção de cor
-    const{canvas,ctx,width,height}=await renderPageToCanvas(page,1.5);
-    const imageData=ctx.getImageData(0,0,width,height);
+    // OCR na página inteira — lê tudo que é visível incluindo selos gráficos
+    const{data}=await worker.recognize(canvas);
+    const pageTextUp=data.text.toUpperCase();
 
-    // 3. Para cada item de texto, verificar se é um SKU
-    const skuRe=/^[A-Z][A-Z0-9\-\/]{2,}[A-Z0-9]$/;
-    const transform=textContent.items.map(item=>{
-      const tx=pdfjsLib.Util.transform(viewport.transform,item.transform);
-      return{str:item.str.trim().toUpperCase(),x:tx[4],y:tx[5],w:item.width*1.5,h:Math.abs(item.height)*1.5||16};
-    });
+    // Extrair SKUs e preços do texto OCR
+    const lines=pageTextUp.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
 
-    for(const item of transform){
-      if(!skuRe.test(item.str)||SKIP_TOKENS.has(item.str)) continue;
-      const skuNorm=normSku(item.str);
+    // Verificar se página tem esgotado visível
+    const temEsgotado=ESGOTADO_WORDS.some(w=>pageTextUp.includes(w));
+
+    // Extrair SKUs do texto OCR desta página
+    const skusNaPagina=[];
+    for(const line of lines){
+      const words=line.split(/\s+/);
+      for(const word of words){
+        const w=word.replace(/[^A-Z0-9\-\/]/g,"");
+        if(skuRe.test(w)&&!SKIP_TOKENS.has(w)&&w.length>=4){
+          skusNaPagina.push(w);
+        }
+      }
+    }
+
+    // Para cada SKU encontrado pelo OCR, verificar disponibilidade
+    // usando dados OCR com posição (bounding boxes)
+    for(const ocrWord of data.words||[]){
+      const w=(ocrWord.text||"").trim().replace(/[^A-Z0-9\-\/]/gi,"").toUpperCase();
+      if(!skuRe.test(w)||SKIP_TOKENS.has(w)||w.length<4) continue;
+      const skuNorm=normSku(w);
       if(catalogMaster.has(skuNorm)) continue;
 
-      // 4. Verificar região ao redor do SKU por pixels de selo
-      // Analisar uma área maior (bloco do produto) — 120px acima e ao redor
-      const x0=Math.max(0,Math.round(item.x)-10);
-      const y0=Math.max(0,Math.round(height-item.y)-140);
-      const x1=Math.min(width,Math.round(item.x)+300);
-      const y1=Math.min(height,Math.round(height-item.y)+40);
+      // Verificar região ao redor do SKU no OCR
+      // Buscar palavras de esgotado na mesma região (±200px)
+      const bbox=ocrWord.bbox;
+      const regionWords=(data.words||[]).filter(ow=>{
+        const ob=ow.bbox;
+        return Math.abs(ob.x0-bbox.x0)<350 &&
+               Math.abs(ob.y0-bbox.y0)<300;
+      }).map(ow=>ow.text.toUpperCase()).join(" ");
 
-      const ratio=contarPixelsSelo(imageData,x0,y0,x1,y1,width);
-      const esgotado=ratio>=SELO_THRESHOLD;
+      const esgotado=ESGOTADO_WORDS.some(w=>regionWords.includes(w));
 
-      // 5. Buscar PCS/CX no texto próximo
+      // Buscar PCS/CX na região
       let pcsCx=null;
-      const vizinhos=transform.filter(t=>{
-        return Math.abs(t.x-item.x)<350 && Math.abs((height-t.y)-(height-item.y))<120;
-      }).map(t=>t.str).join(" ");
-      const mPcs=vizinhos.match(/(?:PCS|UN|QTD)[\/\s]*CX[:\s]*(\d+)|CX\s*C\/\s*(\d+)/i);
+      const mPcs=regionWords.match(/(?:PCS|UN)[\/\s]*CX[:\s]*(\d+)|CX\s*C\/\s*(\d+)/);
       if(mPcs){ const v=parseInt(mPcs[1]||mPcs[2]||"0"); if(v>0&&v<=500) pcsCx=v; }
 
       catalogMaster.set(skuNorm,{
         skuNorm, disponivel:!esgotado, pcsCx,
-        catalogo:file.name, descricao:"", _ratio:ratio
+        catalogo:file.name, descricao:""
       });
       if(!esgotado) added++; else esgotados++;
     }
   }
+
   return{added,esgotados};
 }
 
-// Mantém compatibilidade — usa detecção por pixel
 async function pdfImporterVision(file, catalogMaster, onProgress){
   return pdfImporterPixel(file, catalogMaster, onProgress);
 }
