@@ -145,13 +145,13 @@ input[type=file]{display:none}
     <defs>
       <linearGradient id="lg1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
         <stop offset="0%" stop-color="#7c3aed"/>
-        <stop offset="50%" stop-color="#4d7cfe"/>
+        <stop offset="55%" stop-color="#4d7cfe"/>
         <stop offset="100%" stop-color="#22d3ee"/>
       </linearGradient>
     </defs>
-    <path d="M50 5 A45 45 0 1 0 95 50" stroke="url(#lg1)" stroke-width="12" stroke-linecap="round" fill="none"/>
-    <circle cx="50" cy="50" r="18" stroke="url(#lg1)" stroke-width="8" fill="none"/>
-    <line x1="34" y1="34" x2="66" y2="66" stroke="url(#lg1)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M78 14 A42 42 0 1 0 78 86" stroke="url(#lg1)" stroke-width="11" stroke-linecap="round" fill="none"/>
+    <circle cx="50" cy="50" r="16" stroke="url(#lg1)" stroke-width="8" fill="none"/>
+    <line x1="37" y1="37" x2="63" y2="63" stroke="url(#lg1)" stroke-width="7" stroke-linecap="round"/>
   </svg>
   <div>
     <div class="logo-text">Cellfy</div>
@@ -167,7 +167,7 @@ input[type=file]{display:none}
     <button class="tab active" onclick="switchTab('pedido')">📦 Pedido de Compra</button>
     <button class="tab" onclick="switchTab('fora')">📋 Fora do Catálogo</button>
     <button class="tab" onclick="switchTab('lanc')">🆕 Lançamentos</button>
-    <button class="tab" onclick="switchTab('ia')">🤖 Catálogo via IA</button>
+    <button class="tab" onclick="switchTab('preco')">💰 Análise de Preços</button>
   </div>
 
   <!-- ABA 1: PEDIDO -->
@@ -175,7 +175,7 @@ input[type=file]{display:none}
     <div class="card">
       <div class="card-title">Catálogos PDF dos fornecedores</div>
       <div class="file-drop" id="dropzone" onclick="document.getElementById('pdfInput').click()">
-        <svg width="28" height="28" fill="none" stroke="url(#lg1)" stroke-width="1.5" viewBox="0 0 24 24"><defs><linearGradient id="lg1" x1="0" y1="0" x2="24" y2="24"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+        <svg width="28" height="28" fill="none" stroke="var(--purple2)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
         <p>Arraste um ou mais PDFs aqui ou clique para selecionar</p>
         <p class="small">Ctrl+clique para múltiplos arquivos · Até 10 catálogos simultâneos</p>
       </div>
@@ -189,7 +189,6 @@ input[type=file]{display:none}
         </button>
       </div>
       <div class="log" id="log" style="display:none"></div>
-      
     </div>
     <div id="summaryArea" style="display:none"></div>
     <div id="outputArea" style="display:none"></div>
@@ -205,51 +204,41 @@ input[type=file]{display:none}
     <div id="lancContent"><div class="card"><p style="color:var(--text3);font-size:13px">Rode a análise na aba Pedido de Compra para ver os lançamentos.</p></div></div>
   </div>
 
-  <!-- ABA 4: CATÁLOGO VIA IA -->
-  <div id="tab-ia" class="tab-panel">
+  <!-- ABA 4: ANÁLISE DE PREÇOS -->
+  <div id="tab-preco" class="tab-panel">
     <div class="card">
-      <div class="card-title">Catálogo via IA — Cole o JSON gerado pelo Claude</div>
-      <p style="font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.7">
-        Envie o PDF do catálogo para o Claude neste chat e peça:<br>
-        <span style="font-family:var(--mono);font-size:12px;background:var(--bg3);padding:4px 10px;border-radius:6px;display:inline-block;margin-top:6px;color:var(--purple2)">
-          "Analise este catálogo visualmente e retorne um JSON com todos os SKUs disponíveis e esgotados, incluindo PCS/CX de cada um."
-        </span><br><br>
-        Depois cole o JSON retornado aqui embaixo e clique em <b>Usar este catálogo</b>.
-      </p>
-      <div style="margin-bottom:10px">
-        <input class="search-input" id="iaFornecedor" placeholder="Nome do fornecedor (ex: KNUP)" style="width:220px;margin-bottom:8px">
-        <p style="font-size:11px;color:var(--text3);margin-top:2px">Informe o fornecedor para identificar a origem dos produtos.</p>
-      </div>
-      <textarea id="iaJson" placeholder='Cole o JSON aqui. Exemplo:
-{
-  "produtos": [
-    {"sku": "KP-H81", "disponivel": true, "pcsCx": 12},
-    {"sku": "KP-547", "disponivel": false, "pcsCx": 24}
-  ]
-}' style="width:100%;height:220px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:12px;color:var(--text);font-family:var(--mono);font-size:12px;resize:vertical;outline:none;line-height:1.6"></textarea>
-      <div class="row" style="margin-top:10px">
-        <button class="btn btn-primary" onclick="usarCatalogoIA()">
-          ✓ Usar este catálogo
-        </button>
-        <button class="btn btn-sm" onclick="limparCatalogoIA()">Limpar</button>
-      </div>
-      <div id="iaStatus" style="margin-top:10px;font-size:13px;display:none"></div>
-    </div>
-    <div id="iaCatalogos" style="display:none">
-      <div class="card">
-        <div class="card-title">Catálogos IA carregados</div>
-        <div id="iaCatalogosList"></div>
-        <div class="row" style="margin-top:12px">
-          <button class="btn btn-primary" id="runBtnIA" onclick="runAnalysisIA()">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg>
-            Gerar Pedido com estes catálogos
-          </button>
-          <button class="btn btn-sm" onclick="limparTodosCatalogosIA()">Remover todos</button>
+      <div class="card-title">💰 Análise de Preços</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.7">Compare o preço do catálogo (com seu desconto) com o custo registrado na sua planilha. Identifique aumentos antes de fechar o pedido.</p>
+      <div style="margin-bottom:14px">
+        <div class="sec-label" style="margin-bottom:6px">Sua planilha de custos (Excel)</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <label class="btn btn-sm" style="cursor:pointer">
+            📂 Selecionar planilha
+            <input type="file" id="custoInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="carregarPlanilhaCusto(this)">
+          </label>
+          <span id="custoStatus" style="font-size:12px;color:var(--text3)">Nenhuma planilha carregada</span>
         </div>
       </div>
+      <hr class="divider">
+      <div style="margin-bottom:14px">
+        <div class="sec-label" style="margin-bottom:6px">Desconto por fornecedor (%)</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:10px">O desconto será subtraído do preço do catálogo antes da comparação. Deixe 0 se não houver.</p>
+        <div id="descontosGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:10px"></div>
+        <div class="row" style="flex-wrap:wrap;gap:6px">
+          <input class="search-input" id="novoFornDesc" placeholder="Fornecedor" style="width:160px">
+          <input type="number" id="novoDescVal" placeholder="%" min="0" max="100" style="width:60px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:13px;text-align:center;outline:none">
+          <button class="btn btn-sm" onclick="adicionarDesconto()">+ Adicionar</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="row">
+        <button class="btn btn-primary" onclick="runAnalisePrecos()">🔍 Analisar Preços</button>
+        <span style="font-size:12px;color:var(--text3)">Requer catálogos carregados na Zona A</span>
+      </div>
     </div>
+    <div id="precoResultado" style="display:none"></div>
   </div>
-</div>
+</div></div>
 
 <script>
 // ═══════════════════════════════════════════
@@ -290,8 +279,17 @@ function pn(v){
 function letterScore(l){ const m={A:15,B:10,C:5,D:0}; return m[(l||"").toUpperCase()]||0; }
 
 function switchTab(name){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['pedido','fora','lanc','ia'][i]===name));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['pedido','fora','lanc','preco'][i]===name));
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+name));
+}
+
+function copiarComando(){
+  const cmd=document.querySelector('.ia-cmd');
+  if(!cmd) return;
+  navigator.clipboard.writeText(cmd.textContent).then(()=>{
+    const btn=event.target;btn.textContent='✓ Copiado!';
+    setTimeout(()=>btn.textContent='📋 Copiar comando',2000);
+  });
 }
 
 // ═══════════════════════════════════════════
@@ -335,7 +333,7 @@ function usarCatalogoIA(){
 function renderCatalogosIA(){
   const box=document.getElementById("iaCatalogos");
   const list=document.getElementById("iaCatalogosList");
-  if(!catalogosIA.length){box.style.display="none";return;}
+  if(!catalogosIA.length){box.style.display="none";updateZonaBStatus();return;}
   box.style.display="block";
   list.innerHTML=catalogosIA.map((c,i)=>{
     const disp=c.produtos.filter(p=>p.disponivel).length;
@@ -348,6 +346,8 @@ function renderCatalogosIA(){
       <button class="del-btn" onclick="removerCatalogoIA(${i})">✕</button>
     </div>`;
   }).join("");
+  updateZonaBStatus();
+  renderDescontosGrid();
 }
 
 function removerCatalogoIA(idx){
@@ -551,101 +551,108 @@ function skuMatcher(skuRaw, catalogMaster){
 // ═══════════════════════════════════════════
 // PDF READER — VISÃO (Claude API analisa cada página como imagem)
 // ═══════════════════════════════════════════
-async function renderPageToBase64(page, scale=1.5){
+// ═══════════════════════════════════════════
+// PDF IMPORTER — DETECÇÃO POR COR DE PIXEL
+// Sem API, sem custo. Detecta selos coloridos
+// (laranja/vermelho) que indicam esgotado.
+// ═══════════════════════════════════════════
+
+// Renderiza página como canvas e retorna ctx + dimensões
+async function renderPageToCanvas(page, scale=1.5){
   const viewport=page.getViewport({scale});
   const canvas=document.createElement('canvas');
   canvas.width=viewport.width;
   canvas.height=viewport.height;
   const ctx=canvas.getContext('2d');
   await page.render({canvasContext:ctx,viewport}).promise;
-  // Retorna base64 sem o prefixo data:image/jpeg;base64,
-  return canvas.toDataURL('image/jpeg',0.85).split(',')[1];
+  return{canvas,ctx,width:viewport.width,height:viewport.height};
 }
 
-async function extractCatalogFromPageVision(base64Image, nomeArq, pageNum){
-  // Chama Claude API para analisar a página visualmente
-  const prompt=`Você está analisando uma página de catálogo de produtos.
-
-Analise VISUALMENTE esta imagem e liste TODOS os produtos que aparecem nela.
-
-Para cada produto, informe:
-1. O código SKU (ex: ACV-235, KP-H81, etc)
-2. Se está DISPONÍVEL ou ESGOTADO (verifique se há algum selo, carimbo, marca d'água ou indicação visual de "ESGOTADO", "SEM ESTOQUE", "INDISPONÍVEL" ou similar sobre o produto)
-3. A quantidade por caixa (PCS/CX ou similar)
-
-IMPORTANTE:
-- Se um espaço de produto mostrar apenas um selo de ESGOTADO sem SKU visível, ignore esse espaço
-- Considere apenas produtos com SKU claramente visível
-- Produtos com imagem do produto + SKU + descrição = DISPONÍVEL
-- Produtos onde o espaço do produto foi substituído por um selo de indisponibilidade = ESGOTADO
-
-Responda APENAS em JSON válido neste formato:
-{
-  "produtos": [
-    {"sku": "ACV-235", "disponivel": true, "pcsCx": 50},
-    {"sku": "ACV-340", "disponivel": false, "pcsCx": 50}
-  ]
+// Verifica se uma cor é "alaranjada/avermelhada" — cor típica de selos ESGOTADO
+function isSeloColor(r,g,b){
+  // Laranja-vermelho: R alto, G médio, B baixo
+  return r>160 && g<140 && b<100 && r>g && r>b && (r-b)>80;
 }
 
-Não inclua nenhum texto fora do JSON.`;
-
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1000,
-      messages: [{
-        role: "user",
-        content: [
-          {type: "image", source: {type: "base64", media_type: "image/jpeg", data: base64Image}},
-          {type: "text", text: prompt}
-        ]
-      }]
-    })
-  });
-
-  if(!response.ok) throw new Error(`API erro ${response.status}`);
-  const data=await response.json();
-  const text=data.content.find(c=>c.type==="text")?.text||"{}";
-
-  try{
-    const clean=text.replace(/```json|```/g,"").trim();
-    const parsed=JSON.parse(clean);
-    return (parsed.produtos||[]).map(p=>({
-      skuNorm: normSku(p.sku),
-      disponivel: p.disponivel!==false,
-      pcsCx: p.pcsCx||null,
-      catalogo: nomeArq,
-      descricao: ""
-    }));
-  }catch(e){
-    console.warn(`Página ${pageNum} parse erro:`,e,text);
-    return [];
+// Conta pixels de selo em uma região do canvas
+function contarPixelsSelo(imageData, x0, y0, x1, y1, canvasWidth){
+  let count=0, total=0;
+  for(let y=y0;y<y1;y++){
+    for(let x=x0;x<x1;x++){
+      const idx=(y*canvasWidth+x)*4;
+      const r=imageData.data[idx],g=imageData.data[idx+1],b=imageData.data[idx+2];
+      if(isSeloColor(r,g,b)) count++;
+      total++;
+    }
   }
+  return total>0?count/total:0;
 }
 
-async function pdfImporterVision(file, catalogMaster, onProgress){
+// Threshold mínimo de pixels coloridos para considerar célula esgotada
+const SELO_THRESHOLD=0.015; // 1.5% da célula com cor de selo
+
+// Processa um PDF lendo texto + detectando selos por cor
+async function pdfImporterPixel(file, catalogMaster, onProgress){
   pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
   const arrayBuffer=await file.arrayBuffer();
   const pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
   let added=0, esgotados=0;
 
   for(let p=1;p<=pdf.numPages;p++){
-    if(onProgress) onProgress(p, pdf.numPages);
+    if(onProgress) onProgress(p,pdf.numPages);
     const page=await pdf.getPage(p);
-    const base64=await renderPageToBase64(page);
-    const produtos=await extractCatalogFromPageVision(base64, file.name, p);
 
-    for(const prod of produtos){
-      if(!prod.skuNorm||prod.skuNorm.length<2) continue;
-      if(catalogMaster.has(prod.skuNorm)) continue;
-      catalogMaster.set(prod.skuNorm, prod);
-      if(prod.disponivel) added++;
-      else esgotados++;
+    // 1. Extrair texto com posições (X,Y)
+    const textContent=await page.getTextContent();
+    const viewport=page.getViewport({scale:1.5});
+
+    // 2. Renderizar página como imagem para detecção de cor
+    const{canvas,ctx,width,height}=await renderPageToCanvas(page,1.5);
+    const imageData=ctx.getImageData(0,0,width,height);
+
+    // 3. Para cada item de texto, verificar se é um SKU
+    const skuRe=/^[A-Z][A-Z0-9\-\/]{2,}[A-Z0-9]$/;
+    const transform=textContent.items.map(item=>{
+      const tx=pdfjsLib.Util.transform(viewport.transform,item.transform);
+      return{str:item.str.trim().toUpperCase(),x:tx[4],y:tx[5],w:item.width*1.5,h:Math.abs(item.height)*1.5||16};
+    });
+
+    for(const item of transform){
+      if(!skuRe.test(item.str)||SKIP_TOKENS.has(item.str)) continue;
+      const skuNorm=normSku(item.str);
+      if(catalogMaster.has(skuNorm)) continue;
+
+      // 4. Verificar região ao redor do SKU por pixels de selo
+      // Analisar uma área maior (bloco do produto) — 120px acima e ao redor
+      const x0=Math.max(0,Math.round(item.x)-10);
+      const y0=Math.max(0,Math.round(height-item.y)-140);
+      const x1=Math.min(width,Math.round(item.x)+300);
+      const y1=Math.min(height,Math.round(height-item.y)+40);
+
+      const ratio=contarPixelsSelo(imageData,x0,y0,x1,y1,width);
+      const esgotado=ratio>=SELO_THRESHOLD;
+
+      // 5. Buscar PCS/CX no texto próximo
+      let pcsCx=null;
+      const vizinhos=transform.filter(t=>{
+        return Math.abs(t.x-item.x)<350 && Math.abs((height-t.y)-(height-item.y))<120;
+      }).map(t=>t.str).join(" ");
+      const mPcs=vizinhos.match(/(?:PCS|UN|QTD)[\/\s]*CX[:\s]*(\d+)|CX\s*C\/\s*(\d+)/i);
+      if(mPcs){ const v=parseInt(mPcs[1]||mPcs[2]||"0"); if(v>0&&v<=500) pcsCx=v; }
+
+      catalogMaster.set(skuNorm,{
+        skuNorm, disponivel:!esgotado, pcsCx,
+        catalogo:file.name, descricao:"", _ratio:ratio
+      });
+      if(!esgotado) added++; else esgotados++;
     }
   }
-  return{added, esgotados};
+  return{added,esgotados};
+}
+
+// Mantém compatibilidade — usa detecção por pixel
+async function pdfImporterVision(file, catalogMaster, onProgress){
+  return pdfImporterPixel(file, catalogMaster, onProgress);
 }
 
 // ═══════════════════════════════════════════
@@ -1265,7 +1272,7 @@ async function runAnalysis(){
     }
 
     // ETAPA 2 — Catálogo Mestre (visão via Claude API)
-    addLog(`ETAPA 2 — Analisando ${pdfFiles.length} catálogo(s) visualmente...`,"info");
+    addLog(`ETAPA 2 — Analisando ${pdfFiles.length} catálogo(s) por pixel...`,"info");
     const catalogMaster=new Map();
     const pdfNames=[];
     for(const f of pdfFiles){
@@ -1275,7 +1282,7 @@ async function runAnalysis(){
           addLog(`  → Página ${p}/${total}`);
         });
         pdfNames.push(f.name);
-        addLog(`✓ ${added} disponíveis · ${esgotados} esgotados ignorados — ${f.name}.`,"ok");
+        addLog(`✓ ${added} disponíveis · ${esgotados} esgotados detectados por cor — ${f.name}.`,"ok");
       }catch(e){
         addLog(`✗ Erro ao processar ${f.name}: ${e.message}`,"err");
       }
@@ -1315,6 +1322,229 @@ async function runAnalysis(){
 
   btn.disabled=false;
   btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg> Gerar Pedido`;
+}
+
+// ═══════════════════════════════════════════
+// ZONA B STATUS UPDATE
+// ═══════════════════════════════════════════
+function updateZonaBStatus(){
+  const el=document.getElementById("zonaBStatus");
+  if(!el) return;
+  if(!catalogosIA.length){
+    el.innerHTML=`<span style="color:var(--text3)">Nenhum catálogo IA carregado — acesse a aba 🤖 Catálogo via IA</span>`;
+    el.style.borderColor="var(--border)";
+  } else {
+    const nomes=catalogosIA.map(c=>`<span class="forn-pill">${c.fornecedor} (${c.produtos.filter(p=>p.disponivel).length} disp.)</span>`).join("");
+    el.innerHTML=`<span style="color:var(--green);font-weight:600">✓ ${catalogosIA.length} catálogo(s) carregado(s):</span> ${nomes}`;
+    el.style.borderColor="var(--green)";
+  }
+}
+
+// ═══════════════════════════════════════════
+// ANÁLISE DE PREÇOS
+// ═══════════════════════════════════════════
+let custosMap=new Map(); // SKU → custo
+let descontos={}; // fornecedor → %
+
+function carregarPlanilhaCusto(input){
+  const file=input.files[0];
+  if(!file) return;
+  const status=document.getElementById("custoStatus");
+  status.textContent="Carregando...";
+  status.style.color="var(--amber)";
+
+  const reader=new FileReader();
+  reader.onload=async(e)=>{
+    try{
+      // Usar SheetJS para ler Excel
+      const {read,utils}=await import("https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs");
+      const wb=read(new Uint8Array(e.target.result),{type:"array"});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=utils.sheet_to_json(ws,{header:1});
+      custosMap=new Map();
+      let count=0;
+      for(const row of rows){
+        if(!row[0]||!row[1]) continue;
+        const sku=normSku(String(row[0]));
+        const custo=parseFloat(String(row[1]).replace(/[^\d.,]/g,"").replace(",","."));
+        if(sku&&!isNaN(custo)){custosMap.set(sku,custo);count++;}
+      }
+      status.textContent=`✓ ${count} produtos carregados — ${file.name}`;
+      status.style.color="var(--green)";
+      renderDescontosGrid();
+    }catch(err){
+      status.textContent=`✗ Erro: ${err.message}`;
+      status.style.color="var(--red)";
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function renderDescontosGrid(){
+  const grid=document.getElementById("descontosGrid");
+  if(!grid) return;
+  // Montar lista de fornecedores dos catálogos carregados
+  const fornecedores=new Set();
+  pdfFiles.forEach(f=>fornecedores.add(f.name.replace(/\.pdf$/i,"").split(/[-_]/)[0].toUpperCase()));
+  catalogosIA.forEach(c=>fornecedores.add(c.fornecedor.toUpperCase()));
+  Object.keys(descontos).forEach(f=>fornecedores.add(f));
+
+  grid.innerHTML=[...fornecedores].map(f=>`
+    <div style="display:flex;align-items:center;gap:6px;background:var(--bg3);padding:8px 10px;border-radius:8px;border:1px solid var(--border)">
+      <span style="font-size:13px;font-weight:600;flex:1;color:var(--text)">${f}</span>
+      <input type="number" min="0" max="100" value="${descontos[f]||0}"
+        style="width:60px;background:var(--bg);border:1px solid var(--border2);border-radius:5px;padding:4px 6px;color:var(--text);font-size:13px;text-align:center;outline:none"
+        onchange="descontos['${f}']=parseFloat(this.value)||0" placeholder="0">
+      <span style="font-size:12px;color:var(--text3)">%</span>
+    </div>`).join("");
+}
+
+function adicionarDesconto(){
+  const nome=document.getElementById("novoFornDesc").value.trim().toUpperCase();
+  const val=parseFloat(document.getElementById("novoDescVal").value)||0;
+  if(!nome) return;
+  descontos[nome]=val;
+  document.getElementById("novoFornDesc").value="";
+  document.getElementById("novoDescVal").value="";
+  renderDescontosGrid();
+}
+
+function precoFromText(text){
+  // Extrai primeiro preço R$ encontrado no texto
+  const m=text.match(/R\$\s*([\d.,]+)/);
+  if(!m) return null;
+  return parseFloat(m[1].replace(/\./g,"").replace(",","."));
+}
+
+async function runAnalisePrecos(){
+  if(!custosMap.size){alert("Carregue a planilha de custos primeiro.");return;}
+
+  const resultado=document.getElementById("precoResultado");
+  resultado.style.display="block";
+  resultado.innerHTML=`<div class="card"><p style="color:var(--amber);font-size:13px">⏳ Analisando preços...</p></div>`;
+
+  // Extrair preços dos catálogos texto (pdfFiles)
+  const precosCatalogo=new Map(); // skuNorm → {preco, fornecedor}
+
+  // Catálogos IA já têm produtos mas não têm preço — precisamos extrair do texto
+  // Por ora, usar apenas catálogos texto
+  for(const f of pdfFiles){
+    pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    const ab=await f.arrayBuffer();
+    const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+    const nomeArq=f.name;
+    const fornKey=nomeArq.replace(/\.pdf$/i,"").toUpperCase();
+    const desc=(descontos[fornKey]||0)/100;
+
+    for(let p=1;p<=pdf.numPages;p++){
+      const page=await pdf.getPage(p);
+      const content=await page.getTextContent();
+      const items=content.items;
+
+      for(let i=0;i<items.length;i++){
+        const txt=items[i].str.trim().toUpperCase();
+        if(!txt||txt.length<2) continue;
+        // Verificar se parece SKU
+        if(/^[A-Z][A-Z0-9\-\/]{2,}[A-Z0-9]$/.test(txt)&&!txt.includes(" ")){
+          // Buscar preço nas próximas 15 itens
+          const bloco=items.slice(i,Math.min(i+15,items.length)).map(x=>x.str).join(" ");
+          const preco=precoFromText(bloco);
+          if(preco&&preco>0){
+            const skuN=normSku(txt);
+            const precoReal=preco*(1-desc);
+            if(!precosCatalogo.has(skuN)){
+              precosCatalogo.set(skuN,{preco,precoReal,fornecedor:fornKey,catalogo:nomeArq});
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Comparar com planilha de custos
+  const aumentou=[],reduziu=[],igual=[],novo=[];
+
+  for(const[sku,dados]of precosCatalogo){
+    if(!custosMap.has(sku)){
+      novo.push({sku,...dados,meuCusto:null});
+      continue;
+    }
+    const meuCusto=custosMap.get(sku);
+    const diff=dados.precoReal-meuCusto;
+    const pct=meuCusto>0?((diff/meuCusto)*100):0;
+    const item={sku,...dados,meuCusto,diff,pct};
+    if(diff>0.01) aumentou.push(item);
+    else if(diff<-0.01) reduziu.push(item);
+    else igual.push(item);
+  }
+
+  aumentou.sort((a,b)=>b.pct-a.pct);
+  reduziu.sort((a,b)=>a.pct-b.pct);
+
+  // Render resultado
+  const filtros=['todos','aumentou','reduziu','igual','novo'];
+  let filtroAtivo='todos';
+
+  function renderTabela(filtro){
+    let items=filtro==='todos'?[...aumentou,...reduziu,...igual,...novo]:
+               filtro==='aumentou'?aumentou:filtro==='reduziu'?reduziu:filtro==='igual'?igual:novo;
+
+    if(!items.length) return`<div class="empty">Nenhum item nesta categoria.</div>`;
+
+    return`<div style="overflow-x:auto"><table class="tbl"><thead><tr>
+      <th>SKU</th><th>Fornecedor</th><th style="text-align:right">Preço cat.</th>
+      <th style="text-align:right">Desconto</th><th style="text-align:right">Preço real</th>
+      <th style="text-align:right">Meu custo</th><th style="text-align:right">Diferença</th><th>Status</th>
+    </tr></thead><tbody>
+    ${items.map(i=>{
+      const desc=(descontos[i.fornecedor]||0);
+      const st=i.meuCusto===null?`<span class="badge b-cyan">🆕 Novo</span>`:
+               i.diff>0.01?`<span class="badge b-red">🔴 Subiu ${i.pct.toFixed(1)}%</span>`:
+               i.diff<-0.01?`<span class="badge b-green">🟢 Baixou ${Math.abs(i.pct).toFixed(1)}%</span>`:
+               `<span class="badge b-gray">✅ Igual</span>`;
+      const diffStr=i.meuCusto===null?"—":(i.diff>0?`+R$${i.diff.toFixed(2)}`:`R$${i.diff.toFixed(2)}`);
+      const diffColor=i.diff>0.01?"var(--red)":i.diff<-0.01?"var(--green)":"var(--text3)";
+      return`<tr>
+        <td class="sku-cell">${i.sku}</td>
+        <td style="font-size:12px;color:var(--text2)">${i.fornecedor}</td>
+        <td style="text-align:right;font-size:12px">R$${i.preco?.toFixed(2)||"—"}</td>
+        <td style="text-align:right;font-size:12px;color:var(--text3)">${desc}%</td>
+        <td style="text-align:right;font-size:13px;font-weight:600">R$${i.precoReal?.toFixed(2)||"—"}</td>
+        <td style="text-align:right;font-size:12px;color:var(--text2)">${i.meuCusto!==null?`R$${i.meuCusto.toFixed(2)}`:"—"}</td>
+        <td style="text-align:right;font-size:13px;font-weight:600;color:${diffColor}">${diffStr}</td>
+        <td>${st}</td>
+      </tr>`;
+    }).join("")}
+    </tbody></table></div>`;
+  }
+
+  resultado.innerHTML=`
+    <div class="card">
+      <div class="summary-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="summary-card"><div class="summary-label">Aumentaram</div><div class="summary-val" style="color:var(--red)">${aumentou.length}</div></div>
+        <div class="summary-card"><div class="summary-label">Reduziram</div><div class="summary-val" style="color:var(--green)">${reduziu.length}</div></div>
+        <div class="summary-card"><div class="summary-label">Sem alteração</div><div class="summary-val" style="color:var(--text3)">${igual.length}</div></div>
+        <div class="summary-card"><div class="summary-label">Novos</div><div class="summary-val" style="color:var(--cyan)">${novo.length}</div></div>
+      </div>
+      <div class="filter-bar" id="precoFiltros">
+        <span style="font-size:12px;color:var(--text3)">Filtrar:</span>
+        <span class="chip all active" onclick="filtrarPrecos('todos',this)">Todos</span>
+        <span class="chip" onclick="filtrarPrecos('aumentou',this)">🔴 Aumentou (${aumentou.length})</span>
+        <span class="chip" onclick="filtrarPrecos('reduziu',this)">🟢 Reduziu (${reduziu.length})</span>
+        <span class="chip" onclick="filtrarPrecos('igual',this)">✅ Igual (${igual.length})</span>
+        <span class="chip" onclick="filtrarPrecos('novo',this)">🆕 Novo (${novo.length})</span>
+      </div>
+      <div id="precoTabela">${renderTabela('todos')}</div>
+    </div>`;
+
+  window._precoData={aumentou,reduziu,igual,novo};
+  window._renderTabelaPreco=renderTabela;
+}
+
+function filtrarPrecos(filtro,el){
+  document.querySelectorAll('#precoFiltros .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById("precoTabela").innerHTML=window._renderTabelaPreco(filtro);
 }
 </script>
 </body>
